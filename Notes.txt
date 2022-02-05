@@ -1,0 +1,5 @@
+Types of Motor Controllers
+
+TalonSRX
+https://docs.ctre-phoenix.com/en/latest/ch13_MC.html
+public final TalonSRX armMotor = new TalonSRX(5);
