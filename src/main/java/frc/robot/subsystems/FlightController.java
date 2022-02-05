@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class FlightController extends Joystick {
@@ -14,36 +15,49 @@ public class FlightController extends Joystick {
   
   //button Ports
   public static int 
-    ButtonA = 0,
-    ButtonB = 0,
-    ButtonC = 0;
+    AxisX = 0,
+    AxisY = 1,
+    AxisZ = 2,
+    AxisZR = 3,
+    AxisSlider = 4,
+    ButtonL1 = 2,
+    ButtonL2 = 10,
+    ButtonL3 = 4,
+    ButtonR1 = 1,
+    ButtonR2 = 9,
+    ButtonR3 = 3,
+    Button5 = 5,
+    Button6 = 6,
+    Button7 = 7,
+    Button8 = 8,
+    ButtonSE = 11,
+    ButtonST = 12;
 
 
   //axis
-  /*
-    if preconfigured commands dont work
-        return getRawAxis(LEFTJOY_Y);
-        set axis channels in defines above
-  */
   public double getAxisX(){
-    return this.getX();
+    return this.getRawAxis(AxisX);
   }
   public double getAxisY(){
-    return this.getY() * -1; //flight controller Y axis inverted bc yannno flying
+    return 1 - this.getRawAxis(AxisY); //flight controller Y axis inverted bc yannno flying
   }
   public double getThrottle(){
-    return this.getZ();
+    return 1-this.getRawAxis(AxisZ);
   }
   public double getAxisRZ(){
-    return this.getTwist();
+    return this.getRawAxis(AxisZR);
+  }
+
+  public double getAxisSlider(){
+    return this.getRawAxis(AxisSlider);
   }
 
   //buttons 
-  public boolean getButtonA() {
-    return getRawButton(ButtonA);
+  public boolean getTrigger() {
+    return getRawButton(ButtonR1);
   }
-  public boolean getButtonAPressed() {
-    return getRawButtonPressed(ButtonA);
+  public boolean getTriggerPressed() {
+    return getRawButtonPressed(ButtonR1);
   }
 
 }
