@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
-  public final VictorSPX frontRightDrive = new VictorSPX(1); 
-  public final VictorSPX frontLeftDrive = new VictorSPX(2); 
-  public final VictorSPX backLeftDrive = new VictorSPX(3); 
-  public final VictorSPX backRightDrive = new VictorSPX(4); 
+  public final VictorSPX frontRightDrive = new VictorSPX(Constants.FRPort); 
+  public final VictorSPX frontLeftDrive = new VictorSPX(Constants.FLPort); 
+  public final VictorSPX backLeftDrive = new VictorSPX(Constants.BLPort); 
+  public final VictorSPX backRightDrive = new VictorSPX(Constants.BRPort); 
 
   
   public Drivetrain() {
@@ -37,16 +37,19 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void drive(double x, double y, double z, double orientation){
-    //just in case
-    x = MathUtil.clamp(x, -1.0, 1.0);
-    y = MathUtil.clamp(y, -1.0, 1.0);
-    z = MathUtil.clamp(z, -1.0, 1.0);
+    //just in case, we have a joystick deadzone and make sure its within -1, 1
+    x = MathUtil.applyDeadband(MathUtil.clamp(x, -1.0, 1.0), Constants.k_deadband);
+    y = MathUtil.applyDeadband(MathUtil.clamp(y, -1.0, 1.0), Constants.k_deadband);
+    z = MathUtil.applyDeadband(MathUtil.clamp(z, -1.0, 1.0), Constants.k_deadband);
 
+    //meccanum drive class did not work with VictorSPX controllers 
+    //speeds is an object with the raw motor %s for each motor
     var speeds = MecanumDrive.driveCartesianIK(y, x, z, orientation);
-    frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveLimit / 100));
-    frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveLimit / 100));
-    backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveLimit / 100));
-    backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.driveLimit / 100));
+
+    frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.k_driveLimit / 100));
+    frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.k_driveLimit / 100));
+    backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.k_driveLimit / 100));
+    backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.k_driveLimit / 100));
   }
 
 }

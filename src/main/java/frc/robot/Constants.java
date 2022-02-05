@@ -13,8 +13,19 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //Ports
+    public static int FRPort = 1;
+    public static int FLPort = 2;
+    public static int BRPort = 3;
+    public static int BLPort = 4;
+    //others
+    public static int flightControllerPort = 0;
+
+    //Drive speeds
     public static double turtle = 40;
     public static double rabbit = 100;
     public static double normal = 70;
-    public static double driveLimit = normal;
+    public static double k_driveLimit = normal;
+
+    public static double k_deadband = .05; //deadzone for controller inputs
 }

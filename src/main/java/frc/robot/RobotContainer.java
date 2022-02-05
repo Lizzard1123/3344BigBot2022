@@ -4,11 +4,18 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.Autonomous;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.FlightController;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,12 +25,20 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  public static FlightController flightController = new FlightController(Constants.flightControllerPort);
+  public static Drivetrain drivetrain = new Drivetrain();
+  public static Intake intake = new Intake();
+  public static Climber climber = new Climber();
+  public static AnalogGyro gyro = new AnalogGyro(0); // double check port #
+  //public static Limelight lime = new Limelight();
+  public static Autonomous m_autoCommand = new Autonomous();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    //runs execute of driveCommand function indefinately
+    drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, false)); // Robot orientation 
+    //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
+    gyro.calibrate();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -34,7 +49,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
