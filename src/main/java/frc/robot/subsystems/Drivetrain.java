@@ -22,8 +22,8 @@ public class Drivetrain extends SubsystemBase {
   
   public Drivetrain() {
     super();
-    frontRightDrive.setInverted(true);
-    backRightDrive.setInverted(true);
+    frontLeftDrive.setInverted(true);
+    backLeftDrive.setInverted(true);
     
   }
 

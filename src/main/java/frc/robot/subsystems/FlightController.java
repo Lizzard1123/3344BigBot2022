@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class FlightController extends Joystick {
@@ -39,10 +38,10 @@ public class FlightController extends Joystick {
     return this.getRawAxis(AxisX);
   }
   public double getAxisY(){
-    return 1 - this.getRawAxis(AxisY); //flight controller Y axis inverted bc yannno flying
+    return this.getRawAxis(AxisY) * -1; //flight controller Y axis inverted bc yannno flying
   }
   public double getThrottle(){
-    return 1-this.getRawAxis(AxisZ);
+    return this.getRawAxis(AxisZ) * -1;
   }
   public double getAxisRZ(){
     return this.getRawAxis(AxisZR);
