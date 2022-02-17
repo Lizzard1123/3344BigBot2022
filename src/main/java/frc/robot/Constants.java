@@ -19,7 +19,7 @@ public final class Constants {
     public static int BRPort = 3;
     public static int BLPort = 4;
     public static int flywheelPort = 5;
-    public static int turretPort = 5;
+    public static int turretPort = 6;
     //others
     public static int flightControllerPort = 0;
 
@@ -37,5 +37,6 @@ public final class Constants {
     public static double turretMaxspeed = 10;
 
     //misc
-    public static boolean displayMeccanums = true;
+    public static boolean displayMeccanums = false;
+    public static boolean flywheelManualControl = true;
 }

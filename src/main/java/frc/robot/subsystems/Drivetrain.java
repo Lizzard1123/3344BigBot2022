@@ -74,6 +74,7 @@ public class Drivetrain extends SubsystemBase {
     return backRightDrive.getMotorOutputVoltage();
   }
 
+  //displays motor voltages in the debug tab in shuffleboard
   public void displayVoltages(){
     myShuffleBoard sb = RobotContainer.shuffleBoardInterface;
     boolean sucess =  

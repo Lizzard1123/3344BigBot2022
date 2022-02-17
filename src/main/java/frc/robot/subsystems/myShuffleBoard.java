@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,6 +26,7 @@ public class myShuffleBoard extends SubsystemBase {
   //misc
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
+  private NetworkTableEntry flywheelManualControl;
 
 
   //struct (ish) for overrides 
@@ -49,22 +50,32 @@ public class myShuffleBoard extends SubsystemBase {
     //Driver Tab presets
       maxSpeed = driveTab
         .add("Max Speed", Constants.maxSpeed)
+        .withPosition(0, 0)
         .withWidget(BuiltInWidgets.kNumberSlider)
         .withProperties(Map.of("min", 0, "max", 100))
         .getEntry();
 
       turnSpeed = driveTab
         .add("Turn Speed", Constants.turnSpeed)
+        .withPosition(0, 1)
         .withWidget(BuiltInWidgets.kNumberSlider)
         .withProperties(Map.of("min", 0, "max", 100))
         .getEntry(); 
 
+
       //Constants tab presets -> on the shuffleboard
+      //numbers
       setUpConstantOverrides("turtle", Constants.turtle);
       setUpConstantOverrides("rabbit", Constants.rabbit);
       setUpConstantOverrides("normal", Constants.normal);
       setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
       setUpConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
+      //booleans
+      flywheelManualControl = debugTab.add("flywheelManualControl", Constants.flywheelManualControl)
+      .withWidget(BuiltInWidgets.kToggleButton)
+      .withPosition(4, 2)
+      .withSize(1, 1)
+      .getEntry();
 
       //Debug tab presets
       initAllVoltages();
@@ -82,6 +93,7 @@ public class myShuffleBoard extends SubsystemBase {
     Constants.normal = updateConstantOverrides("normal", Constants.normal);
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
     Constants.turretMaxspeed = updateConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
+    Constants.flywheelManualControl = flywheelManualControl.getBoolean(Constants.flywheelManualControl);
   }
 
   @Override
@@ -94,11 +106,14 @@ public class myShuffleBoard extends SubsystemBase {
 
   //sets up and logs the entries into the constantOverrides 
   public void setUpConstantOverrides(String name, double defaultSetVal){
-    NetworkTableEntry actualVal = constTab.add(name + "_actual", defaultSetVal)
+    ShuffleboardContainer container = constTab.getLayout(name, BuiltInLayouts.kList)
+    .withSize(1, 2)
+    .withPosition(constantOverrides.size(), 0);
+    NetworkTableEntry actualVal = container.add(name + "_actual", defaultSetVal)
     .getEntry(); 
-    NetworkTableEntry defaultVal = constTab.add(name + "_default", defaultSetVal)
+    NetworkTableEntry defaultVal = container.add(name + "_default", defaultSetVal)
     .getEntry(); 
-    NetworkTableEntry compare = constTab.add(name + "_same", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+    NetworkTableEntry compare = container.add(name + "_same", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
     tableTrio contents =  new tableTrio(actualVal, defaultVal, compare);
     constantOverrides.put(name, contents);
   }
@@ -117,14 +132,20 @@ public class myShuffleBoard extends SubsystemBase {
   //adds all voltage graphs into debug tab
   public void initAllVoltages(){
     Drivetrain drive = RobotContainer.drivetrain;
-    NetworkTableEntry FLV = debugTab.add("FLVoltage", drive.getFLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
-    NetworkTableEntry FRV = debugTab.add("FRVoltage", drive.getFRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
-    NetworkTableEntry BLV = debugTab.add("BLVoltage", drive.getBLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
-    NetworkTableEntry BRV = debugTab.add("BRVoltage", drive.getBRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    ShuffleboardContainer driveContainer = debugTab.getLayout("DriveTrain", BuiltInLayouts.kList)
+    .withSize(4, 3)
+    .withPosition(0, 0);
+    NetworkTableEntry FLV = driveContainer.add("FLVoltage", drive.getFLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry FRV = driveContainer.add("FRVoltage", drive.getFRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry BLV = driveContainer.add("BLVoltage", drive.getBLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry BRV = driveContainer.add("BRVoltage", drive.getBRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    ShuffleboardContainer flyTurContainer = debugTab.getLayout("Flywheel&Turret", BuiltInLayouts.kList)
+    .withSize(2, 2)
+    .withPosition(4, 0);
     Flywheel fly = RobotContainer.flywheel;
-    NetworkTableEntry FV = debugTab.add("FlywheelVoltage", fly.getVoltage()).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry FV = flyTurContainer.add("FlywheelVoltage", fly.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     Turret turret = RobotContainer.turret;
-    NetworkTableEntry TV = debugTab.add("TurretVoltage", turret.getVoltage()).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry TV = flyTurContainer.add("TurretVoltage", turret.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     //add all of them to the map
     debugVoltages.put("FLVoltage", FLV);
     debugVoltages.put("FRVoltage", FRV);

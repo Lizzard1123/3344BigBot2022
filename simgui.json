@@ -13,7 +13,9 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Climber": "Subsystem",
       "/LiveWindow/Drivetrain": "Subsystem",
+      "/LiveWindow/Flywheel": "Subsystem",
       "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/Turret": "Subsystem",
       "/LiveWindow/Ungrouped/AnalogGyro[0]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/myShuffleBoard": "Subsystem"
