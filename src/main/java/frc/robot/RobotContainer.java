@@ -12,7 +12,9 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
+import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.myShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -28,6 +30,8 @@ public class RobotContainer {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Intake intake = new Intake();
   public static Climber climber = new Climber();
+  public static Flywheel flywheel = new Flywheel();
+  public static Turret turret = new Turret();
   public static AnalogGyro gyro = new AnalogGyro(0); // double check port #
   //public static Limelight lime = new Limelight();
   public static Autonomous m_autoCommand = new Autonomous();

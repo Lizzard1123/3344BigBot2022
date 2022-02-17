@@ -59,5 +59,18 @@ public class Drivetrain extends SubsystemBase {
     backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveSet / 100));
     backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.driveSet / 100));
   }
+  //return voltages from the motors
+  public double getFLVoltage(){
+    return frontLeftDrive.getMotorOutputVoltage();
+  }
+  public double getFRVoltage(){
+    return frontRightDrive.getMotorOutputVoltage();
+  }
+  public double getBLVoltage(){
+    return backLeftDrive.getMotorOutputVoltage();
+  }
+  public double getBRVoltage(){
+    return backRightDrive.getMotorOutputVoltage();
+  }
 
 }

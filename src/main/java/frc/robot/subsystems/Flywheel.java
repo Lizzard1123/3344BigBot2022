@@ -4,10 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Flywheel extends SubsystemBase {
-  public Flywheel() {}
+  public final VictorSPX flywheel = new VictorSPX(Constants.flywheelPort); 
+
+  public Flywheel() {
+    super();
+  }
 
   @Override
   public void periodic() {
@@ -17,5 +24,9 @@ public class Flywheel extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public double getVoltage(){
+    return flywheel.getMotorOutputVoltage();
   }
 }

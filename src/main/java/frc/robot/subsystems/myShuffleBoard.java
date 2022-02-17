@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class myShuffleBoard extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -69,6 +70,7 @@ public class myShuffleBoard extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     updateAllOverrides(); // check code constants to ones set for tests
+    updateAllVoltages();
     //update the constants with items from suffleboard
     Constants.maxSpeed = maxSpeed.getDouble(Constants.maxSpeed);
     Constants.turnSpeed = turnSpeed.getDouble(Constants.turnSpeed);
@@ -107,6 +109,19 @@ public class myShuffleBoard extends SubsystemBase {
         entry.getValue().check.setBoolean(true);
       }
     }
+  }
+
+  public void updateAllVoltages(){
+    Drivetrain drive = RobotContainer.drivetrain;
+    debugTab.add("FLVoltage", drive.getFLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
+    debugTab.add("FRVoltage", drive.getFRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
+    debugTab.add("BLVoltage", drive.getBLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
+    debugTab.add("BRVoltage", drive.getBRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
+    Flywheel fly = RobotContainer.flywheel;
+    debugTab.add("FlywheelVoltage", fly.getVoltage()).withProperties(Map.of("min", -12, "max", 12));
+    Turret turret = RobotContainer.turret;
+    debugTab.add("TurretVoltage", turret.getVoltage()).withProperties(Map.of("min", -12, "max", 12));
+  
   }
 
   //return the shuffleboard value of constants
