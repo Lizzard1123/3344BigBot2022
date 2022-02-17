@@ -1,0 +1,36 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "AnalogGyro[0]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Climber": "Subsystem",
+      "/LiveWindow/Drivetrain": "Subsystem",
+      "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/Ungrouped/AnalogGyro[0]": "Gyro",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/myShuffleBoard": "Subsystem"
+    }
+  },
+  "NetworkTables": {
+    "Shuffleboard": {
+      "Constants": {
+        "open": true
+      },
+      "Debug": {
+        "open": true
+      },
+      "Drive": {
+        "open": true
+      },
+      "open": true
+    }
+  }
+}

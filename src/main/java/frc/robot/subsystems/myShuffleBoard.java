@@ -4,9 +4,11 @@
 
 package frc.robot.subsystems;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -24,7 +26,7 @@ public class myShuffleBoard extends SubsystemBase {
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
 
-  public Map<String, tableTrio> constantOverrides;
+
   //struct (ish) for overrides 
   public class tableTrio{
     public NetworkTableEntry actaulVal;
@@ -36,6 +38,7 @@ public class myShuffleBoard extends SubsystemBase {
       check = c;
     }
   }
+  public HashMap<String, tableTrio> constantOverrides = new HashMap<String, tableTrio>();
 
   public myShuffleBoard() {
     //Driver Tab presets
@@ -52,7 +55,6 @@ public class myShuffleBoard extends SubsystemBase {
         .getEntry(); 
 
       //Constants tab presets -> on the shuffleboard
-      setUpConstantOverrides("maxSpeed", Constants.maxSpeed);
       setUpConstantOverrides("turtle", Constants.turtle);
       setUpConstantOverrides("rabbit", Constants.rabbit);
       setUpConstantOverrides("normal", Constants.normal);
@@ -70,7 +72,6 @@ public class myShuffleBoard extends SubsystemBase {
     //update the constants with items from suffleboard
     Constants.maxSpeed = maxSpeed.getDouble(Constants.maxSpeed);
     Constants.turnSpeed = turnSpeed.getDouble(Constants.turnSpeed);
-    Constants.maxSpeed = updateConstantOverrides("maxSpeed", Constants.maxSpeed);
     Constants.turtle = updateConstantOverrides("turtle", Constants.turtle);
     Constants.rabbit = updateConstantOverrides("rabbit", Constants.rabbit);
     Constants.normal = updateConstantOverrides("normal", Constants.normal);
@@ -81,22 +82,26 @@ public class myShuffleBoard extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+    periodic();
   }
 
   //custom functions
 
   //sets up and logs the entries into the constantOverrides 
   public void setUpConstantOverrides(String name, double defaultSetVal){
-    NetworkTableEntry actualVal = constTab.add(name + "_actual", defaultSetVal).getEntry(); 
-    NetworkTableEntry defaultVal = constTab.add(name + "_default", defaultSetVal).getEntry(); 
+    NetworkTableEntry actualVal = constTab.add(name + "_actual", defaultSetVal)
+    .getEntry(); 
+    NetworkTableEntry defaultVal = constTab.add(name + "_default", defaultSetVal)
+    .getEntry(); 
     NetworkTableEntry compare = constTab.add(name + "_same", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
-    constantOverrides.put(name, new tableTrio(actualVal, defaultVal, compare));
+    tableTrio contents =  new tableTrio(actualVal, defaultVal, compare);
+    constantOverrides.put(name, contents);
   }
 
   //for each tabletrio in the overrides update the bool indicator showing that they are different in code
   public void updateAllOverrides(){
     for (Map.Entry<String,tableTrio> entry : constantOverrides.entrySet()){
-      if(entry.getValue().actaulVal != entry.getValue().defaultVal){
+      if(entry.getValue().actaulVal.getDouble(1.0) != entry.getValue().defaultVal.getDouble(1.0)){
         entry.getValue().check.setBoolean(false);
       } else {
         entry.getValue().check.setBoolean(true);
@@ -106,14 +111,19 @@ public class myShuffleBoard extends SubsystemBase {
 
   //return the shuffleboard value of constants
   public double updateConstantOverrides(String name, double defaultValue){
+    if(!constantOverrides.containsKey(name)) return defaultValue;
     return constantOverrides.get(name).actaulVal.getDouble(defaultValue);
   }
 
   //show the shuffleboard the meccanum speeds
-  public static void updateMeccanum(WheelSpeeds speeds){
+  /*
+  //cannot display mecanum obj onto screen bc Victorspx doesnt classify as a motorcontroller default
+  public void updateMeccanum(WheelSpeeds speeds){
+    MecanumDrive base = new MecanumDrive(speeds);
     driveTab.add("Meccanum Visualization", speeds)
             .withWidget(BuiltInWidgets.kMecanumDrive);
+  
   }
-
+*/
 
 }

@@ -8,10 +8,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Drivetrain extends SubsystemBase {
   public final VictorSPX frontRightDrive = new VictorSPX(Constants.FRPort); 
@@ -34,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+    drive(50, 50, 0, 0);
   }
 
   public void drive(double x, double y, double z, double orientation){
@@ -45,8 +48,12 @@ public class Drivetrain extends SubsystemBase {
     //meccanum drive class did not work with VictorSPX controllers 
     //speeds is an object with the raw motor %s for each motor
     speeds = MecanumDrive.driveCartesianIK(y, x, z * (Constants.turnSpeed / 100), orientation);
-    if(Constants.displayMeccanums) myShuffleBoard.updateMeccanum(speeds);
+    
+    //if(Constants.displayMeccanums) RobotContainer.shuffleBoardInterface.updateMeccanum(speeds);
 
+    if(!RobotBase.isReal())
+      return;
+    
     frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveSet / 100));
     frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveSet / 100));
     backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveSet / 100));
