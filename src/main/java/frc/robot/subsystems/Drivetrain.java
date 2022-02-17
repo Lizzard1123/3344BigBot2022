@@ -32,11 +32,12 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    displayVoltages();
   }
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
-    drive(50, 50, 0, 0);
+    //drive(50, 50, 0, 0);
   }
 
   public void drive(double x, double y, double z, double orientation){
@@ -71,6 +72,19 @@ public class Drivetrain extends SubsystemBase {
   }
   public double getBRVoltage(){
     return backRightDrive.getMotorOutputVoltage();
+  }
+
+  public void displayVoltages(){
+    myShuffleBoard sb = RobotContainer.shuffleBoardInterface;
+    boolean sucess =  
+      sb.updateVoltage("FLVoltage", getFLVoltage()) &&
+      sb.updateVoltage("FRVoltage", getFRVoltage()) &&
+      sb.updateVoltage("BLVoltage", getBLVoltage()) &&
+      sb.updateVoltage("BRVoltage", getBRVoltage());
+
+    if(!sucess){
+      System.out.print("Failed to output voltages for debug\n");
+    }
   }
 
 }

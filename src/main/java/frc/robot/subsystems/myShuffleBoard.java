@@ -39,7 +39,11 @@ public class myShuffleBoard extends SubsystemBase {
       check = c;
     }
   }
+  //keeps all names to trios of the constant lists
   public HashMap<String, tableTrio> constantOverrides = new HashMap<String, tableTrio>();
+  //keeps all names and graphs to the voltages in debug
+  public HashMap<String, NetworkTableEntry> debugVoltages = new HashMap<String, NetworkTableEntry>();
+
 
   public myShuffleBoard() {
     //Driver Tab presets
@@ -63,14 +67,13 @@ public class myShuffleBoard extends SubsystemBase {
       setUpConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
 
       //Debug tab presets
-
+      initAllVoltages();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     updateAllOverrides(); // check code constants to ones set for tests
-    updateAllVoltages();
     //update the constants with items from suffleboard
     Constants.maxSpeed = maxSpeed.getDouble(Constants.maxSpeed);
     Constants.turnSpeed = turnSpeed.getDouble(Constants.turnSpeed);
@@ -111,17 +114,30 @@ public class myShuffleBoard extends SubsystemBase {
     }
   }
 
-  public void updateAllVoltages(){
+  //adds all voltage graphs into debug tab
+  public void initAllVoltages(){
     Drivetrain drive = RobotContainer.drivetrain;
-    debugTab.add("FLVoltage", drive.getFLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
-    debugTab.add("FRVoltage", drive.getFRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
-    debugTab.add("BLVoltage", drive.getBLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
-    debugTab.add("BRVoltage", drive.getBRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12));
+    NetworkTableEntry FLV = debugTab.add("FLVoltage", drive.getFLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry FRV = debugTab.add("FRVoltage", drive.getFRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry BLV = debugTab.add("BLVoltage", drive.getBLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry BRV = debugTab.add("BRVoltage", drive.getBRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     Flywheel fly = RobotContainer.flywheel;
-    debugTab.add("FlywheelVoltage", fly.getVoltage()).withProperties(Map.of("min", -12, "max", 12));
+    NetworkTableEntry FV = debugTab.add("FlywheelVoltage", fly.getVoltage()).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     Turret turret = RobotContainer.turret;
-    debugTab.add("TurretVoltage", turret.getVoltage()).withProperties(Map.of("min", -12, "max", 12));
-  
+    NetworkTableEntry TV = debugTab.add("TurretVoltage", turret.getVoltage()).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    //add all of them to the map
+    debugVoltages.put("FLVoltage", FLV);
+    debugVoltages.put("FRVoltage", FRV);
+    debugVoltages.put("BLVoltage", BLV);
+    debugVoltages.put("BRVoltage", BRV);
+    debugVoltages.put("FlywheelVoltage", FV);
+    debugVoltages.put("TurretVoltage", TV);
+  }
+
+  public boolean updateVoltage(String name, double val){
+    if(!debugVoltages.containsKey(name)) return false;
+    debugVoltages.get(name).setDouble(val);
+    return true;
   }
 
   //return the shuffleboard value of constants
