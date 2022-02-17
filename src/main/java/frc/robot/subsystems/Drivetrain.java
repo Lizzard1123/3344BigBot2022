@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-
+import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,7 +18,7 @@ public class Drivetrain extends SubsystemBase {
   public final VictorSPX frontLeftDrive = new VictorSPX(Constants.FLPort); 
   public final VictorSPX backLeftDrive = new VictorSPX(Constants.BLPort); 
   public final VictorSPX backRightDrive = new VictorSPX(Constants.BRPort); 
-
+  public WheelSpeeds speeds;
   
   public Drivetrain() {
     super();
@@ -44,12 +44,13 @@ public class Drivetrain extends SubsystemBase {
 
     //meccanum drive class did not work with VictorSPX controllers 
     //speeds is an object with the raw motor %s for each motor
-    var speeds = MecanumDrive.driveCartesianIK(y, x, z, orientation);
+    speeds = MecanumDrive.driveCartesianIK(y, x, z * (Constants.turnSpeed / 100), orientation);
+    if(Constants.displayMeccanums) myShuffleBoard.updateMeccanum(speeds);
 
-    frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.k_driveLimit / 100));
-    frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.k_driveLimit / 100));
-    backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.k_driveLimit / 100));
-    backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.k_driveLimit / 100));
+    frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveSet / 100));
+    frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveSet / 100));
+    backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveSet / 100));
+    backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.driveSet / 100));
   }
 
 }

@@ -18,14 +18,24 @@ public final class Constants {
     public static int FLPort = 2;
     public static int BRPort = 3;
     public static int BLPort = 4;
+    public static int flywheelPort = 5;
+    public static int turretPort = 5;
     //others
     public static int flightControllerPort = 0;
 
     //Drive speeds
+    public static double maxSpeed = 50;
+    public static double turnSpeed = 100;
     public static double turtle = 40;
     public static double rabbit = 100;
     public static double normal = 70;
-    public static double k_driveLimit = normal;
-
+    public static double driveSet = normal;
     public static double k_deadband = .05; //deadzone for controller inputs
+
+    //Flywheel constants
+    public static double flywheelMaxSpeed = 10;
+    public static double turretMaxspeed = 10;
+
+    //misc
+    public static boolean displayMeccanums = true;
 }
