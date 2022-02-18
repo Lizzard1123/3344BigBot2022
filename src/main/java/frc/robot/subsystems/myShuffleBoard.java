@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class myShuffleBoard extends SubsystemBase {
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
   private NetworkTableEntry flywheelManualControl;
+  private NetworkTableEntry flyhweelAnalog;
 
 
   //struct (ish) for overrides 
@@ -77,8 +79,16 @@ public class myShuffleBoard extends SubsystemBase {
       .withSize(1, 1)
       .getEntry();
 
+      flyhweelAnalog = debugTab.add("flyhweelAnalog", Constants.flyhweelAnalog)
+      .withWidget(BuiltInWidgets.kToggleButton)
+      .withPosition(5, 2)
+      .withSize(1, 1)
+      .getEntry();
+
       //Debug tab presets
       initAllVoltages();
+      //Driver tab set notes
+      setNotes();
   }
 
   @Override
@@ -94,6 +104,8 @@ public class myShuffleBoard extends SubsystemBase {
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
     Constants.turretMaxspeed = updateConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
     Constants.flywheelManualControl = flywheelManualControl.getBoolean(Constants.flywheelManualControl);
+    Constants.flyhweelAnalog = flyhweelAnalog.getBoolean(Constants.flyhweelAnalog);
+
   }
 
   @Override
@@ -165,6 +177,13 @@ public class myShuffleBoard extends SubsystemBase {
   public double updateConstantOverrides(String name, double defaultValue){
     if(!constantOverrides.containsKey(name)) return defaultValue;
     return constantOverrides.get(name).actaulVal.getDouble(defaultValue);
+  }
+
+  public void setNotes(){
+    ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
+    .withSize(2, 4)
+    .withPosition(7, 0);
+    noteContainer.add("", "Button L1 -> FLywheel").withProperties(Map.of("Label Position", "HIDDEN"));
   }
 
   //show the shuffleboard the meccanum speeds

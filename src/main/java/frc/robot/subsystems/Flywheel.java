@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -27,6 +29,22 @@ public class Flywheel extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
     periodic();
+  }
+
+  public void spin(double speed){
+    speed /= 100;
+    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    flywheel.set(ControlMode.PercentOutput, speed * (Constants.flywheelMaxSpeed / 100));
+  }
+
+  //used by driver to control speed
+  public void manualControl(double speed){
+    if(Constants.flywheelManualControl) spin(speed);
+  }
+
+  //used by auton and PID to control flywheel speed
+  public void automatedControl(double speed){
+    if(!Constants.flywheelManualControl) spin(speed);
   }
 
   //returns voltage supplied to motor from motorcontroller

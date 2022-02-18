@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.SpinFlywheel;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
@@ -17,6 +18,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.myShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,6 +57,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
+    JoystickButton spinFlywheel = new JoystickButton(flightController, FlightController.ButtonL1);
+    spinFlywheel.whileHeld(new SpinFlywheel());
 
   }
 

@@ -39,4 +39,5 @@ public final class Constants {
     //misc
     public static boolean displayMeccanums = false;
     public static boolean flywheelManualControl = true;
+    public static boolean flyhweelAnalog = false;
 }
