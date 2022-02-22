@@ -59,4 +59,15 @@ public class FlightController extends Joystick {
     return getRawButtonPressed(ButtonR1);
   }
 
+  //just general ones
+
+  //returns button state of port
+  public boolean getButton(int port) {
+    return getRawButton(port);
+  }
+  //returns button new press from port
+  public boolean getButtonPressed(int port) {
+    return getRawButtonPressed(port);
+  }
+
 }
