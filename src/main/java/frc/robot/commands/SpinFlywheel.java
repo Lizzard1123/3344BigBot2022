@@ -29,7 +29,9 @@ public class SpinFlywheel extends CommandBase {
     if(Constants.flyhweelAnalog){
       RobotContainer.flywheel.manualControl(RobotContainer.flightController.getThrottle());
     } else {
-      RobotContainer.flywheel.manualControl(Constants.flywheelMaxSpeed);
+      //going to be the place where pid controlls it
+      //RobotContainer.flywheel.automatedControl(Constants.flywheelMaxSpeed);
+      //RobotContainer.flywheel.manualControl(Constants.flywheelMaxSpeed);
     }
   }
 

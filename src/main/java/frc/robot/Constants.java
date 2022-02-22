@@ -33,11 +33,11 @@ public final class Constants {
     public static double k_deadband = .05; //deadzone for controller inputs
 
     //Flywheel constants
+    public static double flywheelManualSpeed = 0; // default for manual control
     public static double flywheelMaxSpeed = 10;
     public static double turretMaxspeed = 10;
 
     //misc
     public static boolean displayMeccanums = false;
-    public static boolean flywheelManualControl = true;
-    public static boolean flyhweelAnalog = false;
+    public static boolean flyhweelAnalog = false; // speed of flyhweel manual controller
 }

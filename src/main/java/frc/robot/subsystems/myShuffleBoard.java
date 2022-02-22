@@ -26,7 +26,7 @@ public class myShuffleBoard extends SubsystemBase {
   //misc
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
-  private NetworkTableEntry flywheelManualControl;
+  private NetworkTableEntry flywheelManualSpeed;
   private NetworkTableEntry flyhweelAnalog;
 
 
@@ -72,15 +72,14 @@ public class myShuffleBoard extends SubsystemBase {
       setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
       setUpConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
       //booleans
-      flywheelManualControl = debugTab.add("flywheelManualControl", Constants.flywheelManualControl)
-      .withWidget(BuiltInWidgets.kToggleButton)
-      .withPosition(4, 2)
+      flywheelManualSpeed = debugTab.add("flywheelManualSpeed", Constants.flywheelManualSpeed)
+      .withPosition(5, 2)
       .withSize(1, 1)
       .getEntry();
 
       flyhweelAnalog = debugTab.add("flyhweelAnalog", Constants.flyhweelAnalog)
       .withWidget(BuiltInWidgets.kToggleButton)
-      .withPosition(5, 2)
+      .withPosition(6, 2)
       .withSize(1, 1)
       .getEntry();
 
@@ -102,7 +101,6 @@ public class myShuffleBoard extends SubsystemBase {
     Constants.normal = updateConstantOverrides("normal", Constants.normal);
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
     Constants.turretMaxspeed = updateConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
-    Constants.flywheelManualControl = flywheelManualControl.getBoolean(Constants.flywheelManualControl);
     Constants.flyhweelAnalog = flyhweelAnalog.getBoolean(Constants.flyhweelAnalog);
 
   }
@@ -169,6 +167,11 @@ public class myShuffleBoard extends SubsystemBase {
   public boolean updateVoltage(String name, double val){
     if(!debugVoltages.containsKey(name)) return false;
     debugVoltages.get(name).setDouble(val);
+    return true;
+  }
+
+  public boolean updateInput(double speed){
+    flywheelManualSpeed.setDouble(speed);
     return true;
   }
 
