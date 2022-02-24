@@ -79,9 +79,20 @@ public class myShuffleBoard extends SubsystemBase {
 
       flyhweelAnalog = debugTab.add("flyhweelAnalog", Constants.flyhweelAnalog)
       .withWidget(BuiltInWidgets.kToggleButton)
-      .withPosition(6, 2)
+      .withPosition(4, 2)
       .withSize(1, 1)
       .getEntry();
+
+      
+      //misc
+      debugTab
+      .add("GyroDisplay", RobotContainer.gyro)
+      .withPosition(6, 0)
+      .withWidget(BuiltInWidgets.kGyro);
+
+      driveTab.add("Meccanum Visualization", RobotContainer.drivetrain.getBase())
+            .withWidget(BuiltInWidgets.kMecanumDrive);
+
 
       //Debug tab presets
       initAllVoltages();
@@ -102,6 +113,8 @@ public class myShuffleBoard extends SubsystemBase {
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
     Constants.turretMaxspeed = updateConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
     Constants.flyhweelAnalog = flyhweelAnalog.getBoolean(Constants.flyhweelAnalog);
+
+    //gyro
 
   }
 
@@ -185,7 +198,7 @@ public class myShuffleBoard extends SubsystemBase {
     ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
     .withSize(2, 4)
     .withPosition(7, 0);
-    noteContainer.add("", "Button L1 -> FLywheel").withProperties(Map.of("Label Position", "HIDDEN"));
+    noteContainer.add("", "Throttle Axis -> FLywheel").withProperties(Map.of("LabelPosition", "HIDDEN"));
   }
 
   //show the shuffleboard the meccanum speeds

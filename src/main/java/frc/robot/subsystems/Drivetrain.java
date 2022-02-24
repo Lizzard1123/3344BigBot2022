@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
@@ -16,10 +17,13 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Drivetrain extends SubsystemBase {
-  public final VictorSPX frontRightDrive = new VictorSPX(Constants.FRPort); 
-  public final VictorSPX frontLeftDrive = new VictorSPX(Constants.FLPort); 
-  public final VictorSPX backLeftDrive = new VictorSPX(Constants.BLPort); 
-  public final VictorSPX backRightDrive = new VictorSPX(Constants.BRPort); 
+  public final TalonSRX frontRightDrive = new TalonSRX(Constants.FRPort); 
+  public final TalonSRX frontLeftDrive = new TalonSRX(Constants.FLPort); 
+  public final TalonSRX backLeftDrive = new TalonSRX(Constants.BLPort); 
+  public final TalonSRX backRightDrive = new TalonSRX(Constants.BRPort); 
+  //frontLeft, rearLeft, frontRight, rearRight
+  //public MecanumDrive base = new MecanumDrive(frontLeftDrive, backLeftDrive, frontRightDrive, backRightDrive);
+
   public WheelSpeeds speeds;
   
   public Drivetrain() {
@@ -53,7 +57,7 @@ public class Drivetrain extends SubsystemBase {
     //if(Constants.displayMeccanums) RobotContainer.shuffleBoardInterface.updateMeccanum(speeds);
 
     if(!RobotBase.isReal())
-      return;
+      return; // dont set values in sim
     
     frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveSet / 100));
     frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveSet / 100));
