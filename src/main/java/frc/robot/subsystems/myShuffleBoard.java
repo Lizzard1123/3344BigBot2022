@@ -198,7 +198,7 @@ public class myShuffleBoard extends SubsystemBase {
     ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
     .withSize(2, 4)
     .withPosition(7, 0);
-    noteContainer.add("", "Throttle Axis -> FLywheel").withProperties(Map.of("LabelPosition", "HIDDEN"));
+    noteContainer.add("", "L1 & then Throttle Axis -> FLywheel").withProperties(Map.of("LabelPosition", "HIDDEN"));
   }
 
   //show the shuffleboard the meccanum speeds
