@@ -90,8 +90,8 @@ public class myShuffleBoard extends SubsystemBase {
       .withPosition(6, 0)
       .withWidget(BuiltInWidgets.kGyro);
 
-      driveTab.add("Meccanum Visualization", RobotContainer.drivetrain.getBase())
-            .withWidget(BuiltInWidgets.kMecanumDrive);
+      //driveTab.add("Meccanum Visualization", RobotContainer.drivetrain.getBase())
+      //      .withWidget(BuiltInWidgets.kMecanumDrive);
 
 
       //Debug tab presets
