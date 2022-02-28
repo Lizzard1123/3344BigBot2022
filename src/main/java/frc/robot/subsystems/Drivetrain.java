@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -23,8 +22,6 @@ public class Drivetrain extends SubsystemBase {
   public final TalonSRX backRightDrive = new TalonSRX(Constants.BRPort); 
   //frontLeft, rearLeft, frontRight, rearRight
   //public MecanumDrive base = new MecanumDrive(frontLeftDrive, backLeftDrive, frontRightDrive, backRightDrive);
-
-  public WheelSpeeds speeds;
   
   public Drivetrain() {
     super();
@@ -52,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
 
     //meccanum drive class did not work with VictorSPX controllers 
     //speeds is an object with the raw motor %s for each motor
-    speeds = MecanumDrive.driveCartesianIK(y, x, z * (Constants.turnSpeed / 100), orientation);
+    WheelSpeeds speeds = MecanumDrive.driveCartesianIK(y, x, z * (Constants.turnSpeed / 100), orientation);
     
     //if(Constants.displayMeccanums) RobotContainer.shuffleBoardInterface.updateMeccanum(speeds);
 
@@ -80,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
 
   //displays motor voltages in the debug tab in shuffleboard
   public void displayVoltages(){
-    myShuffleBoard sb = RobotContainer.shuffleBoardInterface;
+    MyShuffleBoard sb = RobotContainer.shuffleBoardInterface;
     boolean sucess =  
       sb.updateVoltage("FLVoltage", getFLVoltage()) &&
       sb.updateVoltage("FRVoltage", getFRVoltage()) &&

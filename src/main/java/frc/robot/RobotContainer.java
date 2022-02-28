@@ -16,7 +16,7 @@ import frc.robot.subsystems.FlightController;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.myShuffleBoard;
+import frc.robot.subsystems.MyShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -28,16 +28,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static FlightController flightController = new FlightController(Constants.flightControllerPort);
-  public static Drivetrain drivetrain = new Drivetrain();
-  public static Intake intake = new Intake();
-  public static Climber climber = new Climber();
-  public static Flywheel flywheel = new Flywheel();
-  public static Turret turret = new Turret();
-  public static AnalogGyro gyro = new AnalogGyro(0); // double check port #
+  public static final FlightController flightController = new FlightController(Constants.flightControllerPort);
+  public static final Drivetrain drivetrain = new Drivetrain();
+  public static final Intake intake = new Intake();
+  public static final Climber climber = new Climber();
+  public static final Flywheel flywheel = new Flywheel();
+  public static final Turret turret = new Turret();
+  public static final AnalogGyro gyro = new AnalogGyro(0); // double check port #
   //public static Limelight lime = new Limelight();
-  public static Autonomous m_autoCommand = new Autonomous();
-  public static myShuffleBoard shuffleBoardInterface = new myShuffleBoard();
+  public static final Autonomous m_autoCommand = new Autonomous();
+  public static final MyShuffleBoard shuffleBoardInterface = new MyShuffleBoard();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

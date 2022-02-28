@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class myShuffleBoard extends SubsystemBase {
+public class MyShuffleBoard extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   private static ShuffleboardTab driveTab  = Shuffleboard.getTab("Drive");
   private static ShuffleboardTab constTab  = Shuffleboard.getTab("Constants");
@@ -31,23 +31,23 @@ public class myShuffleBoard extends SubsystemBase {
 
 
   //struct (ish) for overrides 
-  public class tableTrio{
-    public NetworkTableEntry actaulVal;
-    public NetworkTableEntry defaultVal;
-    public NetworkTableEntry check;
-    public tableTrio(NetworkTableEntry aV, NetworkTableEntry dV, NetworkTableEntry c){
+  public class TableTrio{
+    public final NetworkTableEntry actaulVal;
+    public final NetworkTableEntry defaultVal;
+    public final NetworkTableEntry check;
+    public TableTrio(NetworkTableEntry aV, NetworkTableEntry dV, NetworkTableEntry c){
       actaulVal = aV;
       defaultVal = dV;
       check = c;
     }
   }
   //keeps all names to trios of the constant lists
-  public HashMap<String, tableTrio> constantOverrides = new HashMap<String, tableTrio>();
+  public final Map<String, TableTrio> constantOverrides = new HashMap<>();
   //keeps all names and graphs to the voltages in debug
-  public HashMap<String, NetworkTableEntry> debugVoltages = new HashMap<String, NetworkTableEntry>();
+  public final Map<String, NetworkTableEntry> debugVoltages = new HashMap<>();
 
 
-  public myShuffleBoard() {
+  public MyShuffleBoard() {
     //Driver Tab presets
       maxSpeed = driveTab
         .add("Max Speed", Constants.maxSpeed)
@@ -136,18 +136,18 @@ public class myShuffleBoard extends SubsystemBase {
     NetworkTableEntry defaultVal = container.add(name + "_default", defaultSetVal)
     .getEntry(); 
     NetworkTableEntry compare = container.add(name + "_same", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
-    tableTrio contents =  new tableTrio(actualVal, defaultVal, compare);
+    TableTrio contents =  new TableTrio(actualVal, defaultVal, compare);
     constantOverrides.put(name, contents);
   }
 
   //for each tabletrio in the overrides update the bool indicator showing that they are different in code
   public void updateAllOverrides(){
-    for (Map.Entry<String,tableTrio> entry : constantOverrides.entrySet()){
+    for (Map.Entry<String,TableTrio> entry : constantOverrides.entrySet()){
       if(entry.getValue().actaulVal.getDouble(1.0) != entry.getValue().defaultVal.getDouble(1.0)){
         entry.getValue().check.setBoolean(false);
-      } else {
-        entry.getValue().check.setBoolean(true);
+        continue;
       }
+      entry.getValue().check.setBoolean(true);
     }
   }
 
