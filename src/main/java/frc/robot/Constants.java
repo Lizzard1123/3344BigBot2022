@@ -20,6 +20,7 @@ public final class Constants {
     public static int BLPort = 4;
     public static int flywheelPort = 5;
     public static int turretPort = 6;
+    public static int uptakePort = 7;
     //others
     public static int flightControllerPort = 0;
 
