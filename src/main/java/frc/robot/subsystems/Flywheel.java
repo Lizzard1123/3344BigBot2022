@@ -71,7 +71,7 @@ public class Flywheel extends SubsystemBase {
   public double getVelocity(){
     return encoder.getVelocity();
   }
-  //displays the flywheel voltage to the shuffleboard
+  //displays the flywheel info to the shuffleboard
   public void displayAll(){
     if(!RobotContainer.shuffleBoardInterface.updateVoltage("FlywheelVoltage", getVoltage()))
       System.out.println("Error setting flywheel display voltage\n");

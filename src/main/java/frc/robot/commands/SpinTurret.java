@@ -6,13 +6,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Turret;
 
 /** An example command that uses an example subsystem. */
 public class SpinTurret extends CommandBase {
+  private final Turret turret;
 
   //construtor
-  public SpinTurret() {
+  public SpinTurret(Turret turret) {
     super();
+    this.turret = turret;
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.

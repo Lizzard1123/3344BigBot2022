@@ -34,6 +34,12 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry flywheelVelocity;
   private NetworkTableEntry flywheelCurrent;
 
+  //color sensor
+  private NetworkTableEntry colorDist;
+  private NetworkTableEntry colorRed;
+  private NetworkTableEntry colorGreen;
+  private NetworkTableEntry colorBlue;
+
 
   //struct (ish) for overrides 
   public class TableTrio{
@@ -90,6 +96,18 @@ public class MyShuffleBoard extends SubsystemBase {
       flywheelVelocity = flyWheelContainer.add("flywheelVelocity", 0)
       .getEntry();
       flywheelCurrent = flyWheelContainer.add("flywheelCurrent", 0)
+      .getEntry();
+      //Color Sensor
+      ShuffleboardContainer colorContainer = debugTab.getLayout("Color Sensor", BuiltInLayouts.kList)
+      .withSize(1, 4)
+      .withPosition(6,0);
+      colorDist = colorContainer.add("Dist", 0)
+      .getEntry();
+      colorRed = colorContainer.add("Red", 0)
+      .getEntry();
+      colorGreen = colorContainer.add("Green", 0)
+      .getEntry();
+      colorBlue = colorContainer.add("Blue", 0)
       .getEntry();
       //misc
       debugTab
@@ -194,6 +212,19 @@ public class MyShuffleBoard extends SubsystemBase {
   }
   public boolean updateFlyWheelVelocity(double num){
     return flywheelVelocity.setDouble(num);
+  }
+
+  public boolean updateColorDist(double num){
+    return colorDist.setDouble(num);
+  }
+  public boolean updateColorRed(double num){
+    return colorRed.setDouble(num);
+  }
+  public boolean updateColorGreen(double num){
+    return colorGreen.setDouble(num);
+  }
+  public boolean updateColorBlue(double num){
+    return colorBlue.setDouble(num);
   }
 
   //return the shuffleboard value of constants

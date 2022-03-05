@@ -20,6 +20,7 @@
       "/LiveWindow/Drivetrain": "Subsystem",
       "/LiveWindow/Flywheel": "Subsystem",
       "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/MyShuffleBoard": "Subsystem",
       "/LiveWindow/Turret": "Subsystem",
       "/LiveWindow/Ungrouped/AnalogGyro[0]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
