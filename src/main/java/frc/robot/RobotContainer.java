@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SpinFlywheel;
+import frc.robot.commands.SpinTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
@@ -44,6 +45,9 @@ public class RobotContainer {
     //runs execute of driveCommand function indefinately
     drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, false)); // Robot orientation 
     //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
+    //default commmand for spinning turret
+    turret.setDefaultCommand(new SpinTurret()); //TODO does this need to be a default command? 
+    //calibrate gyro
     gyro.calibrate();
     // Configure the button bindings
     configureButtonBindings();
