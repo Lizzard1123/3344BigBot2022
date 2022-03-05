@@ -26,7 +26,7 @@ public class SpinFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.flyhweelAnalog){
+    if(Constants.flywheelAnalog){
       RobotContainer.flywheel.manualControl(RobotContainer.flightController.getThrottle());
     } else {
       //going to be the place where pid controlls it

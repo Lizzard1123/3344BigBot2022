@@ -39,5 +39,5 @@ public final class Constants {
     public static double turretMaxspeed = 10;
 
     //misc
-    public static boolean flyhweelAnalog = true; // speed of flyhweel manual controller
+    public static boolean flywheelAnalog = true; // speed of flywheel manual controller
 }

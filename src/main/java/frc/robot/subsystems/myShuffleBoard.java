@@ -26,8 +26,13 @@ public class MyShuffleBoard extends SubsystemBase {
   //misc
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
+
+  //flywheel
   private NetworkTableEntry flywheelManualSpeed;
-  private NetworkTableEntry flyhweelAnalog;
+  private NetworkTableEntry flywheelAnalog;
+  private NetworkTableEntry flywheelTemp;
+  private NetworkTableEntry flywheelVelocity;
+  private NetworkTableEntry flywheelCurrent;
 
 
   //struct (ish) for overrides 
@@ -71,28 +76,26 @@ public class MyShuffleBoard extends SubsystemBase {
       setUpConstantOverrides("normal", Constants.normal);
       setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
       setUpConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
-      //booleans
-      flywheelManualSpeed = debugTab.add("flywheelManualSpeed", Constants.flywheelManualSpeed)
-      .withPosition(5, 2)
-      .withSize(1, 1)
+      //flywheel
+      ShuffleboardContainer flyWheelContainer = debugTab.getLayout("flywheelLayout", BuiltInLayouts.kList)
+      .withSize(2, 4)
+      .withPosition(7,0);
+      flywheelManualSpeed = flyWheelContainer.add("flywheelManualSpeed", Constants.flywheelManualSpeed)
       .getEntry();
-
-      flyhweelAnalog = debugTab.add("flyhweelAnalog", Constants.flyhweelAnalog)
+      flywheelAnalog = flyWheelContainer.add("flywheelAnalog", Constants.flywheelAnalog)
       .withWidget(BuiltInWidgets.kToggleButton)
-      .withPosition(4, 2)
-      .withSize(1, 1)
       .getEntry();
-
-      
+      flywheelTemp = flyWheelContainer.add("flywheelTemp", 0)
+      .getEntry();
+      flywheelVelocity = flyWheelContainer.add("flywheelVelocity", 0)
+      .getEntry();
+      flywheelCurrent = flyWheelContainer.add("flywheelCurrent", 0)
+      .getEntry();
       //misc
       debugTab
       .add("GyroDisplay", RobotContainer.gyro)
-      .withPosition(6, 0)
+      .withPosition(4, 2)
       .withWidget(BuiltInWidgets.kGyro);
-
-      //driveTab.add("Meccanum Visualization", RobotContainer.drivetrain.getBase())
-      //      .withWidget(BuiltInWidgets.kMecanumDrive);
-
 
       //Debug tab presets
       initAllVoltages();
@@ -112,10 +115,7 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.normal = updateConstantOverrides("normal", Constants.normal);
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
     Constants.turretMaxspeed = updateConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
-    Constants.flyhweelAnalog = flyhweelAnalog.getBoolean(Constants.flyhweelAnalog);
-
-    //gyro
-
+    Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
   }
 
   @Override
@@ -183,9 +183,17 @@ public class MyShuffleBoard extends SubsystemBase {
     return true;
   }
 
-  public boolean updateInput(double speed){
-    flywheelManualSpeed.setDouble(speed);
-    return true;
+  public boolean updateFlyWheelInput(double num){
+    return flywheelManualSpeed.setDouble(num);
+  }
+  public boolean updateFlyWheelCurrent(double num){
+    return flywheelCurrent.setDouble(num);
+  }
+  public boolean updateFlyWheelTemp(double num){
+    return flywheelTemp.setDouble(num);
+  }
+  public boolean updateFlyWheelVelocity(double num){
+    return flywheelVelocity.setDouble(num);
   }
 
   //return the shuffleboard value of constants
@@ -198,7 +206,9 @@ public class MyShuffleBoard extends SubsystemBase {
     ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
     .withSize(2, 4)
     .withPosition(7, 0);
-    noteContainer.add("", "L1 & then Throttle Axis -> FLywheel").withProperties(Map.of("LabelPosition", "HIDDEN"));
+    noteContainer.add("0", "FlywheelAnalog & L1 & then Throttle Axis -> FLywheel");
+    noteContainer.add("1", "throttle slider -> turret left and");
+
   }
 
   //show the shuffleboard the meccanum speeds
