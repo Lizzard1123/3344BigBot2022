@@ -81,7 +81,8 @@ public class MyShuffleBoard extends SubsystemBase {
       setUpConstantOverrides("rabbit", Constants.rabbit);
       setUpConstantOverrides("normal", Constants.normal);
       setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
-      setUpConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
+      setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
+      setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
       //flywheel
       ShuffleboardContainer flyWheelContainer = debugTab.getLayout("flywheelLayout", BuiltInLayouts.kList)
       .withSize(2, 4)
@@ -132,7 +133,8 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.rabbit = updateConstantOverrides("rabbit", Constants.rabbit);
     Constants.normal = updateConstantOverrides("normal", Constants.normal);
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
-    Constants.turretMaxspeed = updateConstantOverrides("turretMaxspeed", Constants.turretMaxspeed);
+    Constants.turretMaxSpeed = updateConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
+    Constants.uptakeMaxSpeed = updateConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
   }
 
@@ -239,6 +241,8 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(7, 0);
     noteContainer.add("0", "FlywheelAnalog & L1 & then Throttle Axis -> FLywheel");
     noteContainer.add("1", "throttle slider -> turret left and");
+    noteContainer.add("2", "Button R1 -> uptake up");
+    noteContainer.add("3", "Button R2 -> uptake down");
 
   }
 

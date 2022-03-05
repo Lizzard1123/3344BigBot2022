@@ -11,12 +11,14 @@ import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SpinFlywheel;
 import frc.robot.commands.SpinTurret;
+import frc.robot.commands.SpinUptake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Uptake;
 import frc.robot.subsystems.MyShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -35,6 +37,7 @@ public class RobotContainer {
   public static final Climber climber = new Climber();
   public static final Flywheel flywheel = new Flywheel();
   public static final Turret turret = new Turret();
+  public static final Uptake uptake = new Uptake();
   public static final AnalogGyro gyro = new AnalogGyro(0); // double check port #
   //public static Limelight lime = new Limelight();
   public static final Autonomous m_autoCommand = new Autonomous();
@@ -64,6 +67,11 @@ public class RobotContainer {
     JoystickButton spinFlywheel = new JoystickButton(flightController, FlightController.ButtonL1);
     spinFlywheel.whileHeld(new SpinFlywheel());
 
+    JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.ButtonR1);
+    spinUptakeUp.whileHeld(new SpinUptake(uptake, false));
+
+    JoystickButton spinUptakeDown = new JoystickButton(flightController, FlightController.ButtonR2);
+    spinUptakeDown.whileHeld(new SpinUptake(uptake, true));
   }
 
   /**

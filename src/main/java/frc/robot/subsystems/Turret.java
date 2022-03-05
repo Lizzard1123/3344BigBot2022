@@ -22,7 +22,7 @@ public class Turret extends SubsystemBase {
   public void spin(double speed){
     speed /= 100;
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
-    turret.set(ControlMode.PercentOutput, speed * (Constants.flywheelMaxSpeed / 100)); 
+    turret.set(ControlMode.PercentOutput, speed * (Constants.turretMaxSpeed / 100)); 
   }
 
   public void stop(){

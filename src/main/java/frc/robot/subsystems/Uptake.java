@@ -4,9 +4,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,6 +20,16 @@ public class Uptake extends SubsystemBase {
 
   public Uptake() {
     super();
+  }
+
+  public void spin(double speed){
+    speed /= 100;
+    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    uptake.set(ControlMode.PercentOutput, speed * (Constants.uptakeMaxSpeed / 100)); 
+  }
+
+  public void stop(){
+    uptake.set(ControlMode.PercentOutput, 0);
   }
 
   public Color getColor(){

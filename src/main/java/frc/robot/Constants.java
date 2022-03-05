@@ -38,8 +38,11 @@ public final class Constants {
 
     //Flywheel constants
     public static double flywheelManualSpeed = 0; // default for manual control
+
+    //max speeds
     public static double flywheelMaxSpeed = 10;
-    public static double turretMaxspeed = 10;
+    public static double turretMaxSpeed = 10;
+    public static double uptakeMaxSpeed = 10;
 
     //misc
     public static boolean flywheelAnalog = true; // speed of flywheel manual controller
