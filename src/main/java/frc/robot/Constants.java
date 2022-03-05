@@ -17,12 +17,12 @@ import edu.wpi.first.wpilibj.I2C;
 public final class Constants {
     //Ports
     public static int FRPort = 1;
-    public static int FLPort = 2;
+    public static int FLPort = 0;
     public static int BRPort = 3;
-    public static int BLPort = 4;
-    public static int flywheelPort = 5;
-    public static int turretPort = 6;
-    public static int uptakePort = 7;
+    public static int BLPort = 2;
+    public static int flywheelPort = 4;
+    public static int turretPort = 5;
+    public static int uptakePort = 6;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
     //others
     public static int flightControllerPort = 0;

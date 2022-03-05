@@ -23,7 +23,7 @@ public class Flywheel extends SubsystemBase {
   public Flywheel() {
     super();
     //TODO same config process here too
-    flywheel.setIdleMode(IdleMode.kBrake);
+    flywheel.setIdleMode(IdleMode.kCoast);
   }
 
   @Override
@@ -39,7 +39,6 @@ public class Flywheel extends SubsystemBase {
   }
 
   public void spin(double speed){
-    speed /= 100;
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
     flywheel.set(speed * (Constants.flywheelMaxSpeed / 100)); 
     //flywheel.setVoltage(speed * 12); //backup if set doest work

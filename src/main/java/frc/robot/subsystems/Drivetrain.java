@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class Drivetrain extends SubsystemBase {
@@ -25,8 +26,8 @@ public class Drivetrain extends SubsystemBase {
   
   public Drivetrain() {
     super();
-    frontLeftDrive.setInverted(true);
-    backLeftDrive.setInverted(true);
+    frontRightDrive.setInverted(true);
+    backRightDrive.setInverted(true);
     
   }
 
@@ -41,7 +42,19 @@ public class Drivetrain extends SubsystemBase {
     //drive(50, 50, 0, 0);
   }
 
+  public void updateNormalSpeed(){
+    if(RobotContainer.flightController.getDpadRelativeUp()){
+      Constants.driveSet = Constants.rabbit;
+    } else if(RobotContainer.flightController.getDpadRelativeDown()){
+      Constants.driveSet = Constants.turtle;
+    } else {
+      Constants.driveSet = Constants.normal;
+    }
+    RobotContainer.shuffleBoardInterface.updateTotalSpeedDisplay(Constants.driveSet * (Constants.maxSpeed/100));
+  }
+
   public void drive(double x, double y, double z, double orientation){
+    updateNormalSpeed();
     //just in case, we have a joystick deadzone and make sure its within -1, 1
     x = MathUtil.applyDeadband(MathUtil.clamp(x, -1.0, 1.0), Constants.k_deadband);
     y = MathUtil.applyDeadband(MathUtil.clamp(y, -1.0, 1.0), Constants.k_deadband);
@@ -56,10 +69,10 @@ public class Drivetrain extends SubsystemBase {
     if(!RobotBase.isReal())
       return; // dont set values in sim
     
-    frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveSet / 100));
-    frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveSet / 100));
-    backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveSet / 100));
-    backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.driveSet / 100));
+    frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
+    frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
+    backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
+    backRightDrive.set(ControlMode.PercentOutput, speeds.rearRight * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
   }
   //return voltages from the motors
   public double getFLVoltage(){

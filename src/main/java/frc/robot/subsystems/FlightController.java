@@ -71,4 +71,12 @@ public class FlightController extends Joystick {
     return getRawButtonPressed(port);
   }
 
+  public boolean getDpadRelativeUp(){
+    return this.getPOV() == 0 || this.getPOV() == 45 || this.getPOV() == 315;
+  }
+
+  public boolean getDpadRelativeDown(){
+    return this.getPOV() == 180 || this.getPOV() == 135 || this.getPOV() == 225;
+  }
+
 }

@@ -64,13 +64,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
-    JoystickButton spinFlywheel = new JoystickButton(flightController, FlightController.ButtonL1);
+    JoystickButton spinFlywheel = new JoystickButton(flightController, FlightController.ButtonR1);
     spinFlywheel.whileHeld(new SpinFlywheel());
 
-    JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.ButtonR1);
+    JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.Button5);
     spinUptakeUp.whileHeld(new SpinUptake(uptake, false));
 
-    JoystickButton spinUptakeDown = new JoystickButton(flightController, FlightController.ButtonR2);
+    JoystickButton spinUptakeDown = new JoystickButton(flightController, FlightController.Button6);
     spinUptakeDown.whileHeld(new SpinUptake(uptake, true));
   }
 

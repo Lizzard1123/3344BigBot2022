@@ -23,9 +23,12 @@ public class Uptake extends SubsystemBase {
   }
 
   public void spin(double speed){
-    speed /= 100;
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
     uptake.set(ControlMode.PercentOutput, speed * (Constants.uptakeMaxSpeed / 100)); 
+  }
+
+  public double getVoltage(){
+    return uptake.getMotorOutputVoltage();
   }
 
   public void stop(){
@@ -54,6 +57,8 @@ public class Uptake extends SubsystemBase {
 
   //displays the Color Sensor info to the shuffleboard
   public void displayAll(){
+    if(!RobotContainer.shuffleBoardInterface.updateVoltage("UptakeVoltage", getVoltage()))
+      System.out.println("Error setting uptake display voltage\n");
     if(!RobotContainer.shuffleBoardInterface.updateColorDist(getDist()))
       System.out.println("Error setting Color Sensor display Dist\n");
     if(!RobotContainer.shuffleBoardInterface.updateColorRed(getRed()))

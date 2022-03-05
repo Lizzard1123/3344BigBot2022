@@ -26,6 +26,7 @@ public class MyShuffleBoard extends SubsystemBase {
   //misc
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
+  private NetworkTableEntry totalSpeedDisplay;
 
   //flywheel
   private NetworkTableEntry flywheelManualSpeed;
@@ -188,6 +189,8 @@ public class MyShuffleBoard extends SubsystemBase {
     NetworkTableEntry FV = flyTurContainer.add("FlywheelVoltage", fly.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     Turret turret = RobotContainer.turret;
     NetworkTableEntry TV = flyTurContainer.add("TurretVoltage", turret.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    Uptake uptake = RobotContainer.uptake;
+    NetworkTableEntry UV = flyTurContainer.add("UptakeVoltage", uptake.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     //add all of them to the map
     debugVoltages.put("FLVoltage", FLV);
     debugVoltages.put("FRVoltage", FRV);
@@ -195,6 +198,12 @@ public class MyShuffleBoard extends SubsystemBase {
     debugVoltages.put("BRVoltage", BRV);
     debugVoltages.put("FlywheelVoltage", FV);
     debugVoltages.put("TurretVoltage", TV);
+    debugVoltages.put("UptakeVoltage", UV);
+    //misc
+    totalSpeedDisplay = driveTab.add("totalSpeedDisplay", 0)
+    .withPosition(0, 2)
+    .withSize(1, 1)
+    .getEntry();
   }
 
   public boolean updateVoltage(String name, double val){
@@ -229,6 +238,10 @@ public class MyShuffleBoard extends SubsystemBase {
     return colorBlue.setDouble(num);
   }
 
+  public boolean updateTotalSpeedDisplay(double num){
+    return totalSpeedDisplay.setDouble(num);
+  }
+
   //return the shuffleboard value of constants
   public double updateConstantOverrides(String name, double defaultValue){
     if(!constantOverrides.containsKey(name)) return defaultValue;
@@ -243,6 +256,8 @@ public class MyShuffleBoard extends SubsystemBase {
     noteContainer.add("1", "throttle slider -> turret left and");
     noteContainer.add("2", "Button R1 -> uptake up");
     noteContainer.add("3", "Button R2 -> uptake down");
+    noteContainer.add("4", "POV up rabbit");
+    noteContainer.add("5", "POV down turtle");
 
   }
 
