@@ -24,6 +24,8 @@ public final class Constants {
     public static int turretPort = 5;
     public static int uptakePort = 6;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
+    public static int leftLimitPort = 0;
+    public static int rightLimitPort = 1;
     //others
     public static int flightControllerPort = 0;
 

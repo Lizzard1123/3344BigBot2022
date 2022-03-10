@@ -41,6 +41,11 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry colorGreen;
   private NetworkTableEntry colorBlue;
 
+  //IO
+  private NetworkTableEntry leftLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
+
+
 
   //struct (ish) for overrides 
   public class TableTrio{
@@ -101,7 +106,7 @@ public class MyShuffleBoard extends SubsystemBase {
       .getEntry();
       //Color Sensor
       ShuffleboardContainer colorContainer = debugTab.getLayout("Color Sensor", BuiltInLayouts.kList)
-      .withSize(1, 4)
+      .withSize(1, 2)
       .withPosition(6,0);
       colorDist = colorContainer.add("Dist", 0)
       .getEntry();
@@ -110,6 +115,16 @@ public class MyShuffleBoard extends SubsystemBase {
       colorGreen = colorContainer.add("Green", 0)
       .getEntry();
       colorBlue = colorContainer.add("Blue", 0)
+      .getEntry();
+      //IO
+      leftLimitDisplay = debugTab.add("LeftLimitDisplay", 0)
+      .withPosition(6, 2)
+      .withSize(1, 1)
+      .getEntry();
+
+      rightLimitDisplay = debugTab.add("RightLimitDisplay", 0)
+      .withPosition(6, 3)
+      .withSize(1, 1)
       .getEntry();
       //misc
       debugTab
@@ -210,6 +225,12 @@ public class MyShuffleBoard extends SubsystemBase {
     if(!debugVoltages.containsKey(name)) return false;
     debugVoltages.get(name).setDouble(val);
     return true;
+  }
+
+  public boolean updateLimits(boolean leftVal, boolean rightVal){
+    System.out.println(" " + (leftLimitDisplay.setBoolean(leftVal)?"1":"0") + "leftReturn\n");
+    System.out.println(" " + (rightLimitDisplay.setBoolean(rightVal)?"1":"0") + "leftReturn\n");
+    return leftLimitDisplay.setBoolean(leftVal) && rightLimitDisplay.setBoolean(rightVal);
   }
 
   public boolean updateFlyWheelInput(double num){

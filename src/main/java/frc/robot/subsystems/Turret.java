@@ -8,19 +8,23 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Turret extends SubsystemBase {
   public final VictorSPX turret = new VictorSPX(Constants.turretPort); 
+  public final DigitalInput leftLimit = new DigitalInput(Constants.leftLimitPort);
+  public final DigitalInput rightLimit = new DigitalInput(Constants.rightLimitPort);
+
 
   public Turret() {
     super();
   }
 
   public void spin(double speed){
-    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    speed = MathUtil.clamp(speed, leftLimit.get()?0:-1, rightLimit.get()?0:1); // check just in case, max and mins input
     turret.set(ControlMode.PercentOutput, speed * (Constants.turretMaxSpeed / 100)); 
   }
 
@@ -32,6 +36,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run\
     updateVoltage();
+    updateLimits();
   }
 
   @Override
@@ -42,6 +47,13 @@ public class Turret extends SubsystemBase {
 
   public double getVoltage(){
     return turret.getMotorOutputVoltage();
+  }
+
+  private void updateLimits(){
+    System.out.println("Left: " + leftLimit.get() + "\n");
+    System.out.println("Right: " + rightLimit.get() + "\n");
+    if(!RobotContainer.shuffleBoardInterface.updateLimits(leftLimit.get(), rightLimit.get()))
+      System.out.println("Error setting turret display limits\n");
   }
 
   private void updateVoltage(){
