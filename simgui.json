@@ -25,9 +25,12 @@
       "/LiveWindow/Drivetrain": "Subsystem",
       "/LiveWindow/Flywheel": "Subsystem",
       "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/LimelightClass": "Subsystem",
       "/LiveWindow/MyShuffleBoard": "Subsystem",
       "/LiveWindow/Turret": "Subsystem",
       "/LiveWindow/Ungrouped/AnalogGyro[0]": "Gyro",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Uptake": "Subsystem",
       "/LiveWindow/myShuffleBoard": "Subsystem",
@@ -35,6 +38,12 @@
     }
   },
   "NetworkTables": {
+    "CameraPublisher": {
+      "USB Camera 0": {
+        "open": true
+      },
+      "open": true
+    },
     "Shuffleboard": {
       "Constants": {
         "open": true
@@ -43,6 +52,12 @@
         "open": true
       },
       "Drive": {
+        "open": true
+      },
+      "Limelight": {
+        "LL": {
+          "open": true
+        },
         "open": true
       },
       "open": true

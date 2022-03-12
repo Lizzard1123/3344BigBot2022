@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -17,6 +19,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LimelightClass;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Uptake;
 import frc.robot.subsystems.MyShuffleBoard;
@@ -39,6 +42,7 @@ public class RobotContainer {
   public static final Turret turret = new Turret();
   public static final Uptake uptake = new Uptake();
   public static final AnalogGyro gyro = new AnalogGyro(0); // double check port #
+  public static final LimelightClass limelight = new LimelightClass();
   //public static Limelight lime = new Limelight();
   public static final Autonomous m_autoCommand = new Autonomous();
   public static final MyShuffleBoard shuffleBoardInterface = new MyShuffleBoard();

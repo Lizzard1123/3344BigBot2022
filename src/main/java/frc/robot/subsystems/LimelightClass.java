@@ -4,26 +4,36 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class LimelightClass extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private final NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable("limelight");;
+  private final NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable("limelight");
+  public HttpCamera limelightFeed;
+  public UsbCamera frontCamera;
 
   public LimelightClass() {
-    
+    limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
+    frontCamera = CameraServer.startAutomaticCapture();
+    frontCamera.setResolution(640, 480);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    RobotContainer.shuffleBoardInterface.updateAllLimelight(hasSight(), getXOffset(), getYOffset(), getArea(), getWidth(), getHeight());
   }
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+    periodic();
   }
 
   public double getLimelightVal(String name){
