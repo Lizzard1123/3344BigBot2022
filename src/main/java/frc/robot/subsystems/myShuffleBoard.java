@@ -45,7 +45,15 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry leftLimitDisplay;
   private NetworkTableEntry rightLimitDisplay;
 
-
+  //Limelight
+  private NetworkTableEntry limelightValid;
+  private NetworkTableEntry rightLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
+  private NetworkTableEntry rightLimitDisplay;
 
   //struct (ish) for overrides 
   public class TableTrio{

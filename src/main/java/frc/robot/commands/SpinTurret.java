@@ -26,7 +26,7 @@ public class SpinTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.turret.spin(RobotContainer.flightController.getAxisSlider()); //TODO figure out if this is an axis or buttons
+    turret.spin(RobotContainer.flightController.getAxisSlider()); //TODO figure out if this is an axis or buttons
   }
 
   // Called once the command ends or is interrupted.

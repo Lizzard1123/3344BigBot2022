@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -28,13 +27,13 @@ public class SpinUptake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.uptake.spin(Constants.uptakeMaxSpeed * (reverse?-1:1));
+    uptake.spin(Constants.uptakeMaxSpeed * (reverse?-1:1));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.uptake.stop();
+    uptake.stop();
   }
 
   // Returns true when the command should end.
