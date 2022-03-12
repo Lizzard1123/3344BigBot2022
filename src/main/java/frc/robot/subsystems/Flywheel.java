@@ -15,14 +15,12 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Flywheel extends SubsystemBase {
-  //TODO IMPORTANT set flywheel to brushless on the REV HARDWARE CLIENT 
   public final CANSparkMax flywheel = new CANSparkMax(Constants.flywheelPort, MotorType.kBrushless);
   public final RelativeEncoder encoder = flywheel.getEncoder();
 
 
   public Flywheel() {
     super();
-    //TODO same config process here too
     flywheel.setIdleMode(IdleMode.kCoast);
   }
 
