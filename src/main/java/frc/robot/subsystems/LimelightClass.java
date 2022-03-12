@@ -19,15 +19,21 @@ public class LimelightClass extends SubsystemBase {
   public UsbCamera frontCamera;
 
   public LimelightClass() {
-    limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
+    limelightFeed = new HttpCamera("limelight", "http://http://10.33.44.11:5800//stream.mjpg");
     frontCamera = CameraServer.startAutomaticCapture();
-    frontCamera.setResolution(640, 480);
+    frontCamera.setResolution(160, 120);
+    frontCamera.setFPS(60);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     RobotContainer.shuffleBoardInterface.updateAllLimelight(hasSight(), getXOffset(), getYOffset(), getArea(), getWidth(), getHeight());
+    if(RobotContainer.shuffleBoardInterface.getVisionStatus()){
+      enableVisionCam();
+    } else {
+      enableDriverCam();
+    }
   }
 
   @Override
@@ -66,13 +72,12 @@ public class LimelightClass extends SubsystemBase {
 
   //valid keys - https://docs.limelightvision.io/en/latest/networktables_api.html
   public void enableDriverCam(){
-    if(limelightNetworkTable.getEntry("camMode").setDouble(1.0) && limelightNetworkTable.getEntry("ledMode").setDouble(1.0))
-      System.out.println("Error enabling CamMode on limelight");
+    limelightNetworkTable.getEntry("camMode").setDouble(1.0);
+    limelightNetworkTable.getEntry("ledMode").setDouble(1.0);
   }
 
   public void enableVisionCam(){
-    if(limelightNetworkTable.getEntry("camMode").setDouble(0.0) && limelightNetworkTable.getEntry("ledMode").setDouble(3.0))
-      System.out.println("Error disable CamMode on limelight");
+    limelightNetworkTable.getEntry("camMode").setDouble(0.0);
+    limelightNetworkTable.getEntry("ledMode").setDouble(3.0);
   }
-
 }

@@ -53,6 +53,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry limelightArea;
   private NetworkTableEntry limelightWidth;
   private NetworkTableEntry limelightHeight;
+  private NetworkTableEntry limelightCamController;
 
   //struct (ish) for overrides 
   public class TableTrio{
@@ -128,17 +129,19 @@ public class MyShuffleBoard extends SubsystemBase {
       colorBlue = colorContainer.add("Blue", 0)
       .getEntry();
       //IO
-      leftLimitDisplay = debugTab.add("LeftLimitDisplay", 0)
+      
+      leftLimitDisplay = debugTab.add("LeftLimitDisplay", false)
       .withPosition(6, 2)
       .withSize(1, 1)
       .withWidget(BuiltInWidgets.kBooleanBox)
       .getEntry();
 
-      rightLimitDisplay = debugTab.add("RightLimitDisplay", 0)
+      rightLimitDisplay = debugTab.add("RightLimitDisplay", false)
       .withPosition(6, 3)
       .withSize(1, 1)
       .withWidget(BuiltInWidgets.kBooleanBox)
       .getEntry();
+      
       //misc
       debugTab
       .add("GyroDisplay", RobotContainer.gyro)
@@ -150,7 +153,40 @@ public class MyShuffleBoard extends SubsystemBase {
       //Driver tab set notes
       setNotes();
       //limelight init
-      initLimelight();
+      limelightTab.add("LL", RobotContainer.limelight.limelightFeed)
+      .withPosition(0, 0)
+      .withSize(7, 4)
+      .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
+      limelightValid = limelightTab.add("limelightValid", false)
+      .withPosition(8, 0)
+      .withSize(1, 1)
+      .withWidget(BuiltInWidgets.kBooleanBox)
+      .getEntry();
+      limelightX = limelightTab.add("limelightX", 0)
+      .withPosition(8, 1)
+      .withSize(1, 1)
+      .getEntry();
+      limelightY = limelightTab.add("limelightY", 0)
+      .withPosition(8, 2)
+      .withSize(1, 1)
+      .getEntry();
+      limelightArea = limelightTab.add("limelightArea", 0)
+      .withPosition(8, 3)
+      .withSize(1, 1)
+      .getEntry();
+      limelightWidth = limelightTab.add("limelightWidth", 0)
+      .withPosition(7, 0)
+      .withSize(1, 1)
+      .getEntry();
+      limelightHeight = limelightTab.add("limelightHeight", 0)
+      .withPosition(7, 1)
+      .withSize(1, 1)
+      .getEntry();
+      limelightCamController = limelightTab.add("limelightCamController", false)
+      .withPosition(7, 2)
+      .withSize(1, 1)
+      .withWidget(BuiltInWidgets.kToggleButton)
+      .getEntry();
   }
 
   @Override
@@ -175,39 +211,6 @@ public class MyShuffleBoard extends SubsystemBase {
     periodic();
   }
 
-  //custom functions
-  private void initLimelight(){ //limelightTab
-    limelightTab.add("LL", RobotContainer.limelight.limelightFeed)
-    .withPosition(0, 0)
-    .withSize(7, 4)
-    .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
-    limelightValid = limelightTab.add("limelightValid", 0)
-    .withPosition(8, 0)
-    .withSize(1, 1)
-    .withWidget(BuiltInWidgets.kBooleanBox)
-    .getEntry();
-    limelightX = limelightTab.add("limelightX", 0)
-    .withPosition(8, 1)
-    .withSize(1, 1)
-    .getEntry();
-    limelightY = limelightTab.add("limelightY", 0)
-    .withPosition(8, 2)
-    .withSize(1, 1)
-    .getEntry();
-    limelightArea = limelightTab.add("limelightArea", 0)
-    .withPosition(8, 3)
-    .withSize(1, 1)
-    .getEntry();
-    limelightWidth = limelightTab.add("limelightWidth", 0)
-    .withPosition(7, 0)
-    .withSize(1, 1)
-    .getEntry();
-    limelightHeight = limelightTab.add("limelightHeight", 0)
-    .withPosition(7, 1)
-    .withSize(1, 1)
-    .getEntry();
-  }
-
   public boolean updateAllLimelight(
     boolean valid,
     double xOffset,
@@ -222,6 +225,10 @@ public class MyShuffleBoard extends SubsystemBase {
             limelightArea.setDouble(area) &&
             limelightWidth.setDouble(width) &&
             limelightHeight.setDouble(height);
+  }
+
+  public boolean getVisionStatus(){
+    return limelightCamController.getBoolean(false);
   }
 
   //sets up and logs the entries into the constantOverrides 
@@ -292,7 +299,9 @@ public class MyShuffleBoard extends SubsystemBase {
   public boolean updateLimits(boolean leftVal, boolean rightVal){
     //System.out.println(" " + (leftLimitDisplay.setBoolean(leftVal)?"1":"0") + "leftReturn\n");
     //System.out.println(" " + (rightLimitDisplay.setBoolean(rightVal)?"1":"0") + "leftReturn\n");
-    return leftLimitDisplay.setBoolean(leftVal) && rightLimitDisplay.setBoolean(rightVal);
+    leftLimitDisplay.setBoolean(leftVal);
+    rightLimitDisplay.setBoolean(rightVal);
+    return true;
   }
 
   public boolean updateFlyWheelInput(double num){

@@ -23,6 +23,7 @@ public final class Constants {
     public static int flywheelPort = 4;
     public static int turretPort = 5;
     public static int uptakePort = 6;
+    public static int intakePort = 7;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
     public static int leftLimitPort = 0;
     public static int rightLimitPort = 1;

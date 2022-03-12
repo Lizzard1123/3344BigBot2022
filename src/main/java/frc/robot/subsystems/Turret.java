@@ -50,10 +50,7 @@ public class Turret extends SubsystemBase {
   }
 
   private void updateLimits(){
-    //System.out.println("Left: " + leftLimit.get() + "\n");
-    //System.out.println("Right: " + rightLimit.get() + "\n");
-    if(!RobotContainer.shuffleBoardInterface.updateLimits(leftLimit.get(), rightLimit.get()))
-      System.out.println("Error setting turret display limits\n");
+    RobotContainer.shuffleBoardInterface.updateLimits(leftLimit.get(), rightLimit.get());
   }
 
   private void updateVoltage(){
