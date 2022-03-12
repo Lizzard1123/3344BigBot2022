@@ -12,6 +12,8 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SpinFlywheel;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
+import frc.robot.commands.holdArm;
+import frc.robot.commands.moveArm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
@@ -51,7 +53,9 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, false)); // Robot orientation 
     //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
     //default commmand for spinning turret
-    turret.setDefaultCommand(new SpinTurret(turret)); //TODO does this need to be a default command? 
+    turret.setDefaultCommand(new SpinTurret(turret)); //TODO does this need to be a default command?
+    //intake 
+    intake.setDefaultCommand(new holdArm(intake));
     //calibrate gyro
     gyro.calibrate();
     // Configure the button bindings
@@ -70,10 +74,16 @@ public class RobotContainer {
     spinFlywheel.whileHeld(new SpinFlywheel());
 
     JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.Button5);
-    spinUptakeUp.whileHeld(new SpinUptake(uptake, false));
+    spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
 
     JoystickButton spinUptakeDown = new JoystickButton(flightController, FlightController.Button6);
-    spinUptakeDown.whileHeld(new SpinUptake(uptake, true));
+    spinUptakeDown.whileHeld(new SpinUptake(uptake, intake, true));
+
+    JoystickButton armUp = new JoystickButton(flightController, FlightController.ButtonR2);
+    armUp.whileHeld(new moveArm(intake, false));
+
+    JoystickButton armDown = new JoystickButton(flightController, FlightController.ButtonL2);
+    armDown.whileHeld(new moveArm(intake, true));
   }
 
   /**

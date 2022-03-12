@@ -24,6 +24,7 @@ public final class Constants {
     public static int turretPort = 5;
     public static int uptakePort = 6;
     public static int intakePort = 7;
+    public static int armPort = 8;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
     public static int leftLimitPort = 0;
     public static int rightLimitPort = 1;
@@ -46,6 +47,11 @@ public final class Constants {
     public static double flywheelMaxSpeed = 10;
     public static double turretMaxSpeed = 10;
     public static double uptakeMaxSpeed = 10;
+    public static double intakeMaxSpeed = 10;
+    public static double armMaxSpeed = 10;
+    public static double armDefaultVoltage = 4;
+
+
 
     //misc
     public static boolean flywheelAnalog = true; // speed of flywheel manual controller

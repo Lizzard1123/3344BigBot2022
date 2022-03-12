@@ -55,6 +55,15 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry limelightHeight;
   private NetworkTableEntry limelightCamController;
 
+  //PID
+  private NetworkTableEntry turretVisionPID;
+  private NetworkTableEntry flywheelVisionPID;
+
+  //intake ones
+  private NetworkTableEntry intakeVoltage;
+  private NetworkTableEntry armVoltage;
+  
+
   //struct (ish) for overrides 
   public class TableTrio{
     public final NetworkTableEntry actaulVal;
@@ -101,6 +110,9 @@ public class MyShuffleBoard extends SubsystemBase {
       setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
       setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
       setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
+      setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
+      setUpConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
+      setUpConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
       //flywheel
       ShuffleboardContainer flyWheelContainer = debugTab.getLayout("flywheelLayout", BuiltInLayouts.kList)
       .withSize(2, 4)
@@ -155,7 +167,7 @@ public class MyShuffleBoard extends SubsystemBase {
       //limelight init
       limelightTab.add("LL", RobotContainer.limelight.limelightFeed)
       .withPosition(0, 0)
-      .withSize(7, 4)
+      .withSize(5, 4)
       .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
       limelightValid = limelightTab.add("limelightValid", false)
       .withPosition(8, 0)
@@ -182,11 +194,41 @@ public class MyShuffleBoard extends SubsystemBase {
       .withPosition(7, 1)
       .withSize(1, 1)
       .getEntry();
-      limelightCamController = limelightTab.add("limelightCamController", false)
+      limelightCamController = limelightTab.add("ll_CamController", false)
       .withPosition(7, 2)
       .withSize(1, 1)
       .withWidget(BuiltInWidgets.kToggleButton)
       .getEntry();
+
+      //PID
+      /*
+      turretVisionPID = limelightTab.add("turretVisionPID", 0)
+      .withPosition(5, 0)
+      .withSize(2, 2)
+      .withWidget(BuiltInWidgets.kPIDController)
+      .getEntry();
+
+      flywheelVisionPID = limelightTab.add("flywheelVisionPID", 0)
+      .withPosition(5, 2)
+      .withSize(2, 2)
+      .withWidget(BuiltInWidgets.kPIDController)
+      .getEntry();
+*/
+      //intake and arm
+      intakeVoltage = debugTab.add("intakeVoltage", 0)
+      .withWidget(BuiltInWidgets.kVoltageView)
+      .withProperties(Map.of("min", -12, "max", 12))
+      .withPosition(0, 3)
+      .withSize(2, 1)
+      .getEntry();
+
+      armVoltage = debugTab.add("armVoltage", 0)
+      .withWidget(BuiltInWidgets.kVoltageView)
+      .withProperties(Map.of("min", -12, "max", 12))
+      .withPosition(2, 3)
+      .withSize(2, 1)
+      .getEntry();
+
   }
 
   @Override
@@ -202,6 +244,9 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.flywheelMaxSpeed = updateConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
     Constants.turretMaxSpeed = updateConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
     Constants.uptakeMaxSpeed = updateConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
+    Constants.intakeMaxSpeed = updateConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
+    Constants.armMaxSpeed = updateConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
+    Constants.armDefaultVoltage = updateConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
   }
 
@@ -332,6 +377,12 @@ public class MyShuffleBoard extends SubsystemBase {
 
   public boolean updateTotalSpeedDisplay(double num){
     return totalSpeedDisplay.setDouble(num);
+  }
+
+  //intake voltages
+  public void updateIntakeVoltages(double intake, double arm){
+    intakeVoltage.setDouble(intake);
+    armVoltage.setDouble(arm);
   }
 
   //return the shuffleboard value of constants

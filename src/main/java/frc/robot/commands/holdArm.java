@@ -6,21 +6,16 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Uptake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class SpinUptake extends CommandBase {
-  private final Uptake uptake;
+public class holdArm extends CommandBase {
   private final Intake intake;
-  private boolean reverse = false;
 
-  public SpinUptake(Uptake uptake, Intake intake, boolean reverse) {
-    super();
-    this.uptake = uptake;
+  public holdArm(Intake intake) {
     this.intake = intake;
-    this.reverse = reverse;
-    addRequirements(uptake);
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
@@ -30,15 +25,13 @@ public class SpinUptake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    uptake.spin(Constants.uptakeMaxSpeed * (reverse?-1:1));
-    intake.intakeSpin(Constants.intakeMaxSpeed * (reverse?-1:1));
+    intake.armVoltage(Constants.armDefaultVoltage);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    uptake.stop();
-    intake.intakeStop();
+    intake.armStop();
   }
 
   // Returns true when the command should end.

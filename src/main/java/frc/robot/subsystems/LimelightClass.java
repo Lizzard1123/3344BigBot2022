@@ -19,7 +19,7 @@ public class LimelightClass extends SubsystemBase {
   public UsbCamera frontCamera;
 
   public LimelightClass() {
-    limelightFeed = new HttpCamera("limelight", "http://http://10.33.44.11:5800//stream.mjpg");
+    limelightFeed = new HttpCamera("limelight", "http://10.33.44.11:5800//stream.mjpg");
     frontCamera = CameraServer.startAutomaticCapture();
     frontCamera.setResolution(160, 120);
     frontCamera.setFPS(60);
