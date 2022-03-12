@@ -38,7 +38,7 @@ public final class Constants {
     public static double rabbit = 100;
     public static double normal = 70;
     public static double driveSet = normal;
-    public static double k_deadband = .05; //deadzone for controller inputs
+    public static double k_deadband = .1; //deadzone for controller inputs
 
     //Flywheel constants
     public static double flywheelManualSpeed = 0; // default for manual control

@@ -40,6 +40,7 @@ public class RobotContainer {
   public static final Climber climber = new Climber();
   public static final Flywheel flywheel = new Flywheel();
   public static final Turret turret = new Turret();
+  public static final SpinTurret turretHandler = new SpinTurret(turret);
   public static final Uptake uptake = new Uptake();
   public static final AnalogGyro gyro = new AnalogGyro(0); // double check port #
   public static final LimelightClass limelight = new LimelightClass();
@@ -53,7 +54,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, false)); // Robot orientation 
     //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
     //default commmand for spinning turret
-    turret.setDefaultCommand(new SpinTurret(turret)); //TODO does this need to be a default command?
+    turret.setDefaultCommand(turretHandler); //TODO does this need to be a default command?
     //intake 
     intake.setDefaultCommand(new holdArm(intake));
     //calibrate gyro

@@ -55,10 +55,6 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry limelightHeight;
   private NetworkTableEntry limelightCamController;
 
-  //PID
-  private NetworkTableEntry turretVisionPID;
-  private NetworkTableEntry flywheelVisionPID;
-
   //intake ones
   private NetworkTableEntry intakeVoltage;
   private NetworkTableEntry armVoltage;
@@ -201,14 +197,12 @@ public class MyShuffleBoard extends SubsystemBase {
       .getEntry();
 
       //PID
-      /*
-      turretVisionPID = limelightTab.add("turretVisionPID", 0)
+      limelightTab.add("turretVisionPID", RobotContainer.turretHandler.pid)
       .withPosition(5, 0)
       .withSize(2, 2)
-      .withWidget(BuiltInWidgets.kPIDController)
-      .getEntry();
-
-      flywheelVisionPID = limelightTab.add("flywheelVisionPID", 0)
+      .withWidget(BuiltInWidgets.kPIDController);
+/*
+      limelightTab.add("flywheelVisionPID", 0)
       .withPosition(5, 2)
       .withSize(2, 2)
       .withWidget(BuiltInWidgets.kPIDController)
