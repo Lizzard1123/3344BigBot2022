@@ -54,5 +54,5 @@ public final class Constants {
 
 
     //misc
-    public static boolean flywheelAnalog = true; // speed of flywheel manual controller
+    public static boolean flywheelAnalog = false; // speed of flywheel manual controller
 }

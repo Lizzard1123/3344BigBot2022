@@ -42,6 +42,7 @@ public class RobotContainer {
   public static final Intake intake = new Intake();
   public static final Climber climber = new Climber();
   public static final Flywheel flywheel = new Flywheel();
+  public static final SpinFlywheel flywheelHandler = new SpinFlywheel(flywheel);
   public static final Turret turret = new Turret();
   public static final SpinTurret turretHandler = new SpinTurret(turret);
   public static final Uptake uptake = new Uptake();
@@ -75,7 +76,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
     JoystickButton spinFlywheel = new JoystickButton(flightController, FlightController.ButtonR1);
-    spinFlywheel.whileHeld(new SpinFlywheel());
+    spinFlywheel.whileHeld(flywheelHandler);
 
     JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.Button5);
     spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));

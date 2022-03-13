@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -56,6 +57,14 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry limelightWidth;
   private NetworkTableEntry limelightHeight;
   private NetworkTableEntry limelightCamController;
+  //limelight pid
+  private NetworkTableEntry turretTolerance;
+  private NetworkTableEntry turretError;
+  private NetworkTableEntry flywheelTolerance;
+  private NetworkTableEntry flywheelError;
+  private NetworkTableEntry flywheelTargetVelocity;
+
+
 
   //intake ones
   private NetworkTableEntry intakeVoltage;
@@ -89,7 +98,7 @@ public class MyShuffleBoard extends SubsystemBase {
     //limelight
     initLimelight();
     //power and commands crashes program through duplicating pdp element
-    //initPower();
+    initPower();
   }
 
   @Override
@@ -109,6 +118,10 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.armMaxSpeed = updateConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
     Constants.armDefaultVoltage = updateConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
+    //updating spinflywheel command
+    updateFlywheelCommands();
+    //updating turret command
+    updateTurretCommand();
   }
 
   @Override
@@ -131,6 +144,10 @@ public class MyShuffleBoard extends SubsystemBase {
             limelightArea.setDouble(area) &&
             limelightWidth.setDouble(width) &&
             limelightHeight.setDouble(height);
+  }
+
+  public double getTurretTolerance(){
+    return turretTolerance.getDouble(0.0);
   }
 
   public boolean getVisionStatus(){
@@ -227,6 +244,12 @@ public class MyShuffleBoard extends SubsystemBase {
     return flywheelVelocity.setDouble(num);
   }
 
+  public void updateFlywheelCommands(){
+    RobotContainer.flywheelHandler.setTolerance(flywheelTolerance.getDouble(0.0));
+    flywheelTargetVelocity.setDouble(RobotContainer.flywheelHandler.getInterpolatedVelocity());
+    flywheelError.setDouble(RobotContainer.flywheelHandler.getError());
+  }
+
   public boolean updateColorDist(double num){
     return colorDist.setDouble(num);
   }
@@ -242,6 +265,11 @@ public class MyShuffleBoard extends SubsystemBase {
 
   public boolean updateTotalSpeedDisplay(double num){
     return totalSpeedDisplay.setDouble(num);
+  }
+
+  public void updateTurretCommand(){
+    RobotContainer.turretHandler.setTolerance(turretTolerance.getDouble(0.0));
+    turretError.setDouble(RobotContainer.turretHandler.getError());
   }
 
   //intake voltages
@@ -378,7 +406,7 @@ public class MyShuffleBoard extends SubsystemBase {
     //limelight init
     limelightTab.add("LL", RobotContainer.limelight.limelightFeed)
     .withPosition(0, 0)
-    .withSize(5, 4)
+    .withSize(4, 4)
     .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
     limelightValid = limelightTab.add("limelightValid", false)
     .withPosition(8, 0)
@@ -416,19 +444,66 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(5, 0)
     .withSize(2, 2)
     .withWidget(BuiltInWidgets.kPIDController);
-    /*
-    limelightTab.add("flywheelVisionPID", 0)
-    .withPosition(5, 2)
-    .withSize(2, 2)
-    .withWidget(BuiltInWidgets.kPIDController)
+
+    turretTolerance = limelightTab.add("turretTolerance", 0)
+    .withPosition(4, 0)
+    .withSize(1, 1)
     .getEntry();
-    */
+
+    turretError = limelightTab.add("turretError", 0)
+    .withPosition(4, 1)
+    .withSize(1, 1)
+    .getEntry();
+    
+    limelightTab.add("flywheelVisionPID", RobotContainer.flywheelHandler.pid)
+    .withPosition(6, 2)
+    .withSize(1, 2)
+    .withWidget(BuiltInWidgets.kPIDController);
+
+    flywheelTolerance = limelightTab.add("flywheelTolerance", 0)
+    .withPosition(5, 2)
+    .withSize(1, 1)
+    .getEntry();
+
+    flywheelError = limelightTab.add("flywheelError", 0)
+    .withPosition(5, 3)
+    .withSize(1, 1)
+    .getEntry();
+    
+    flywheelTargetVelocity = limelightTab.add("flywheelTargetVelocity", 0)
+    .withPosition(4, 2)
+    .withSize(1, 1)
+    .getEntry();
+    
   }
 
   private void initPower(){
+    /*
     powerTab.add("Power distribute", RobotContainer.pdp)
     .withWidget(BuiltInWidgets.kPowerDistribution)
     .withPosition(0, 0)
     .withSize(3, 4);
+    */
+    powerTab.add("Climber", RobotContainer.climber)
+    .withPosition(4, 0)
+    .withSize(2, 1);
+    powerTab.add("Drivetrain", RobotContainer.drivetrain)
+    .withPosition(4, 1)
+    .withSize(2, 1);
+    powerTab.add("Flywheel", RobotContainer.flywheel)
+    .withPosition(4, 2)
+    .withSize(2, 1);
+    powerTab.add("Intake", RobotContainer.intake)
+    .withPosition(4, 3)
+    .withSize(2, 1);
+    powerTab.add("LimelightClass", RobotContainer.limelight)
+    .withPosition(6, 0)
+    .withSize(2, 1);
+    powerTab.add("Turret", RobotContainer.turret)
+    .withPosition(6, 1)
+    .withSize(2, 1);
+    powerTab.add("Uptake", RobotContainer.uptake)
+    .withPosition(6, 2)
+    .withSize(2, 1);
   }
 }

@@ -6,17 +6,20 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Flywheel;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class SpinFlywheel extends CommandBase {
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public SpinFlywheel() {
+  private Flywheel flywheel;
+  public PIDController pid;
+
+  public SpinFlywheel(Flywheel flywheel) {
     super();
+    this.flywheel = flywheel;
+    pid = new PIDController(0,0,0);
+    addRequirements(flywheel);
   }
 
   // Called when the command is initially scheduled.
@@ -26,12 +29,13 @@ public class SpinFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.flywheelAnalog){
-      RobotContainer.flywheel.manualControl(RobotContainer.flightController.getThrottle());
-    } else {
-      //going to be the place where pid controlls it
-      //RobotContainer.flywheel.automatedControl(Constants.flywheelMaxSpeed);
-      //RobotContainer.flywheel.manualControl(Constants.flywheelMaxSpeed);
+    if(Constants.flywheelAnalog){ //manual
+      flywheel.spin(RobotContainer.flightController.getThrottle());
+    } else { //pid
+      flywheel.spin(pid.calculate(flywheel.getVelocity(), interpolateVelocity(RobotContainer.limelight.getWidth())));
+      if(withinTolerance()){
+        pid.reset();
+      }
     }
   }
 
@@ -43,5 +47,25 @@ public class SpinFlywheel extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  private double interpolateVelocity(double width){
+    return Math.pow(width, 2);
+  }
+
+  public double getInterpolatedVelocity(){
+    return interpolateVelocity(RobotContainer.limelight.getWidth());
+  }
+
+  public double getError(){
+    return pid.getPositionError();
+  }
+
+  public boolean withinTolerance(){
+    return pid.atSetpoint();
+  }
+
+  public void setTolerance(double tol){
+    pid.setTolerance(tol);
   }
 }

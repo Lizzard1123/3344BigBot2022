@@ -30,18 +30,26 @@ public class SpinTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = pid.calculate(RobotContainer.limelight.getXOffset(), 0);
-    if(Math.abs(speed) > (20 * (Constants.turretMaxSpeed/100))){
-      turret.spin(speed);
-    } else {
-      turret.stop();
-    }
-    /*
     if(Constants.flywheelAnalog){ // manual controlls
       turret.spin(RobotContainer.flightController.getAxisSlider());
     } else { //PIDS
       turret.spin(pid.calculate(RobotContainer.limelight.getXOffset(), 0));
-    }*/
+      if(withinTolerance()){ //check if at target to reset Ki values
+        pid.reset();
+      }
+    }
+  }
+
+  public void setTolerance(double tol){
+    pid.setTolerance(tol);
+  }
+
+  public double getError(){
+    return pid.getPositionError();
+  }
+
+  public boolean withinTolerance(){
+    return pid.atSetpoint();
   }
 
   // Called once the command ends or is interrupted.

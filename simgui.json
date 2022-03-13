@@ -36,7 +36,12 @@
       "/LiveWindow/Uptake": "Subsystem",
       "/LiveWindow/myShuffleBoard": "Subsystem",
       "/Shuffleboard/Debug/GyroDisplay": "Gyro",
-      "/Shuffleboard/Limelight/turretVisionPID": "PIDController"
+      "/Shuffleboard/Limelight/turretVisionPID": "PIDController",
+      "/Shuffleboard/powerTab/Climber": "Subsystem",
+      "/Shuffleboard/powerTab/Drivetrain": "Subsystem",
+      "/Shuffleboard/powerTab/Flywheel": "Subsystem",
+      "/Shuffleboard/powerTab/Intake": "Subsystem",
+      "/Shuffleboard/powerTab/LimelightClass": "Subsystem"
     }
   },
   "NetworkTables": {
