@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -23,6 +24,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private static ShuffleboardTab constTab  = Shuffleboard.getTab("Constants");
   private static ShuffleboardTab debugTab  = Shuffleboard.getTab("Debug");
   private static ShuffleboardTab limelightTab  = Shuffleboard.getTab("Limelight");
+  private static ShuffleboardTab powerTab  = Shuffleboard.getTab("powerTab");
 
   //misc
   private NetworkTableEntry maxSpeed;
@@ -79,150 +81,15 @@ public class MyShuffleBoard extends SubsystemBase {
 
   public MyShuffleBoard() {
     //Driver Tab presets
-      maxSpeed = driveTab
-        .add("Max Speed", Constants.maxSpeed)
-        .withPosition(0, 0)
-        .withWidget(BuiltInWidgets.kNumberSlider)
-        .withProperties(Map.of("min", 0, "max", 100))
-        .getEntry();
-
-      turnSpeed = driveTab
-        .add("Turn Speed", Constants.turnSpeed)
-        .withPosition(0, 1)
-        .withWidget(BuiltInWidgets.kNumberSlider)
-        .withProperties(Map.of("min", 0, "max", 100))
-        .getEntry(); 
-
-      //driver camera
-      driveTab.add(RobotContainer.limelight.frontCamera)
-      .withPosition(2, 0)
-      .withSize(5, 4);
-
-      //Constants tab presets -> on the shuffleboard
-      //numbers
-      setUpConstantOverrides("turtle", Constants.turtle);
-      setUpConstantOverrides("rabbit", Constants.rabbit);
-      setUpConstantOverrides("normal", Constants.normal);
-      setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
-      setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
-      setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
-      setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
-      setUpConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
-      setUpConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
-      //flywheel
-      ShuffleboardContainer flyWheelContainer = debugTab.getLayout("flywheelLayout", BuiltInLayouts.kList)
-      .withSize(2, 4)
-      .withPosition(7,0);
-      flywheelManualSpeed = flyWheelContainer.add("flywheelManualSpeed", Constants.flywheelManualSpeed)
-      .getEntry();
-      flywheelAnalog = flyWheelContainer.add("flywheelAnalog", Constants.flywheelAnalog)
-      .withWidget(BuiltInWidgets.kToggleButton)
-      .getEntry();
-      flywheelTemp = flyWheelContainer.add("flywheelTemp", 0)
-      .getEntry();
-      flywheelVelocity = flyWheelContainer.add("flywheelVelocity", 0)
-      .getEntry();
-      flywheelCurrent = flyWheelContainer.add("flywheelCurrent", 0)
-      .getEntry();
-      //Color Sensor
-      ShuffleboardContainer colorContainer = debugTab.getLayout("Color Sensor", BuiltInLayouts.kList)
-      .withSize(1, 2)
-      .withPosition(6,0);
-      colorDist = colorContainer.add("Dist", 0)
-      .getEntry();
-      colorRed = colorContainer.add("Red", 0)
-      .getEntry();
-      colorGreen = colorContainer.add("Green", 0)
-      .getEntry();
-      colorBlue = colorContainer.add("Blue", 0)
-      .getEntry();
-      //IO
-      
-      leftLimitDisplay = debugTab.add("LeftLimitDisplay", false)
-      .withPosition(6, 2)
-      .withSize(1, 1)
-      .withWidget(BuiltInWidgets.kBooleanBox)
-      .getEntry();
-
-      rightLimitDisplay = debugTab.add("RightLimitDisplay", false)
-      .withPosition(6, 3)
-      .withSize(1, 1)
-      .withWidget(BuiltInWidgets.kBooleanBox)
-      .getEntry();
-      
-      //misc
-      debugTab
-      .add("GyroDisplay", RobotContainer.gyro)
-      .withPosition(4, 2)
-      .withWidget(BuiltInWidgets.kGyro);
-
-      //Debug tab presets
-      initAllVoltages();
-      //Driver tab set notes
-      setNotes();
-      //limelight init
-      limelightTab.add("LL", RobotContainer.limelight.limelightFeed)
-      .withPosition(0, 0)
-      .withSize(5, 4)
-      .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
-      limelightValid = limelightTab.add("limelightValid", false)
-      .withPosition(8, 0)
-      .withSize(1, 1)
-      .withWidget(BuiltInWidgets.kBooleanBox)
-      .getEntry();
-      limelightX = limelightTab.add("limelightX", 0)
-      .withPosition(8, 1)
-      .withSize(1, 1)
-      .getEntry();
-      limelightY = limelightTab.add("limelightY", 0)
-      .withPosition(8, 2)
-      .withSize(1, 1)
-      .getEntry();
-      limelightArea = limelightTab.add("limelightArea", 0)
-      .withPosition(8, 3)
-      .withSize(1, 1)
-      .getEntry();
-      limelightWidth = limelightTab.add("limelightWidth", 0)
-      .withPosition(7, 0)
-      .withSize(1, 1)
-      .getEntry();
-      limelightHeight = limelightTab.add("limelightHeight", 0)
-      .withPosition(7, 1)
-      .withSize(1, 1)
-      .getEntry();
-      limelightCamController = limelightTab.add("ll_CamController", false)
-      .withPosition(7, 2)
-      .withSize(1, 1)
-      .withWidget(BuiltInWidgets.kToggleButton)
-      .getEntry();
-
-      //PID
-      limelightTab.add("turretVisionPID", RobotContainer.turretHandler.pid)
-      .withPosition(5, 0)
-      .withSize(2, 2)
-      .withWidget(BuiltInWidgets.kPIDController);
-/*
-      limelightTab.add("flywheelVisionPID", 0)
-      .withPosition(5, 2)
-      .withSize(2, 2)
-      .withWidget(BuiltInWidgets.kPIDController)
-      .getEntry();
-*/
-      //intake and arm
-      intakeVoltage = debugTab.add("intakeVoltage", 0)
-      .withWidget(BuiltInWidgets.kVoltageView)
-      .withProperties(Map.of("min", -12, "max", 12))
-      .withPosition(0, 3)
-      .withSize(2, 1)
-      .getEntry();
-
-      armVoltage = debugTab.add("armVoltage", 0)
-      .withWidget(BuiltInWidgets.kVoltageView)
-      .withProperties(Map.of("min", -12, "max", 12))
-      .withPosition(2, 3)
-      .withSize(2, 1)
-      .getEntry();
-
+    initDriverTab();
+    //constants
+    initConstantsTab();
+    //debug tab (full)
+    initDebugTab();
+    //limelight
+    initLimelight();
+    //power and commands crashes program through duplicating pdp element
+    //initPower();
   }
 
   @Override
@@ -273,13 +140,17 @@ public class MyShuffleBoard extends SubsystemBase {
   //sets up and logs the entries into the constantOverrides 
   public void setUpConstantOverrides(String name, double defaultSetVal){
     ShuffleboardContainer container = constTab.getLayout(name, BuiltInLayouts.kList)
-    .withSize(1, 2)
+    .withSize(1, 3)
     .withPosition(constantOverrides.size(), 0);
-    NetworkTableEntry actualVal = container.add(name + "_actual", defaultSetVal)
+    NetworkTableEntry actualVal = container.add("A_" + name, defaultSetVal)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", 0, "max", 100, "Block increment", 1))
     .getEntry(); 
-    NetworkTableEntry defaultVal = container.add(name + "_default", defaultSetVal)
+    NetworkTableEntry defaultVal = container.add("D_" + name, defaultSetVal)
+    .withWidget(BuiltInWidgets.kNumberBar)
+    .withProperties(Map.of("min", defaultSetVal, "max", defaultSetVal))
     .getEntry(); 
-    NetworkTableEntry compare = container.add(name + "_same", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+    NetworkTableEntry compare = container.add("S_" + name, true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
     TableTrio contents =  new TableTrio(actualVal, defaultVal, compare);
     constantOverrides.put(name, contents);
   }
@@ -382,7 +253,7 @@ public class MyShuffleBoard extends SubsystemBase {
   //return the shuffleboard value of constants
   public double updateConstantOverrides(String name, double defaultValue){
     if(!constantOverrides.containsKey(name)) return defaultValue;
-    return constantOverrides.get(name).actaulVal.getDouble(defaultValue);
+    return MathUtil.clamp(constantOverrides.get(name).actaulVal.getDouble(defaultValue), 0, 100);
   }
 
   public void setNotes(){
@@ -398,15 +269,166 @@ public class MyShuffleBoard extends SubsystemBase {
 
   }
 
-  //show the shuffleboard the meccanum speeds
-  /*
-  //cannot display mecanum obj onto screen bc Victorspx doesnt classify as a motorcontroller default
-  public void updateMeccanum(WheelSpeeds speeds){
-    MecanumDrive base = new MecanumDrive(speeds);
-    driveTab.add("Meccanum Visualization", speeds)
-            .withWidget(BuiltInWidgets.kMecanumDrive);
-  
-  }
-*/
+  private void initDriverTab(){
+    maxSpeed = driveTab
+    .add("Max Speed", Constants.maxSpeed)
+    .withPosition(0, 0)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", 0, "max", 100, "Block increment", 1))
+    .getEntry();
 
+    turnSpeed = driveTab
+    .add("Turn Speed", Constants.turnSpeed)
+    .withPosition(0, 1)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", 0, "max", 100,  "Block increment", 1))
+    .getEntry(); 
+
+    //driver camera
+    driveTab.add(RobotContainer.limelight.frontCamera)
+    .withPosition(2, 0)
+    .withSize(5, 4);
+
+    //Driver tab set notes
+    setNotes();
+  }
+
+  private void initConstantsTab(){
+    //Constants tab presets -> on the shuffleboard
+    //numbers
+    setUpConstantOverrides("turtle", Constants.turtle);
+    setUpConstantOverrides("rabbit", Constants.rabbit);
+    setUpConstantOverrides("normal", Constants.normal);
+    setUpConstantOverrides("flywheelMaxSpeed", Constants.flywheelMaxSpeed);
+    setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
+    setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
+    setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
+    setUpConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
+    setUpConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
+  }
+
+  private void initDebugTab(){
+    //flywheel
+    ShuffleboardContainer flyWheelContainer = debugTab.getLayout("flywheelLayout", BuiltInLayouts.kList)
+    .withSize(2, 4)
+    .withPosition(7,0);
+    flywheelManualSpeed = flyWheelContainer.add("flywheelManualSpeed", Constants.flywheelManualSpeed)
+    .getEntry();
+    flywheelAnalog = flyWheelContainer.add("flywheelAnalog", Constants.flywheelAnalog)
+    .withWidget(BuiltInWidgets.kToggleButton)
+    .getEntry();
+    flywheelTemp = flyWheelContainer.add("flywheelTemp", 0)
+    .getEntry();
+    flywheelVelocity = flyWheelContainer.add("flywheelVelocity", 0)
+    .getEntry();
+    flywheelCurrent = flyWheelContainer.add("flywheelCurrent", 0)
+    .getEntry();
+    //Color Sensor
+    ShuffleboardContainer colorContainer = debugTab.getLayout("Color Sensor", BuiltInLayouts.kList)
+    .withSize(1, 2)
+    .withPosition(6,0);
+    colorDist = colorContainer.add("Dist", 0)
+    .getEntry();
+    colorRed = colorContainer.add("Red", 0)
+    .getEntry();
+    colorGreen = colorContainer.add("Green", 0)
+    .getEntry();
+    colorBlue = colorContainer.add("Blue", 0)
+    .getEntry();
+    //IO
+    
+    leftLimitDisplay = debugTab.add("LeftLimitDisplay", false)
+    .withPosition(6, 2)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .getEntry();
+
+    rightLimitDisplay = debugTab.add("RightLimitDisplay", false)
+    .withPosition(6, 3)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .getEntry();
+    
+    //intake and arm
+    intakeVoltage = debugTab.add("intakeVoltage", 0)
+    .withWidget(BuiltInWidgets.kVoltageView)
+    .withProperties(Map.of("min", -12, "max", 12))
+    .withPosition(0, 3)
+    .withSize(2, 1)
+    .getEntry();
+
+    armVoltage = debugTab.add("armVoltage", 0)
+    .withWidget(BuiltInWidgets.kVoltageView)
+    .withProperties(Map.of("min", -12, "max", 12))
+    .withPosition(2, 3)
+    .withSize(2, 1)
+    .getEntry();
+
+    //misc
+    debugTab
+    .add("GyroDisplay", RobotContainer.gyro)
+    .withPosition(4, 2)
+    .withWidget(BuiltInWidgets.kGyro);
+
+    //Debug tab presets
+    initAllVoltages();
+  }
+
+  private void initLimelight(){
+    //limelight init
+    limelightTab.add("LL", RobotContainer.limelight.limelightFeed)
+    .withPosition(0, 0)
+    .withSize(5, 4)
+    .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
+    limelightValid = limelightTab.add("limelightValid", false)
+    .withPosition(8, 0)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .getEntry();
+    limelightX = limelightTab.add("limelightX", 0)
+    .withPosition(8, 1)
+    .withSize(1, 1)
+    .getEntry();
+    limelightY = limelightTab.add("limelightY", 0)
+    .withPosition(8, 2)
+    .withSize(1, 1)
+    .getEntry();
+    limelightArea = limelightTab.add("limelightArea", 0)
+    .withPosition(8, 3)
+    .withSize(1, 1)
+    .getEntry();
+    limelightWidth = limelightTab.add("limelightWidth", 0)
+    .withPosition(7, 0)
+    .withSize(1, 1)
+    .getEntry();
+    limelightHeight = limelightTab.add("limelightHeight", 0)
+    .withPosition(7, 1)
+    .withSize(1, 1)
+    .getEntry();
+    limelightCamController = limelightTab.add("ll_CamController", false)
+    .withPosition(7, 2)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kToggleButton)
+    .getEntry();
+
+    //PID
+    limelightTab.add("turretVisionPID", RobotContainer.turretHandler.pid)
+    .withPosition(5, 0)
+    .withSize(2, 2)
+    .withWidget(BuiltInWidgets.kPIDController);
+    /*
+    limelightTab.add("flywheelVisionPID", 0)
+    .withPosition(5, 2)
+    .withSize(2, 2)
+    .withWidget(BuiltInWidgets.kPIDController)
+    .getEntry();
+    */
+  }
+
+  private void initPower(){
+    powerTab.add("Power distribute", RobotContainer.pdp)
+    .withWidget(BuiltInWidgets.kPowerDistribution)
+    .withPosition(0, 0)
+    .withSize(3, 4);
+  }
 }

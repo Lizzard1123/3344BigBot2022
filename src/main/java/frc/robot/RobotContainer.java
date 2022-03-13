@@ -6,7 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SpinFlywheel;
@@ -34,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  public static final PowerDistribution pdp = new PowerDistribution(60, ModuleType.kRev);
   public static final FlightController flightController = new FlightController(Constants.flightControllerPort);
   public static final Drivetrain drivetrain = new Drivetrain();
   public static final Intake intake = new Intake();
