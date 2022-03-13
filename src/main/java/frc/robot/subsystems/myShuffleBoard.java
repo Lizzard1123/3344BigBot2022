@@ -63,6 +63,8 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry flywheelTolerance;
   private NetworkTableEntry flywheelError;
   private NetworkTableEntry flywheelTargetVelocity;
+  private NetworkTableEntry flywheelTargetPVal;
+  private NetworkTableEntry readyToShoot;
 
 
 
@@ -122,6 +124,8 @@ public class MyShuffleBoard extends SubsystemBase {
     updateFlywheelCommands();
     //updating turret command
     updateTurretCommand();
+    //ready to shoot
+    readyToShoot.setBoolean(RobotContainer.turretHandler.withinTolerance() && RobotContainer.flywheelHandler.withinTolerance());
   }
 
   @Override
@@ -246,6 +250,7 @@ public class MyShuffleBoard extends SubsystemBase {
 
   public void updateFlywheelCommands(){
     RobotContainer.flywheelHandler.setTolerance(flywheelTolerance.getDouble(0.0));
+    RobotContainer.flywheelHandler.setInterpolatorVal(flywheelTargetPVal.getDouble(0.0));
     flywheelTargetVelocity.setDouble(RobotContainer.flywheelHandler.getInterpolatedVelocity());
     flywheelError.setDouble(RobotContainer.flywheelHandler.getError());
   }
@@ -475,6 +480,15 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(1, 1)
     .getEntry();
     
+    flywheelTargetPVal = limelightTab.add("flywheelTargetPVal", 0)
+    .withPosition(4, 3)
+    .withSize(1, 1)
+    .getEntry();
+
+    readyToShoot = limelightTab.add("readyToShoot", false)
+    .withPosition(7, 3)
+    .withSize(1, 1)
+    .getEntry();
   }
 
   private void initPower(){

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class SpinFlywheel extends CommandBase {
   private Flywheel flywheel;
   public PIDController pid;
+  private double setInterpolatorPVal = 0.0;
 
   public SpinFlywheel(Flywheel flywheel) {
     super();
@@ -50,7 +51,7 @@ public class SpinFlywheel extends CommandBase {
   }
 
   private double interpolateVelocity(double width){
-    return Math.pow(width, 2);
+    return Math.pow(width, 2) * setInterpolatorPVal;
   }
 
   public double getInterpolatedVelocity(){
@@ -67,5 +68,9 @@ public class SpinFlywheel extends CommandBase {
 
   public void setTolerance(double tol){
     pid.setTolerance(tol);
+  }
+
+  public void setInterpolatorVal(double val){
+    setInterpolatorPVal = val;
   }
 }
