@@ -51,7 +51,7 @@ public class SpinFlywheel extends CommandBase {
   }
 
   private double interpolateVelocity(double width){
-    return Math.pow(width, 2) * setInterpolatorPVal;
+    return Math.pow(320/width, 2) * setInterpolatorPVal;
   }
 
   public double getInterpolatedVelocity(){
