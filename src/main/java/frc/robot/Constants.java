@@ -59,4 +59,8 @@ public final class Constants {
     public static double autonTurnTime = 5;
     //misc
     public static boolean flywheelAnalog = false; // speed of flywheel manual controller
+    public static boolean isBlue = true; //holds team color false means red
+    public static double minDist = 1000;
+    public static double minRed = 1000;
+    public static double minBlue = 1000;
 }

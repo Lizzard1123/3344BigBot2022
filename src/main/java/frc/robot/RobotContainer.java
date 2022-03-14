@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.Index;
 import frc.robot.commands.SpinFlywheel;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
@@ -63,6 +64,8 @@ public class RobotContainer {
     intake.setDefaultCommand(new holdArm(intake));
     //flyhweel
     flywheel.setDefaultCommand(flywheelHandler);
+    //uptake indexer
+    uptake.setDefaultCommand(new Index(uptake));
     //calibrate gyro
     gyro.calibrate();
     // Configure the button bindings

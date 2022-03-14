@@ -32,6 +32,8 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry turnSpeed;
   private NetworkTableEntry totalSpeedDisplay;
   private NetworkTableEntry scanWidth;
+  private NetworkTableEntry colorPicker;
+  private NetworkTableEntry colorDisplay;
 
   //flywheel
   private NetworkTableEntry flywheelManualSpeed;
@@ -45,6 +47,10 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry colorRed;
   private NetworkTableEntry colorGreen;
   private NetworkTableEntry colorBlue;
+  private NetworkTableEntry colorMinRed;
+  private NetworkTableEntry colorMinBlue;
+  private NetworkTableEntry colorMinDist;
+
 
   //IO
   private NetworkTableEntry leftLimitDisplay;
@@ -129,6 +135,9 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.armDefaultVoltage = updateConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
     Constants.scanWidth = scanWidth.getDouble(Constants.scanWidth);
+    Constants.minRed = colorMinRed.getDouble(Constants.minRed);
+    Constants.minBlue = colorMinBlue.getDouble(Constants.minBlue);
+    Constants.minDist = colorMinDist.getDouble(Constants.minDist);
     //updating spinflywheel command
     updateFlywheelCommands();
     //updating turret command
@@ -140,6 +149,8 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.autonForwardTime = MathUtil.clamp(autonForwardTime.getDouble(Constants.autonForwardTime), 0, 15);
     Constants.autonTurnSpeed = MathUtil.clamp(autonTurnSpeed.getDouble(Constants.autonTurnSpeed), -Constants.maxSpeed, Constants.maxSpeed);
     Constants.autonTurnTime = MathUtil.clamp(autonTurnTime.getDouble(Constants.autonTurnTime), 0, 15);
+    //color picker
+    handleColor();
   }
 
   @Override
@@ -303,6 +314,12 @@ public class MyShuffleBoard extends SubsystemBase {
     return MathUtil.clamp(constantOverrides.get(name).actaulVal.getDouble(defaultValue), 0, 100);
   }
 
+  //handler for color choosing
+  public void handleColor(){
+    Constants.isBlue = colorPicker.getBoolean(false);
+    colorDisplay.setBoolean(Constants.isBlue);
+  }
+
   public void setNotes(){
     ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
     .withSize(2, 4)
@@ -338,6 +355,20 @@ public class MyShuffleBoard extends SubsystemBase {
 
     //Driver tab set notes
     setNotes();
+
+    //color picker
+    colorPicker = driveTab.add("Color", true)
+    .withPosition(0, 3)
+    .withPosition(1, 1)
+    .withWidget(BuiltInWidgets.kToggleButton)
+    .getEntry();
+
+    colorDisplay = driveTab.add("CurrentColor", true)
+    .withPosition(0, 3)
+    .withPosition(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
+    .getEntry();
   }
 
   private void initConstantsTab(){
@@ -358,6 +389,21 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(1, 1)
     .withWidget(BuiltInWidgets.kNumberSlider)
     .withProperties(Map.of("min", 0, "max", 320, "Block increment", 1))
+    .getEntry();
+
+    colorMinRed = constTab.add("colorMinRed", Constants.minRed)
+    .withPosition(6, 3)
+    .withSize(1, 1)
+    .getEntry();
+    
+    colorMinBlue = constTab.add("colorMinBlue", Constants.minBlue)
+    .withPosition(7, 3)
+    .withSize(1, 1)
+    .getEntry();
+
+    colorMinDist = constTab.add("colorMinDist", Constants.minDist)
+    .withPosition(8, 3)
+    .withSize(1, 1)
     .getEntry();
   }
 

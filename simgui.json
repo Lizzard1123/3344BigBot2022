@@ -32,16 +32,20 @@
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Uptake": "Subsystem",
       "/LiveWindow/myShuffleBoard": "Subsystem",
       "/Shuffleboard/Debug/GyroDisplay": "Gyro",
+      "/Shuffleboard/Limelight/flywheelVisionPID": "PIDController",
       "/Shuffleboard/Limelight/turretVisionPID": "PIDController",
       "/Shuffleboard/powerTab/Climber": "Subsystem",
       "/Shuffleboard/powerTab/Drivetrain": "Subsystem",
       "/Shuffleboard/powerTab/Flywheel": "Subsystem",
       "/Shuffleboard/powerTab/Intake": "Subsystem",
-      "/Shuffleboard/powerTab/LimelightClass": "Subsystem"
+      "/Shuffleboard/powerTab/LimelightClass": "Subsystem",
+      "/Shuffleboard/powerTab/Turret": "Subsystem",
+      "/Shuffleboard/powerTab/Uptake": "Subsystem"
     }
   },
   "NetworkTables": {
