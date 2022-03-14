@@ -418,7 +418,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .getEntry();
 
     shootTime = constTab.add("shootTime", Constants.shootTime)
-    .withPosition(5, 3)
+    .withPosition(4, 3)
     .withSize(1, 1)
     .getEntry();
   }

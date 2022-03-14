@@ -35,9 +35,9 @@ public class Index extends CommandBase {
       //sort color
       if(Constants.isBlue && uptake.getBlue() >= Constants.minBlue || //is blue ball on blue team
         !Constants.isBlue && uptake.getRed() >= Constants.minRed){ //is red ball on red team
-        new Shoot(uptake, RobotContainer.flywheel, RobotContainer.turret, true);
+        new Shoot(uptake, true);
       } else { //wrong color
-        new Shoot(uptake, RobotContainer.flywheel, RobotContainer.turret, false);
+        new Shoot(uptake, false);
       }
   }
 
