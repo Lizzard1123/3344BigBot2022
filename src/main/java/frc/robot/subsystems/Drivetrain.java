@@ -63,11 +63,6 @@ public class Drivetrain extends SubsystemBase {
     //speeds is an object with the raw motor %s for each motor
     WheelSpeeds speeds = MecanumDrive.driveCartesianIK(y, x, z * (Constants.turnSpeed / 100), orientation);
     
-    //if(Constants.displayMeccanums) RobotContainer.shuffleBoardInterface.updateMeccanum(speeds);
-
-    if(!RobotBase.isReal())
-      return; // dont set values in sim
-    
     frontRightDrive.set(ControlMode.PercentOutput, speeds.frontRight * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
     frontLeftDrive.set(ControlMode.PercentOutput, speeds.frontLeft * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
     backLeftDrive.set(ControlMode.PercentOutput, speeds.rearLeft * (Constants.driveSet / 100) * (Constants.maxSpeed / 100));
@@ -99,6 +94,25 @@ public class Drivetrain extends SubsystemBase {
     if(!sucess){
       System.out.print("Failed to output voltages for debug\n");
     }
+  }
+
+  public void spinLeft(double speed){
+    speed = MathUtil.clamp(speed, -1.0, 1.0);
+    frontLeftDrive.set(ControlMode.PercentOutput, speed);
+    backLeftDrive.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void spinRight(double speed){
+    speed = MathUtil.clamp(speed, -1.0, 1.0);
+    frontRightDrive.set(ControlMode.PercentOutput, speed);
+    backRightDrive.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void stopAll(){
+    frontRightDrive.set(ControlMode.PercentOutput, 0);
+    frontLeftDrive.set(ControlMode.PercentOutput, 0);
+    backLeftDrive.set(ControlMode.PercentOutput, 0);
+    backRightDrive.set(ControlMode.PercentOutput, 0);
   }
 
 }

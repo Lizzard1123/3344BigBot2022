@@ -136,7 +136,10 @@ public class MyShuffleBoard extends SubsystemBase {
     //ready to shoot
     readyToShoot.setBoolean(RobotContainer.turretHandler.withinTolerance() && RobotContainer.flywheelHandler.withinTolerance());
     //auton updates
-
+    Constants.autonForwardSpeed = MathUtil.clamp(autonForwardSpeed.getDouble(Constants.autonForwardSpeed), -Constants.maxSpeed, Constants.maxSpeed);
+    Constants.autonForwardTime = MathUtil.clamp(autonForwardTime.getDouble(Constants.autonForwardTime), 0, 15);
+    Constants.autonTurnSpeed = MathUtil.clamp(autonTurnSpeed.getDouble(Constants.autonTurnSpeed), -Constants.maxSpeed, Constants.maxSpeed);
+    Constants.autonTurnTime = MathUtil.clamp(autonTurnTime.getDouble(Constants.autonTurnTime), 0, 15);
   }
 
   @Override

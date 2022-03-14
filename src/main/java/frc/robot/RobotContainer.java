@@ -61,6 +61,8 @@ public class RobotContainer {
     turret.setDefaultCommand(turretHandler);
     //intake 
     intake.setDefaultCommand(new holdArm(intake));
+    //flyhweel
+    flywheel.setDefaultCommand(flywheelHandler);
     //calibrate gyro
     gyro.calibrate();
     // Configure the button bindings
@@ -75,8 +77,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
-    JoystickButton spinFlywheel = new JoystickButton(flightController, FlightController.ButtonR1);
-    spinFlywheel.whileHeld(flywheelHandler);
 
     JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.Button5);
     spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
