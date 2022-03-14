@@ -39,6 +39,7 @@ public final class Constants {
     public static double normal = 70;
     public static double driveSet = normal;
     public static double k_deadband = .1; //deadzone for controller inputs
+    public static double scanWidth = 15;
 
     //Flywheel constants
     public static double flywheelManualSpeed = 0; // default for manual control
@@ -51,8 +52,11 @@ public final class Constants {
     public static double armMaxSpeed = 0;
     public static double armDefaultVoltage = 0;
 
-
-
+    //auton
+    public static double autonForwardSpeed = 30;
+    public static double autonForwardTime = 3;
+    public static double autonTurnSpeed = 25;
+    public static double autonTurnTime = 5;
     //misc
     public static boolean flywheelAnalog = false; // speed of flywheel manual controller
 }

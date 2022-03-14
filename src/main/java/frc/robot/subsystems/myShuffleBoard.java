@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -26,11 +25,13 @@ public class MyShuffleBoard extends SubsystemBase {
   private static ShuffleboardTab debugTab  = Shuffleboard.getTab("Debug");
   private static ShuffleboardTab limelightTab  = Shuffleboard.getTab("Limelight");
   private static ShuffleboardTab powerTab  = Shuffleboard.getTab("powerTab");
+  private static ShuffleboardTab autonTab  = Shuffleboard.getTab("auton");
 
   //misc
   private NetworkTableEntry maxSpeed;
   private NetworkTableEntry turnSpeed;
   private NetworkTableEntry totalSpeedDisplay;
+  private NetworkTableEntry scanWidth;
 
   //flywheel
   private NetworkTableEntry flywheelManualSpeed;
@@ -66,6 +67,11 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry flywheelTargetPVal;
   private NetworkTableEntry readyToShoot;
 
+  //auton vars
+  private NetworkTableEntry autonForwardSpeed;
+  private NetworkTableEntry autonForwardTime;
+  private NetworkTableEntry autonTurnSpeed;
+  private NetworkTableEntry autonTurnTime;
 
 
   //intake ones
@@ -101,6 +107,8 @@ public class MyShuffleBoard extends SubsystemBase {
     initLimelight();
     //power and commands crashes program through duplicating pdp element
     initPower();
+    //auton
+    initAuton();
   }
 
   @Override
@@ -120,12 +128,15 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.armMaxSpeed = updateConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
     Constants.armDefaultVoltage = updateConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
+    Constants.scanWidth = scanWidth.getDouble(Constants.scanWidth);
     //updating spinflywheel command
     updateFlywheelCommands();
     //updating turret command
     updateTurretCommand();
     //ready to shoot
     readyToShoot.setBoolean(RobotContainer.turretHandler.withinTolerance() && RobotContainer.flywheelHandler.withinTolerance());
+    //auton updates
+
   }
 
   @Override
@@ -338,6 +349,13 @@ public class MyShuffleBoard extends SubsystemBase {
     setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
     setUpConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
     setUpConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
+    //misc
+    scanWidth = constTab.add("scanWidth", Constants.scanWidth)
+    .withPosition(0, 3)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kNumberSlider)
+    .withProperties(Map.of("min", 0, "max", 320, "Block increment", 1))
+    .getEntry();
   }
 
   private void initDebugTab(){
@@ -519,5 +537,27 @@ public class MyShuffleBoard extends SubsystemBase {
     powerTab.add("Uptake", RobotContainer.uptake)
     .withPosition(6, 2)
     .withSize(2, 1);
+  }
+
+  private void initAuton(){
+    autonForwardSpeed = autonTab.add("autonForwardSpeed", Constants.autonForwardSpeed)
+    .withPosition(0, 0)
+    .withSize(1, 1)
+    .getEntry();
+
+    autonForwardTime = autonTab.add("autonForwardTime", Constants.autonForwardTime)
+    .withPosition(0, 1)
+    .withSize(1, 1)
+    .getEntry();
+
+    autonTurnSpeed = autonTab.add("autonTurnSpeed", Constants.autonTurnSpeed)
+    .withPosition(1, 0)
+    .withSize(1, 1)
+    .getEntry();
+
+    autonTurnTime = autonTab.add("autonTurnTime", Constants.autonTurnTime)
+    .withPosition(1, 1)
+    .withSize(1, 1)
+    .getEntry();
   }
 }

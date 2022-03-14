@@ -45,6 +45,14 @@ public class Turret extends SubsystemBase {
     periodic();
   }
 
+  public boolean leftPressing(){
+    return !leftLimit.get();
+  }
+
+  public boolean rightPressing(){
+    return !rightLimit.get();
+  }
+
   public double getVoltage(){
     return turret.getMotorOutputVoltage();
   }

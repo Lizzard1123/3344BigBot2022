@@ -47,7 +47,6 @@ public class FlightController extends Joystick {
     return this.getRawAxis(AxisZR);
   }
   //two buttons on throttle? 
-  //TODO double check that these are the right buttons
   public double getAxisSlider(){
     return this.getRawAxis(AxisSlider);
   }

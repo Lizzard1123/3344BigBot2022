@@ -58,7 +58,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, false)); // Robot orientation 
     //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
     //default commmand for spinning turret
-    turret.setDefaultCommand(turretHandler); //TODO does this need to be a default command?
+    turret.setDefaultCommand(turretHandler);
     //intake 
     intake.setDefaultCommand(new holdArm(intake));
     //calibrate gyro
