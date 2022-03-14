@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class Index extends CommandBase {
+public class spinUptakeTimed extends CommandBase {
   private Uptake uptake;
+  private double startTime;
 
-  public Index(Uptake uptake) {
-    super();
+  public spinUptakeTimed(Uptake uptake) {
     this.uptake = uptake;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(uptake);
@@ -22,32 +22,27 @@ public class Index extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    startTime = Timer.getFPGATimestamp();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() { //this is kinda a mess
-    //check if ball is in front of color sensor
-    if(uptake.getDist() >= Constants.minDist)
-      Constants.holdingBall = true;
-    //check color of ball to determine its fate
-    if(Constants.holdingBall)
-      //sort color
-      if(Constants.isBlue && uptake.getBlue() >= Constants.minBlue || //is blue ball on blue team
-        !Constants.isBlue && uptake.getRed() >= Constants.minRed){ //is red ball on red team
-        new Shoot(uptake, RobotContainer.flywheel, RobotContainer.turret, true);
-      } else { //wrong color
-        new Shoot(uptake, RobotContainer.flywheel, RobotContainer.turret, false);
-      }
+  public void execute() {
+    uptake.spin(Constants.uptakeMaxSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    uptake.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if((Timer.getFPGATimestamp() - startTime) >= Constants.shootTime)
+      return true;
     return false;
   }
 }

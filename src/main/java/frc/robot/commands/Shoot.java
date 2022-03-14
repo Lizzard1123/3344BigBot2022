@@ -4,18 +4,21 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Uptake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class Index extends CommandBase {
+public class Shoot extends CommandBase {
   private Uptake uptake;
+  private boolean rightColor;
+  private boolean hasShot = false;
 
-  public Index(Uptake uptake) {
+  public Shoot(Uptake uptake, boolean rightColor) {
     super();
     this.uptake = uptake;
+    this.rightColor = rightColor;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(uptake);
   }
@@ -26,19 +29,12 @@ public class Index extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() { //this is kinda a mess
-    //check if ball is in front of color sensor
-    if(uptake.getDist() >= Constants.minDist)
-      Constants.holdingBall = true;
-    //check color of ball to determine its fate
-    if(Constants.holdingBall)
-      //sort color
-      if(Constants.isBlue && uptake.getBlue() >= Constants.minBlue || //is blue ball on blue team
-        !Constants.isBlue && uptake.getRed() >= Constants.minRed){ //is red ball on red team
-        new Shoot(uptake, RobotContainer.flywheel, RobotContainer.turret, true);
-      } else { //wrong color
-        new Shoot(uptake, RobotContainer.flywheel, RobotContainer.turret, false);
-      }
+  public void execute() {
+    if(!rightColor){
+      eject();
+    } else {
+      tryToShoot();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -48,6 +44,17 @@ public class Index extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return hasShot;
+  }
+
+  private void eject(){
+    new spinUptakeTimed(uptake);
+    hasShot = true;
+  }
+
+  private void tryToShoot(){
+    if(RobotContainer.flywheelHandler.withinTolerance() && RobotContainer.turretHandler.withinTolerance())
+      new spinUptakeTimed(uptake);
+      hasShot = true;
   }
 }

@@ -50,6 +50,8 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry colorMinRed;
   private NetworkTableEntry colorMinBlue;
   private NetworkTableEntry colorMinDist;
+  private NetworkTableEntry holdingBall;
+  private NetworkTableEntry shootTime;
 
 
   //IO
@@ -138,6 +140,7 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.minRed = colorMinRed.getDouble(Constants.minRed);
     Constants.minBlue = colorMinBlue.getDouble(Constants.minBlue);
     Constants.minDist = colorMinDist.getDouble(Constants.minDist);
+    Constants.shootTime = shootTime.getDouble(Constants.shootTime);
     //updating spinflywheel command
     updateFlywheelCommands();
     //updating turret command
@@ -151,6 +154,8 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.autonTurnTime = MathUtil.clamp(autonTurnTime.getDouble(Constants.autonTurnTime), 0, 15);
     //color picker
     handleColor();
+    //indexer
+    holdingBall.setBoolean(Constants.holdingBall);
   }
 
   @Override
@@ -403,6 +408,17 @@ public class MyShuffleBoard extends SubsystemBase {
 
     colorMinDist = constTab.add("colorMinDist", Constants.minDist)
     .withPosition(8, 3)
+    .withSize(1, 1)
+    .getEntry();
+
+    holdingBall = constTab.add("holdingBall", Constants.holdingBall)
+    .withPosition(5, 3)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .getEntry();
+
+    shootTime = constTab.add("shootTime", Constants.shootTime)
+    .withPosition(5, 3)
     .withSize(1, 1)
     .getEntry();
   }
