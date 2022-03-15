@@ -47,8 +47,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry colorRed;
   private NetworkTableEntry colorGreen;
   private NetworkTableEntry colorBlue;
-  private NetworkTableEntry colorMinRed;
-  private NetworkTableEntry colorMinBlue;
+  private NetworkTableEntry holdingBlueBall;
   private NetworkTableEntry colorMinDist;
   private NetworkTableEntry holdingBall;
   private NetworkTableEntry shootTime;
@@ -137,8 +136,6 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.armDefaultVoltage = updateConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
     Constants.scanWidth = scanWidth.getDouble(Constants.scanWidth);
-    Constants.minRed = colorMinRed.getDouble(Constants.minRed);
-    Constants.minBlue = colorMinBlue.getDouble(Constants.minBlue);
     Constants.minDist = colorMinDist.getDouble(Constants.minDist);
     Constants.shootTime = shootTime.getDouble(Constants.shootTime);
     //updating spinflywheel command
@@ -156,6 +153,7 @@ public class MyShuffleBoard extends SubsystemBase {
     handleColor();
     //indexer
     holdingBall.setBoolean(Constants.holdingBall);
+    holdingBlueBall.setBoolean(Constants.holdingBlueBall);
   }
 
   @Override
@@ -369,7 +367,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .getEntry();
 
     colorDisplay = driveTab.add("CurrentColor", true)
-    .withPosition(0, 3)
+    .withPosition(1, 3)
     .withPosition(1, 1)
     .withWidget(BuiltInWidgets.kBooleanBox)
     .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
@@ -396,14 +394,11 @@ public class MyShuffleBoard extends SubsystemBase {
     .withProperties(Map.of("min", 0, "max", 320, "Block increment", 1))
     .getEntry();
 
-    colorMinRed = constTab.add("colorMinRed", Constants.minRed)
+    holdingBlueBall = constTab.add("holdingBlueBall", Constants.holdingBlueBall)
     .withPosition(6, 3)
     .withSize(1, 1)
-    .getEntry();
-    
-    colorMinBlue = constTab.add("colorMinBlue", Constants.minBlue)
-    .withPosition(7, 3)
-    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
     .getEntry();
 
     colorMinDist = constTab.add("colorMinDist", Constants.minDist)

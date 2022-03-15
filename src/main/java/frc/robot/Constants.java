@@ -45,7 +45,7 @@ public final class Constants {
     public static double flywheelManualSpeed = 0; // default for manual control
 
     //max speeds
-    public static double flywheelMaxSpeed = 100;
+    public static double flywheelMaxSpeed = 0;
     public static double turretMaxSpeed = 20;
     public static double uptakeMaxSpeed = 60;
     public static double intakeMaxSpeed = 25;
@@ -61,8 +61,7 @@ public final class Constants {
     public static boolean flywheelAnalog = false; // speed of flywheel manual controller
     public static boolean isBlue = true; //holds team color false means red
     public static boolean holdingBall = false;
-    public static double minDist = 1000;
-    public static double minRed = 1000;
-    public static double minBlue = 1000;
+    public static boolean holdingBlueBall = false;
+    public static double minDist = 130;
     public static double shootTime = .5;
 }

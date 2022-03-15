@@ -19,7 +19,7 @@ public class SpinFlywheel extends CommandBase {
   public SpinFlywheel(Flywheel flywheel) {
     super();
     this.flywheel = flywheel;
-    pid = new PIDController(0,0,0);
+    pid = new PIDController(0.075,0,0);
     addRequirements(flywheel);
   }
 

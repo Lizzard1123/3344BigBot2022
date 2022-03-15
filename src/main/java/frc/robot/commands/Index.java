@@ -28,13 +28,13 @@ public class Index extends CommandBase {
   @Override
   public void execute() { //this is kinda a mess
     //check if ball is in front of color sensor
-    if(uptake.getDist() >= Constants.minDist)
-      Constants.holdingBall = true;
+    Constants.holdingBall = (uptake.getDist() >= Constants.minDist);
+    Constants.holdingBlueBall = (uptake.getBlue() >= uptake.getRed());
     //check color of ball to determine its fate
     if(Constants.holdingBall)
       //sort color
-      if(Constants.isBlue && uptake.getBlue() >= Constants.minBlue || //is blue ball on blue team
-        !Constants.isBlue && uptake.getRed() >= Constants.minRed){ //is red ball on red team
+      if((Constants.isBlue && uptake.getBlue() >= uptake.getRed())|| //is blue ball on blue team
+        (!Constants.isBlue && uptake.getRed() >= uptake.getBlue())){ //is red ball on red team
         new Shoot(uptake, true);
       } else { //wrong color
         new Shoot(uptake, false);

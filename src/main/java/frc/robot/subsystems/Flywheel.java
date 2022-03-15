@@ -41,16 +41,6 @@ public class Flywheel extends SubsystemBase {
     flywheel.set(speed * (Constants.flywheelMaxSpeed / 100)); 
   }
 
-  //used by driver to control speed
-  public void manualControl(double speed){
-    if(Constants.flywheelAnalog) spin(speed);
-  }
-
-  //used by auton and PID to control flywheel speed
-  public void automatedControl(double speed){
-    if(!Constants.flywheelAnalog) spin(speed);
-  }
-
   //returns voltage supplied to motor from motorcontroller
   public double getVoltage(){
     return flywheel.get() * 12;
