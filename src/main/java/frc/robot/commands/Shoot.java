@@ -53,7 +53,9 @@ public class Shoot extends CommandBase {
   }
 
   private void tryToShoot(){
-    if(RobotContainer.flywheelHandler.withinTolerance() && RobotContainer.turretHandler.withinTolerance())
+    if(RobotContainer.limelight.hasSight() &&
+     RobotContainer.flywheelHandler.withinTolerance() && 
+     RobotContainer.turretHandler.withinTolerance())
       new spinUptakeTimed(uptake);
       hasShot = true;
   }
