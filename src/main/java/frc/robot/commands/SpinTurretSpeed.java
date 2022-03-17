@@ -4,31 +4,24 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Turret;
 
-import java.io.Console;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class moveClimberGimbal extends CommandBase {
-  private Climber climber;
-  private boolean reverse;
-  private boolean custom;
+public class SpinTurretSpeed extends CommandBase {
+  private Turret turret;
   private double speed;
 
-  public moveClimberGimbal(Climber climber, boolean reverse, boolean custom, double speed) {
-    this.climber = climber;
-    this.reverse = reverse;
-    this.custom = custom;
+  public SpinTurretSpeed(Turret turret, double speed) {
+    super();
+    this.turret = turret;
     this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.
@@ -38,18 +31,12 @@ public class moveClimberGimbal extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(custom){
-      climber.spinGimbal(speed * (reverse?-1:1)); 
-    } else {
-      climber.spinGimbal(Constants.defaultGimbal/100); 
-    }
+    turret.turret.set(ControlMode.PercentOutput, speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    climber.spinGimbal(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

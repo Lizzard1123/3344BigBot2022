@@ -54,6 +54,7 @@ public final class Constants {
     public static double climberMaxSpeed = 50;
 
     //auton
+    public static boolean goForAuton = false; 
     public static double autonForwardSpeed = 30;
     public static double autonForwardTime = 3;
     public static double autonTurnSpeed = 25;

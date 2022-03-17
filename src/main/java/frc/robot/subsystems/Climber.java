@@ -30,6 +30,14 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
+  public double getCurrent(){
+    return climberGimbal.getOutputCurrent();
+  }
+  
+  public double getTemp(){
+    return climberGimbal.getMotorTemperature();
+  }
+
   public void spin(double speed){
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
     climber.set(ControlMode.PercentOutput, speed * (Constants.climberMaxSpeed / 100)); 

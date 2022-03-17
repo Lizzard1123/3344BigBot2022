@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.security.GuardedObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +43,10 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry flywheelTemp;
   private NetworkTableEntry flywheelVelocity;
   private NetworkTableEntry flywheelCurrent;
+  //other neo
+  private NetworkTableEntry gimbalCurrent;
+  private NetworkTableEntry gimbalTemp;
+
 
   //color sensor
   private NetworkTableEntry colorDist;
@@ -78,6 +83,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry readyToShoot;
 
   //auton vars
+  private NetworkTableEntry goForAuton;
   private NetworkTableEntry autonForwardSpeed;
   private NetworkTableEntry autonForwardTime;
   private NetworkTableEntry autonTurnSpeed;
@@ -143,6 +149,7 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.shootTime = shootTime.getDouble(Constants.shootTime);
     Constants.shootWidth = shootWidth.getDouble(Constants.shootWidth);
     Constants.manualOverride = manualOverride.getBoolean(Constants.manualOverride);
+    Constants.goForAuton = goForAuton.getBoolean(Constants.goForAuton);
     //updating spinflywheel command
     updateFlywheelCommands();
     //updating turret command
@@ -161,6 +168,9 @@ public class MyShuffleBoard extends SubsystemBase {
     //indexer
     holdingBall.setBoolean(Constants.holdingBall);
     holdingBlueBall.setBoolean(Constants.holdingBlueBall);
+    //power tab misc
+    gimbalTemp.setDouble(RobotContainer.climber.getTemp());
+    gimbalCurrent.setDouble(RobotContainer.climber.getCurrent());
   }
 
   @Override
@@ -334,12 +344,12 @@ public class MyShuffleBoard extends SubsystemBase {
     ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
     .withSize(2, 4)
     .withPosition(7, 0);
-    noteContainer.add("0", "FlywheelAnalog & L1 & then Throttle Axis -> FLywheel");
-    noteContainer.add("1", "throttle slider -> turret left and");
-    noteContainer.add("2", "Button R1 -> uptake up");
-    noteContainer.add("3", "Button R2 -> uptake down");
-    noteContainer.add("4", "POV up rabbit");
-    noteContainer.add("5", "POV down turtle");
+    noteContainer.add("0", "Y climber up");
+    noteContainer.add("1", "A climber down");
+    noteContainer.add("2", "X gimbal close");
+    noteContainer.add("3", "B gimbal open");
+    noteContainer.add("4", "good luck");
+    noteContainer.add("5", "youve got this");
 
   }
 
@@ -618,9 +628,26 @@ public class MyShuffleBoard extends SubsystemBase {
     powerTab.add("Uptake", RobotContainer.uptake)
     .withPosition(6, 2)
     .withSize(2, 1);
+
+    gimbalCurrent = powerTab.add("gimbalCurrent", 0)
+    .withPosition(8, 0)
+    .withSize(1, 1)
+    .getEntry();
+
+    gimbalTemp = powerTab.add("gimbalTemp", 0)
+    .withPosition(8, 1)
+    .withSize(1, 1)
+    .getEntry();
   }
 
   private void initAuton(){
+    goForAuton = autonTab.add("goForAuton", Constants.goForAuton)
+    .withPosition(0, 2)
+    .withSize(2, 1)
+    .withWidget(BuiltInWidgets.kToggleButton)
+    .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
+    .getEntry();
+
     autonForwardSpeed = autonTab.add("autonForwardSpeed", Constants.autonForwardSpeed)
     .withPosition(0, 0)
     .withSize(1, 1)
