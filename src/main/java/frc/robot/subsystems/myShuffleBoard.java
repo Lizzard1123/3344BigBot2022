@@ -34,6 +34,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry scanWidth;
   private NetworkTableEntry colorPicker;
   private NetworkTableEntry colorDisplay;
+  private NetworkTableEntry manualOverride;
 
   //flywheel
   private NetworkTableEntry flywheelManualSpeed;
@@ -140,6 +141,7 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.minDist = colorMinDist.getDouble(Constants.minDist);
     Constants.shootTime = shootTime.getDouble(Constants.shootTime);
     Constants.shootWidth = shootWidth.getDouble(Constants.shootWidth);
+    Constants.manualOverride = manualOverride.getBoolean(Constants.manualOverride);
     //updating spinflywheel command
     updateFlywheelCommands();
     //updating turret command
@@ -364,17 +366,23 @@ public class MyShuffleBoard extends SubsystemBase {
     setNotes();
 
     //color picker
-    colorPicker = driveTab.add("Color", true)
+    colorPicker = driveTab.add("Color", Constants.isBlue)
     .withPosition(0, 3)
     .withSize(1, 1)
     .withWidget(BuiltInWidgets.kToggleButton)
     .getEntry();
 
-    colorDisplay = driveTab.add("CurrentColor", true)
+    colorDisplay = driveTab.add("CurrentColor", Constants.isBlue)
     .withPosition(1, 3)
     .withSize(1, 1)
     .withWidget(BuiltInWidgets.kBooleanBox)
     .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
+    .getEntry();
+
+    manualOverride = driveTab.add("manualOverride", Constants.manualOverride)
+    .withPosition(1, 2)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kToggleButton)
     .getEntry();
   }
 
@@ -443,7 +451,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .getEntry();
     flywheelVelocity = flyWheelContainer.add("flywheelVelocity", 0)
     .getEntry();
-    flywheelCurrent = flyWheelContainer.add("flywheelCurrent", 0)
+    flywheelCurrent = flyWheelContainer.add ("flywheelCurrent", 0)
     .getEntry();
     //Color Sensor
     ShuffleboardContainer colorContainer = debugTab.getLayout("Color Sensor", BuiltInLayouts.kList)

@@ -5,19 +5,19 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Uptake;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class SpinUptake extends CommandBase {
-  private final Uptake uptake;
-  private boolean reverse = false;
+public class controllFlywheel extends CommandBase {
+  private Flywheel flywheel;
 
-  public SpinUptake(Uptake uptake, boolean reverse) {
+  public controllFlywheel(Flywheel flywheel) {
     super();
-    this.uptake = uptake;
-    this.reverse = reverse;
-    addRequirements(uptake);
+    this.flywheel = flywheel;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(flywheel);
   }
 
   // Called when the command is initially scheduled.
@@ -27,14 +27,14 @@ public class SpinUptake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!Constants.holdingBall || Constants.manualOverride)
-      uptake.spin(Constants.uptakeMaxSpeed * (reverse?-1:1));
+    if(Constants.manualOverride){
+      flywheel.spin(RobotContainer.gunnerController.getLeftJoyY());
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    uptake.stop();
   }
 
   // Returns true when the command should end.

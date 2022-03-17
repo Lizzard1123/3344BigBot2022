@@ -15,8 +15,10 @@ import frc.robot.commands.Index;
 import frc.robot.commands.MoveClimber;
 import frc.robot.commands.ScanTurret;
 import frc.robot.commands.SpinFlywheel;
+import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
+import frc.robot.commands.controllFlywheel;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
@@ -82,25 +84,33 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     JoystickButton spinUptakeUp = new JoystickButton(driverController, XBox.LB_BUTTON);
-    spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
+    spinUptakeUp.whileHeld(new SpinUptake(uptake, false));
+    JoystickButton spinIntakeUp = new JoystickButton(driverController, XBox.LB_BUTTON);
+    spinIntakeUp.whileHeld(new SpinIntake(intake, false));
+
     JoystickButton spinUptakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
-    spinUptakeDown.whileHeld(new SpinUptake(uptake, intake, true));
+    spinUptakeDown.whileHeld(new SpinUptake(uptake, true));
+    JoystickButton spinIntakeDown = new JoystickButton(driverController, XBox.LB_BUTTON);
+    spinIntakeDown.whileHeld(new SpinIntake(intake, false));
 
     JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     moveClimberUp.whileHeld(new MoveClimber(climber, false));
     JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON);
     moveClimberDown.whileHeld(new MoveClimber(climber, true));
 
-    JoystickButton scan = new JoystickButton(driverController, XBox.X_BUTTON);
+    JoystickButton scan = new JoystickButton(driverController, XBox.B_BUTTON);
     scan.whileHeld(new ScanTurret(turret));
 
     //other controller controlling the shooting
-    JoystickButton gunnerSpinUptakeUp = new JoystickButton(gunnerController, XBox.LB_BUTTON);
-    gunnerSpinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
-    JoystickButton gunnerSpinUptakeDown = new JoystickButton(gunnerController, XBox.RB_BUTTON);
-    gunnerSpinUptakeDown.whileHeld(new SpinUptake(uptake, intake, true));
+    JoystickButton gunnerSpinUptakeUp = new JoystickButton(gunnerController, XBox.Y_BUTTON);
+    gunnerSpinUptakeUp.whileHeld(new SpinUptake(uptake, false));
+    JoystickButton gunnerSpinUptakeDown = new JoystickButton(gunnerController, XBox.A_BUTTON);
+    gunnerSpinUptakeDown.whileHeld(new SpinUptake(uptake, true));
+    
+    JoystickButton spinFlywheel = new JoystickButton(gunnerController, XBox.X_BUTTON);
+    spinFlywheel.whileHeld(new controllFlywheel(flywheel));
 
-    JoystickButton gunnerScan = new JoystickButton(gunnerController, XBox.X_BUTTON);
+    JoystickButton gunnerScan = new JoystickButton(gunnerController, XBox.B_BUTTON);
     gunnerScan.whileHeld(new ScanTurret(turret));
     
   }
