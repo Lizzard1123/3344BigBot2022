@@ -31,7 +31,7 @@ public class ScanTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(lastCheckedLeft){ //TODO check if this is the right orientation for the turret to spin ||  I dont think it matters tho
+    if(lastCheckedLeft){
       turret.spin(Constants.turretMaxSpeed);
     } else {
       turret.spin(-1 * Constants.turretMaxSpeed);

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -27,20 +26,23 @@ public class Index extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() { //this is kinda a mess
-    //check if ball is in front of color sensor
-    Constants.holdingBall = (uptake.getDist() >= Constants.minDist);
-    if(Constants.holdingBall)
-      uptake.stop();
-    Constants.holdingBlueBall = (uptake.getBlue() >= uptake.getRed());
-    //check color of ball to determine its fate
-    if(Constants.holdingBall)
-      //sort color
-      if((Constants.isBlue && Constants.holdingBlueBall )|| //is blue ball on blue team
-        (!Constants.isBlue && !Constants.holdingBlueBall)){ //is red ball on red team
-        //new Shoot(uptake, true).schedule();;
-      } else { //wrong color
-        new Shoot(uptake, false).schedule();;
-      }
+    //manual override doesnt need indexer 
+    if(!Constants.manualOverride){
+      //check if ball is in front of color sensor
+      Constants.holdingBall = (uptake.getDist() >= Constants.minDist);
+      if(Constants.holdingBall)
+        uptake.stop();
+      Constants.holdingBlueBall = (uptake.getBlue() >= uptake.getRed());
+     //check color of ball to determine its fate
+      if(Constants.holdingBall)
+        //sort color
+        if((Constants.isBlue && Constants.holdingBlueBall )|| //is blue ball on blue team
+          (!Constants.isBlue && !Constants.holdingBlueBall)){ //is red ball on red team
+          //new Shoot(uptake, true).schedule();;
+        } else { //wrong color
+          new Shoot(uptake, false).schedule();;
+        }
+    }
   }
 
   // Called once the command ends or is interrupted.

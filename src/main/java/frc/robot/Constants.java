@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.I2C;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //important
+    public static boolean manualOverride = false;
+
     //Ports
     public static int FRPort = 1;
     public static int FLPort = 0;

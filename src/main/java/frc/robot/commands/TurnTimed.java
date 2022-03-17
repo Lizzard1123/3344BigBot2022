@@ -29,7 +29,7 @@ public class TurnTimed extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() { //TODO check which way is left and right this should be right
+  public void execute() { 
     drive.spinLeft(Constants.autonForwardSpeed / 100);
     drive.spinRight(-Constants.autonForwardSpeed / 100);
   }

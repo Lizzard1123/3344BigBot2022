@@ -23,8 +23,8 @@ public class Uptake extends SubsystemBase {
   }
 
   public void spin(double speed){
-    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
-    uptake.set(ControlMode.PercentOutput, speed * (Constants.uptakeMaxSpeed / 100)); 
+    speed = MathUtil.clamp(speed, - (Constants.uptakeMaxSpeed / 100),  (Constants.uptakeMaxSpeed / 100)); // check just in case, max and mins input
+    uptake.set(ControlMode.PercentOutput, speed); 
   }
 
   public double getVoltage(){

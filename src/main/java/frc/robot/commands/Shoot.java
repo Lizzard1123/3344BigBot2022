@@ -46,7 +46,7 @@ public class Shoot extends CommandBase {
       }
     } else {
       if(Constants.readyToShoot){
-        //tryToShoot();
+        tryToShoot();
       }
     }
   }

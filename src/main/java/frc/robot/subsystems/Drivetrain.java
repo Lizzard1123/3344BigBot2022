@@ -41,11 +41,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void updateNormalSpeed(){
-    if(RobotContainer.flightController.getDpadRelativeUp()){
+    if(RobotContainer.driverController.getRawButton(XBox.upButton)){
       Constants.driveSet = Constants.rabbit;
-    } else if(RobotContainer.flightController.getDpadRelativeDown()){
+    } else if(RobotContainer.driverController.getRawButton(XBox.downButton)){
       Constants.driveSet = Constants.turtle;
-    } else {
+    } else if(RobotContainer.driverController.getRawButton(XBox.rightButton)){
       Constants.driveSet = Constants.normal;
     }
     RobotContainer.shuffleBoardInterface.updateTotalSpeedDisplay(Constants.driveSet * (Constants.maxSpeed/100));

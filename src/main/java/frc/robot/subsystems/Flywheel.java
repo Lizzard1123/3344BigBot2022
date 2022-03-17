@@ -37,8 +37,8 @@ public class Flywheel extends SubsystemBase {
   }
 
   public void spin(double speed){
-    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
-    flywheel.set(speed * (Constants.flywheelMaxSpeed / 100)); 
+    speed = MathUtil.clamp(speed, -(Constants.flywheelMaxSpeed / 100), (Constants.flywheelMaxSpeed / 100)); // check just in case, max and mins input
+    flywheel.set(speed); 
   }
 
   //returns voltage supplied to motor from motorcontroller

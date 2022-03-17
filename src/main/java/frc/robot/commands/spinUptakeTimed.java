@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;

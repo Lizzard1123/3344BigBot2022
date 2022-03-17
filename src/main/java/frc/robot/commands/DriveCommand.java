@@ -6,13 +6,13 @@ package frc.robot.commands;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.FlightController;
+import frc.robot.subsystems.XBox;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class DriveCommand extends CommandBase {
   private final Drivetrain drivetrain;
-  private final FlightController ctr;
+  private final XBox ctr;
   private final Boolean fieldOrientated;
 
   /**
@@ -20,9 +20,9 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand(FlightController flightController, Drivetrain drivetrain, Boolean fieldOrientated) {
+  public DriveCommand(XBox XBox, Drivetrain drivetrain, Boolean fieldOrientated) {
     this.drivetrain = drivetrain;
-    this.ctr = flightController;
+    this.ctr = XBox;
     this.fieldOrientated = fieldOrientated;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
@@ -35,7 +35,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(ctr.getAxisX(), ctr.getAxisY(), ctr.getAxisRZ(), 
+    drivetrain.drive(ctr.getLeftJoyX(), ctr.getLeftJoyY(), ctr.getRightJoyX(), 
                       fieldOrientated?RobotContainer.gyro.getAngle():0.0);
   }
 

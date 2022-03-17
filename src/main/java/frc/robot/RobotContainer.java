@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
@@ -20,12 +19,12 @@ import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.FlightController;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightClass;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Uptake;
+import frc.robot.subsystems.XBox;
 import frc.robot.subsystems.MyShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -39,7 +38,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static final PowerDistribution pdp = new PowerDistribution(60, ModuleType.kRev);
-  public static final FlightController flightController = new FlightController(Constants.flightControllerPort);
+  //public static final FlightController flightController = new FlightController(Constants.flightControllerPort);
+  public static final XBox driverController = new XBox(0);
+  public static final XBox gunnerController = new XBox(1);
   public static final Drivetrain drivetrain = new Drivetrain();
   public static final Intake intake = new Intake();
   public static final Climber climber = new Climber();
@@ -58,7 +59,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //runs execute of driveCommand function indefinately
-    drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, false)); // Robot orientation 
+    drivetrain.setDefaultCommand(new DriveCommand(driverController, drivetrain, false)); // Robot orientation 
     //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
     //default commmand for spinning turret
     turret.setDefaultCommand(turretHandler);
@@ -79,22 +80,29 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
-    
-    JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.Button5);
-    spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
 
-    JoystickButton spinUptakeDown = new JoystickButton(flightController, FlightController.Button6);
+    JoystickButton spinUptakeUp = new JoystickButton(driverController, XBox.LB_BUTTON);
+    spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
+    JoystickButton spinUptakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
     spinUptakeDown.whileHeld(new SpinUptake(uptake, intake, true));
 
-    JoystickButton moveClimberUp = new JoystickButton(flightController, FlightController.ButtonR2);
+    JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     moveClimberUp.whileHeld(new MoveClimber(climber, false));
-
-    JoystickButton moveClimberDown = new JoystickButton(flightController, FlightController.ButtonL2);
+    JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON);
     moveClimberDown.whileHeld(new MoveClimber(climber, true));
 
-    JoystickButton scan = new JoystickButton(flightController, FlightController.Button8);
+    JoystickButton scan = new JoystickButton(driverController, XBox.X_BUTTON);
     scan.whileHeld(new ScanTurret(turret));
+
+    //other controller controlling the shooting
+    JoystickButton gunnerSpinUptakeUp = new JoystickButton(gunnerController, XBox.LB_BUTTON);
+    gunnerSpinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
+    JoystickButton gunnerSpinUptakeDown = new JoystickButton(gunnerController, XBox.RB_BUTTON);
+    gunnerSpinUptakeDown.whileHeld(new SpinUptake(uptake, intake, true));
+
+    JoystickButton gunnerScan = new JoystickButton(gunnerController, XBox.X_BUTTON);
+    gunnerScan.whileHeld(new ScanTurret(turret));
+    
   }
 
   /**

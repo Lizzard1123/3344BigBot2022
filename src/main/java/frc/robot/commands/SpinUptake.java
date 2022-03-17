@@ -38,7 +38,7 @@ public class SpinUptake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    uptake.stop(); //TODO this might cause issues? 
+    uptake.stop();
     intake.intakeStop();
   }
 

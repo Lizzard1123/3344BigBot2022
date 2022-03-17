@@ -31,8 +31,8 @@ public class SpinTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.flywheelAnalog){ // manual controlls
-      turret.spin(RobotContainer.flightController.getAxisSlider());
+    if(Constants.manualOverride){ // manual controlls
+      turret.spin(RobotContainer.gunnerController.getRightTrigger() - RobotContainer.gunnerController.getLeftTrigger());
     } else { //PIDS
       turret.spin(pid.calculate(RobotContainer.limelight.getXOffset(), 0));
       if(withinTolerance()){ //check if at target to reset Ki values
