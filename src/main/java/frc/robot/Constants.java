@@ -67,4 +67,5 @@ public final class Constants {
     public static double minDist = 130;
     public static double shootTime = .75;
     public static double getEjectSetGoal = 500;
+    public static double defaultGimbal = 10;
 }

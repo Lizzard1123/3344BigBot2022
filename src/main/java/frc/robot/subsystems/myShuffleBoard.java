@@ -136,6 +136,7 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.uptakeMaxSpeed = updateConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     Constants.intakeMaxSpeed = updateConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
     Constants.climberMaxSpeed = updateConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed);
+    Constants.defaultGimbal = updateConstantOverrides("defaultGimbal", Constants.defaultGimbal);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
     Constants.scanWidth = scanWidth.getDouble(Constants.scanWidth);
     Constants.minDist = colorMinDist.getDouble(Constants.minDist);
@@ -396,7 +397,8 @@ public class MyShuffleBoard extends SubsystemBase {
     setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
     setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
-    setUpConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed);
+    setUpConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed); //defaultGimbal
+    setUpConstantOverrides("defaultGimbal", Constants.defaultGimbal);
     //misc
     scanWidth = constTab.add("scanWidth", Constants.scanWidth)
     .withPosition(0, 3)

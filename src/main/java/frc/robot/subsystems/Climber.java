@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,6 +15,7 @@ import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
   VictorSPX climber = new VictorSPX(Constants.climberPort);
+  CANSparkMax climberGimbal = new CANSparkMax(11, MotorType.kBrushless);
 
   public Climber() {
     super();
@@ -30,6 +33,11 @@ public class Climber extends SubsystemBase {
   public void spin(double speed){
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
     climber.set(ControlMode.PercentOutput, speed * (Constants.climberMaxSpeed / 100)); 
+  }
+
+  public void spinGimbal(double speed){
+    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    climberGimbal.set(speed); 
   }
 
   public void stop(){

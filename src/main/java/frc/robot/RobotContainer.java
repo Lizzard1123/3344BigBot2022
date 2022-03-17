@@ -19,6 +19,7 @@ import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
 import frc.robot.commands.controllFlywheel;
+import frc.robot.commands.moveClimberGimbal;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
@@ -67,6 +68,7 @@ public class RobotContainer {
     turret.setDefaultCommand(turretHandler);
     //flyhweel
     //flywheel.setDefaultCommand(flywheelHandler, false); if working with manual control
+    climber.setDefaultCommand(new moveClimberGimbal(climber, true, false, 0));
     //uptake indexer
     uptake.setDefaultCommand(new Index(uptake));
     //calibrate gyro
@@ -87,25 +89,35 @@ public class RobotContainer {
     spinUptakeUp.whileHeld(new SpinUptake(uptake, false));
     JoystickButton spinIntakeUp = new JoystickButton(driverController, XBox.LB_BUTTON);
     spinIntakeUp.whileHeld(new SpinIntake(intake, false));
-
+    
     JoystickButton spinUptakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
     spinUptakeDown.whileHeld(new SpinUptake(uptake, true));
     JoystickButton spinIntakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
     spinIntakeDown.whileHeld(new SpinIntake(intake, true));
-
+    
     JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
-    moveClimberUp.whileHeld(new MoveClimber(climber, false));
+    moveClimberUp.whileHeld(new MoveClimber(climber, true));
     JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON);
-    moveClimberDown.whileHeld(new MoveClimber(climber, true));
+    moveClimberDown.whileHeld(new MoveClimber(climber, false));
 
-    JoystickButton scan = new JoystickButton(driverController, XBox.B_BUTTON);
-    scan.whileHeld(new ScanTurret(turret));
+    JoystickButton moveClimberGimbalUp = new JoystickButton(driverController, XBox.X_BUTTON);
+    moveClimberGimbalUp.whileHeld(new moveClimberGimbal(climber, false, true, Constants.defaultGimbal));
+    JoystickButton moveClimberGimbalDown = new JoystickButton(driverController, XBox.B_BUTTON);
+    moveClimberGimbalDown.whileHeld(new moveClimberGimbal(climber, true, true, 0));
+
+    //JoystickButton scan = new JoystickButton(driverController, XBox.B_BUTTON);
+    //scan.whileHeld(new ScanTurret(turret));
 
     //other controller controlling the shooting
     JoystickButton gunnerSpinUptakeUp = new JoystickButton(gunnerController, XBox.Y_BUTTON);
     gunnerSpinUptakeUp.whileHeld(new SpinUptake(uptake, true));
     JoystickButton gunnerSpinUptakeDown = new JoystickButton(gunnerController, XBox.A_BUTTON);
     gunnerSpinUptakeDown.whileHeld(new SpinUptake(uptake, false));
+
+    JoystickButton gunnerSpinIntakeUp = new JoystickButton(gunnerController, XBox.Y_BUTTON);
+    gunnerSpinIntakeUp.whileHeld(new SpinIntake(intake, true));
+    JoystickButton gunnerSpinIntakeDown = new JoystickButton(gunnerController, XBox.A_BUTTON);
+    gunnerSpinIntakeDown.whileHeld(new SpinIntake(intake, false));
     
     JoystickButton spinFlywheel = new JoystickButton(gunnerController, XBox.X_BUTTON);
     spinFlywheel.whileHeld(new controllFlywheel(flywheel));

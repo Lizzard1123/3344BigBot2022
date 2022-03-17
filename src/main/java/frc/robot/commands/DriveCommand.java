@@ -35,7 +35,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(ctr.getLeftJoyX(), ctr.getLeftJoyY(), ctr.getRightJoyX(), 
+    drivetrain.drive(ctr.getRightJoyX(), -ctr.getRightJoyY(), ctr.getLeftJoyX(), 
                       fieldOrientated?RobotContainer.gyro.getAngle():0.0);
   }
 
