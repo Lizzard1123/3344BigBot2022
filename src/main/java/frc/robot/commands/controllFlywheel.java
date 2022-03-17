@@ -28,7 +28,7 @@ public class controllFlywheel extends CommandBase {
   @Override
   public void execute() {
     if(Constants.manualOverride){
-      flywheel.spin(RobotContainer.gunnerController.getLeftJoyY());
+      flywheel.spin(-RobotContainer.gunnerController.getLeftJoyY());
     }
   }
 

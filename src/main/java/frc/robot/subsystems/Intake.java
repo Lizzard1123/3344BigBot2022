@@ -36,8 +36,8 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeSpin(double speed){
-    speed = MathUtil.clamp(speed, -(Constants.intakeMaxSpeed / 100), (Constants.intakeMaxSpeed / 100)); // check just in case, max and mins input
-    intake.set(speed); 
+    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    intake.set(speed * (Constants.intakeMaxSpeed / 100)); 
   }
 
   public void armSpin(double speed){

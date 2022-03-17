@@ -90,8 +90,8 @@ public class RobotContainer {
 
     JoystickButton spinUptakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
     spinUptakeDown.whileHeld(new SpinUptake(uptake, true));
-    JoystickButton spinIntakeDown = new JoystickButton(driverController, XBox.LB_BUTTON);
-    spinIntakeDown.whileHeld(new SpinIntake(intake, false));
+    JoystickButton spinIntakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
+    spinIntakeDown.whileHeld(new SpinIntake(intake, true));
 
     JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     moveClimberUp.whileHeld(new MoveClimber(climber, false));
@@ -103,9 +103,9 @@ public class RobotContainer {
 
     //other controller controlling the shooting
     JoystickButton gunnerSpinUptakeUp = new JoystickButton(gunnerController, XBox.Y_BUTTON);
-    gunnerSpinUptakeUp.whileHeld(new SpinUptake(uptake, false));
+    gunnerSpinUptakeUp.whileHeld(new SpinUptake(uptake, true));
     JoystickButton gunnerSpinUptakeDown = new JoystickButton(gunnerController, XBox.A_BUTTON);
-    gunnerSpinUptakeDown.whileHeld(new SpinUptake(uptake, true));
+    gunnerSpinUptakeDown.whileHeld(new SpinUptake(uptake, false));
     
     JoystickButton spinFlywheel = new JoystickButton(gunnerController, XBox.X_BUTTON);
     spinFlywheel.whileHeld(new controllFlywheel(flywheel));

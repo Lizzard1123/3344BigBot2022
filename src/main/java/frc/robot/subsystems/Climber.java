@@ -28,8 +28,8 @@ public class Climber extends SubsystemBase {
   }
 
   public void spin(double speed){
-    speed = MathUtil.clamp(speed, -(Constants.climberMaxSpeed / 100), (Constants.climberMaxSpeed / 100)); // check just in case, max and mins input
-    climber.set(ControlMode.PercentOutput, speed); 
+    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    climber.set(ControlMode.PercentOutput, speed * (Constants.climberMaxSpeed / 100)); 
   }
 
   public void stop(){
