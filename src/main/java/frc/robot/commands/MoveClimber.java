@@ -5,17 +5,19 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class holdArm extends CommandBase {
-  private final Intake intake;
+public class MoveClimber extends CommandBase {
+  private Climber climber;
+  private boolean reverse;
 
-  public holdArm(Intake intake) {
-    this.intake = intake;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+  public MoveClimber(Climber climber, boolean rev) {
+    this.climber = climber;
+    this.reverse = rev;
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
@@ -25,13 +27,13 @@ public class holdArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.armVoltage(Constants.armDefaultVoltage);
+    climber.spin(Constants.climberMaxSpeed * (reverse?-1:1));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.armStop();
+    climber.stop();
   }
 
   // Returns true when the command should end.

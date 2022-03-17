@@ -4,9 +4,8 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Uptake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -21,25 +20,42 @@ public class Shoot extends CommandBase {
     this.rightColor = rightColor;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(uptake);
+    RobotContainer.flywheelPID.reset();
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    Constants.flywheelAnalog = false;
+    if(!rightColor){
+      RobotContainer.flywheelHandler = new SpinFlywheel(RobotContainer.flywheel, false, RobotContainer.flywheelPID);
+      RobotContainer.flywheelHandler.setGoal(Constants.getEjectSetGoal);
+    } else {
+      RobotContainer.flywheelHandler = new SpinFlywheel(RobotContainer.flywheel, true, RobotContainer.flywheelPID);
+    }
+    RobotContainer.flywheelPID.reset();
+    RobotContainer.flywheelHandler.schedule();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(!rightColor){
-      eject();
+      if(RobotContainer.flywheelHandler.withinTolerance()){
+        eject();
+      }
     } else {
-      tryToShoot();
+      if(Constants.readyToShoot){
+        //tryToShoot();
+      }
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.flywheelHandler.isDone(true);
+  }
 
   // Returns true when the command should end.
   @Override
@@ -48,15 +64,16 @@ public class Shoot extends CommandBase {
   }
 
   private void eject(){
-    new spinUptakeTimed(uptake);
+    new spinUptakeTimed(uptake).schedule();
     hasShot = true;
   }
 
   private void tryToShoot(){
     if(RobotContainer.limelight.hasSight() &&
-     RobotContainer.flywheelHandler.withinTolerance() && 
-     RobotContainer.turretHandler.withinTolerance())
-      new spinUptakeTimed(uptake);
+      RobotContainer.limelight.getWidth() >= Constants.shootWidth &&
+      RobotContainer.flywheelHandler.withinTolerance() && 
+      RobotContainer.turretHandler.withinTolerance())
+      new spinUptakeTimed(uptake).schedule();
       hasShot = true;
   }
 }

@@ -4,9 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
+  VictorSPX climber = new VictorSPX(Constants.climberPort);
+
   public Climber() {
     super();
   }
@@ -18,5 +25,14 @@ public class Climber extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void spin(double speed){
+    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
+    climber.set(ControlMode.PercentOutput, speed * (Constants.climberMaxSpeed / 100)); 
+  }
+
+  public void stop(){
+    spin(0);
   }
 }

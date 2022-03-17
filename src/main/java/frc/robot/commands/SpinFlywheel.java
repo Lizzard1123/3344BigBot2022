@@ -13,41 +13,50 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An example command that uses an example subsystem. */
 public class SpinFlywheel extends CommandBase {
   private Flywheel flywheel;
-  public PIDController pid;
+  private PIDController pid;
   private double setInterpolatorPVal = 0.0;
+  private boolean update = true;
+  private boolean isDone = false;
 
-  public SpinFlywheel(Flywheel flywheel) {
+  public SpinFlywheel(Flywheel flywheel, boolean update, PIDController pid) {
     super();
     this.flywheel = flywheel;
-    pid = new PIDController(0.075,0,0);
+    this.update = update;
+    this.pid = pid;
+    pid.reset();
     addRequirements(flywheel);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pid.calculate(0);
+    pid.reset();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.flywheelAnalog){ //manual
-      flywheel.spin(RobotContainer.flightController.getThrottle());
-    } else { //pid
-      flywheel.spin(pid.calculate(flywheel.getVelocity(), interpolateVelocity(RobotContainer.limelight.getWidth())));
-      if(withinTolerance()){
-        pid.reset();
-      }
+    if(update){
+      pid.setSetpoint(interpolateVelocity(RobotContainer.limelight.getWidth()));
+    }
+    flywheel.spin(pid.calculate(flywheel.getVelocity()));
+    if(withinTolerance()){
+      //pid.reset();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.flywheelPID.reset();
+    flywheel.spin(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isDone;
   }
 
   private double interpolateVelocity(double width){
@@ -60,6 +69,14 @@ public class SpinFlywheel extends CommandBase {
 
   public double getError(){
     return pid.getPositionError();
+  }
+
+  public void setGoal(double speed){
+    pid.setSetpoint(speed);
+  }
+
+  public void isDone(boolean done){
+    this.isDone = done;
   }
 
   public boolean withinTolerance(){

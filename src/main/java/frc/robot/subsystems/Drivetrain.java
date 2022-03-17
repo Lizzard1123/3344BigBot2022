@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

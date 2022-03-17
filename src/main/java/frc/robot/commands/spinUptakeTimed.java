@@ -5,7 +5,11 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -29,7 +33,7 @@ public class spinUptakeTimed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    uptake.spin(Constants.uptakeMaxSpeed);
+    uptake.uptake.set(ControlMode.PercentOutput, -.6);
   }
 
   // Called once the command ends or is interrupted.

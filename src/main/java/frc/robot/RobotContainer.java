@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -12,12 +13,11 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Index;
+import frc.robot.commands.MoveClimber;
 import frc.robot.commands.ScanTurret;
 import frc.robot.commands.SpinFlywheel;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
-import frc.robot.commands.holdArm;
-import frc.robot.commands.moveArm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FlightController;
@@ -44,7 +44,8 @@ public class RobotContainer {
   public static final Intake intake = new Intake();
   public static final Climber climber = new Climber();
   public static final Flywheel flywheel = new Flywheel();
-  public static final SpinFlywheel flywheelHandler = new SpinFlywheel(flywheel);
+  public static final PIDController flywheelPID = new PIDController(0, 0, 0);
+  public static SpinFlywheel flywheelHandler = new SpinFlywheel(flywheel, false, flywheelPID);
   public static final Turret turret = new Turret();
   public static final SpinTurret turretHandler = new SpinTurret(turret);
   public static final Uptake uptake = new Uptake();
@@ -61,10 +62,8 @@ public class RobotContainer {
     //drivetrain.setDefaultCommand(new DriveCommand(flightController, drivetrain, true)); //Field orientation
     //default commmand for spinning turret
     turret.setDefaultCommand(turretHandler);
-    //intake 
-    intake.setDefaultCommand(new holdArm(intake));
     //flyhweel
-    //flywheel.setDefaultCommand(flywheelHandler);
+    //flywheel.setDefaultCommand(flywheelHandler, false); if working with manual control
     //uptake indexer
     uptake.setDefaultCommand(new Index(uptake));
     //calibrate gyro
@@ -81,18 +80,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //JoystickButton liftArm = new JoystickButton(flightController, FlightController.ButtonA);
-
+    
     JoystickButton spinUptakeUp = new JoystickButton(flightController, FlightController.Button5);
     spinUptakeUp.whileHeld(new SpinUptake(uptake, intake, false));
 
     JoystickButton spinUptakeDown = new JoystickButton(flightController, FlightController.Button6);
     spinUptakeDown.whileHeld(new SpinUptake(uptake, intake, true));
 
-    JoystickButton armUp = new JoystickButton(flightController, FlightController.ButtonR2);
-    armUp.whileHeld(new moveArm(intake, false));
+    JoystickButton moveClimberUp = new JoystickButton(flightController, FlightController.ButtonR2);
+    moveClimberUp.whileHeld(new MoveClimber(climber, false));
 
-    JoystickButton armDown = new JoystickButton(flightController, FlightController.ButtonL2);
-    armDown.whileHeld(new moveArm(intake, true));
+    JoystickButton moveClimberDown = new JoystickButton(flightController, FlightController.ButtonL2);
+    moveClimberDown.whileHeld(new MoveClimber(climber, true));
 
     JoystickButton scan = new JoystickButton(flightController, FlightController.Button8);
     scan.whileHeld(new ScanTurret(turret));

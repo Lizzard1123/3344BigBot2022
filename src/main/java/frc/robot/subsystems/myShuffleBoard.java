@@ -51,6 +51,8 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry colorMinDist;
   private NetworkTableEntry holdingBall;
   private NetworkTableEntry shootTime;
+  private NetworkTableEntry shootWidth;
+  private NetworkTableEntry getEjectSetGoal;
 
 
   //IO
@@ -132,18 +134,20 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.turretMaxSpeed = updateConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
     Constants.uptakeMaxSpeed = updateConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     Constants.intakeMaxSpeed = updateConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
-    Constants.armMaxSpeed = updateConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
-    Constants.armDefaultVoltage = updateConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
+    Constants.climberMaxSpeed = updateConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
     Constants.scanWidth = scanWidth.getDouble(Constants.scanWidth);
     Constants.minDist = colorMinDist.getDouble(Constants.minDist);
     Constants.shootTime = shootTime.getDouble(Constants.shootTime);
+    Constants.shootWidth = shootWidth.getDouble(Constants.shootWidth);
     //updating spinflywheel command
     updateFlywheelCommands();
     //updating turret command
     updateTurretCommand();
     //ready to shoot
-    readyToShoot.setBoolean(RobotContainer.turretHandler.withinTolerance() && RobotContainer.flywheelHandler.withinTolerance());
+    Constants.readyToShoot = RobotContainer.turretHandler.withinTolerance() && RobotContainer.flywheelHandler.withinTolerance() && RobotContainer.limelight.hasSight();
+    readyToShoot.setBoolean(Constants.readyToShoot);
+    Constants.getEjectSetGoal = getEjectSetGoal.getDouble(Constants.getEjectSetGoal);
     //auton updates
     Constants.autonForwardSpeed = MathUtil.clamp(autonForwardSpeed.getDouble(Constants.autonForwardSpeed), -Constants.maxSpeed, Constants.maxSpeed);
     Constants.autonForwardTime = MathUtil.clamp(autonForwardTime.getDouble(Constants.autonForwardTime), 0, 15);
@@ -179,7 +183,7 @@ public class MyShuffleBoard extends SubsystemBase {
   }
 
   public double getTurretTolerance(){
-    return turretTolerance.getDouble(0.0);
+    return turretTolerance.getDouble(4.0);
   }
 
   public boolean getVisionStatus(){
@@ -301,7 +305,7 @@ public class MyShuffleBoard extends SubsystemBase {
   }
 
   public void updateTurretCommand(){
-    RobotContainer.turretHandler.setTolerance(turretTolerance.getDouble(0.0));
+    RobotContainer.turretHandler.setTolerance(turretTolerance.getDouble(4.0));
     turretError.setDouble(RobotContainer.turretHandler.getError());
   }
 
@@ -362,13 +366,13 @@ public class MyShuffleBoard extends SubsystemBase {
     //color picker
     colorPicker = driveTab.add("Color", true)
     .withPosition(0, 3)
-    .withPosition(1, 1)
+    .withSize(1, 1)
     .withWidget(BuiltInWidgets.kToggleButton)
     .getEntry();
 
     colorDisplay = driveTab.add("CurrentColor", true)
     .withPosition(1, 3)
-    .withPosition(1, 1)
+    .withSize(1, 1)
     .withWidget(BuiltInWidgets.kBooleanBox)
     .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
     .getEntry();
@@ -384,8 +388,7 @@ public class MyShuffleBoard extends SubsystemBase {
     setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
     setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
-    setUpConstantOverrides("armMaxSpeed", Constants.armMaxSpeed);
-    setUpConstantOverrides("armDefaultVoltage", Constants.armDefaultVoltage);
+    setUpConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed);
     //misc
     scanWidth = constTab.add("scanWidth", Constants.scanWidth)
     .withPosition(0, 3)
@@ -415,6 +418,16 @@ public class MyShuffleBoard extends SubsystemBase {
     shootTime = constTab.add("shootTime", Constants.shootTime)
     .withPosition(4, 3)
     .withSize(1, 1)
+    .getEntry(); //getEjectSetGoal
+
+    shootWidth = constTab.add("shootWidth", Constants.shootWidth)
+    .withPosition(3, 3)
+    .withSize(1, 1)
+    .getEntry(); //getEjectSetGoal
+
+    getEjectSetGoal = constTab.add("getEjectSetGoal", Constants.getEjectSetGoal)
+    .withPosition(3, 3)
+    .withSize(1, 1)
     .getEntry();
   }
 
@@ -423,8 +436,6 @@ public class MyShuffleBoard extends SubsystemBase {
     ShuffleboardContainer flyWheelContainer = debugTab.getLayout("flywheelLayout", BuiltInLayouts.kList)
     .withSize(2, 4)
     .withPosition(7,0);
-    flywheelManualSpeed = flyWheelContainer.add("flywheelManualSpeed", Constants.flywheelManualSpeed)
-    .getEntry();
     flywheelAnalog = flyWheelContainer.add("flywheelAnalog", Constants.flywheelAnalog)
     .withWidget(BuiltInWidgets.kToggleButton)
     .getEntry();
@@ -528,7 +539,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(2, 2)
     .withWidget(BuiltInWidgets.kPIDController);
 
-    turretTolerance = limelightTab.add("turretTolerance", 0)
+    turretTolerance = limelightTab.add("turretTolerance", 4)
     .withPosition(4, 0)
     .withSize(1, 1)
     .getEntry();
@@ -538,7 +549,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(1, 1)
     .getEntry();
     
-    limelightTab.add("flywheelVisionPID", RobotContainer.flywheelHandler.pid)
+    limelightTab.add("flywheelVisionPID", RobotContainer.flywheelPID)
     .withPosition(6, 2)
     .withSize(1, 2)
     .withWidget(BuiltInWidgets.kPIDController);

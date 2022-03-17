@@ -24,7 +24,8 @@ public final class Constants {
     public static int turretPort = 5;
     public static int uptakePort = 6;
     public static int intakePort = 7;
-    public static int armPort = 8;
+    public static int climberPort = 8;
+    //public static int armPort = 8;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
     public static int leftLimitPort = 0;
     public static int rightLimitPort = 1;
@@ -40,17 +41,14 @@ public final class Constants {
     public static double driveSet = normal;
     public static double k_deadband = .1; //deadzone for controller inputs
     public static double scanWidth = 15;
-
-    //Flywheel constants
-    public static double flywheelManualSpeed = 0; // default for manual control
+    public static double shootWidth = 20;
 
     //max speeds
-    public static double flywheelMaxSpeed = 0;
+    public static double flywheelMaxSpeed = 100;
     public static double turretMaxSpeed = 20;
     public static double uptakeMaxSpeed = 60;
     public static double intakeMaxSpeed = 25;
-    public static double armMaxSpeed = 0;
-    public static double armDefaultVoltage = 0;
+    public static double climberMaxSpeed = 50;
 
     //auton
     public static double autonForwardSpeed = 30;
@@ -62,6 +60,8 @@ public final class Constants {
     public static boolean isBlue = true; //holds team color false means red
     public static boolean holdingBall = false;
     public static boolean holdingBlueBall = false;
+    public static boolean readyToShoot = false;
     public static double minDist = 130;
-    public static double shootTime = .5;
+    public static double shootTime = .75;
+    public static double getEjectSetGoal = 500;
 }

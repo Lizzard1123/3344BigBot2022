@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -17,7 +15,7 @@ import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
   public final CANSparkMax intake = new CANSparkMax(Constants.intakePort, MotorType.kBrushless);
-  public final VictorSPX arm = new VictorSPX(Constants.armPort);
+  //public final VictorSPX arm = new VictorSPX(Constants.armPort);
 
   public Intake() {
     super();
@@ -44,12 +42,12 @@ public class Intake extends SubsystemBase {
 
   public void armSpin(double speed){
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
-    arm.set(ControlMode.PercentOutput, speed * (Constants.armMaxSpeed / 100)); 
+    //arm.set(ControlMode.PercentOutput, speed * (Constants.armMaxSpeed / 100)); 
   }
 
   public void armVoltage(double volt){
     volt = MathUtil.clamp(volt, -12, 12); // check just in case, max and mins input
-    arm.set(ControlMode.PercentOutput, volt / 12); 
+    //arm.set(ControlMode.PercentOutput, volt / 12); 
   }
 
   public double getIntakeVoltage(){
@@ -57,7 +55,8 @@ public class Intake extends SubsystemBase {
   }
 
   public double getArmVoltage(){
-    return arm.getMotorOutputVoltage();
+    //return arm.getMotorOutputVoltage();
+    return 0.0;
   }
 
   public void intakeStop(){

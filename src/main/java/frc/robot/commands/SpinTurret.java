@@ -19,7 +19,8 @@ public class SpinTurret extends CommandBase {
   public SpinTurret(Turret turret) {
     super();
     this.turret = turret;
-    pid = new PIDController(0,0,0);
+    pid = new PIDController(0.075,0,0);
+    setTolerance(4);
     addRequirements(turret);
   }
 
