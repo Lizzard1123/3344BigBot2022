@@ -38,7 +38,7 @@ public class Index extends CommandBase {
         //sort color
         if((Constants.isBlue && Constants.holdingBlueBall )|| //is blue ball on blue team
           (!Constants.isBlue && !Constants.holdingBlueBall)){ //is red ball on red team
-          //new Shoot(uptake, true).schedule();;
+          new Shoot(uptake, true).schedule();;
         } else { //wrong color
           new Shoot(uptake, false).schedule();;
         }

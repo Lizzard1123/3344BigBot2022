@@ -27,6 +27,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private static ShuffleboardTab limelightTab  = Shuffleboard.getTab("Limelight");
   private static ShuffleboardTab powerTab  = Shuffleboard.getTab("powerTab");
   private static ShuffleboardTab autonTab  = Shuffleboard.getTab("auton");
+  private static ShuffleboardTab camerasTab  = Shuffleboard.getTab("camerasTab");
 
   //misc
   private NetworkTableEntry maxSpeed;
@@ -125,6 +126,8 @@ public class MyShuffleBoard extends SubsystemBase {
     initPower();
     //auton
     initAuton();
+    //init cameras 
+    initCameras();
   }
 
   @Override
@@ -667,5 +670,17 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(1, 1)
     .withSize(1, 1)
     .getEntry();
+  }
+
+  private void initCameras(){
+     //driver camera
+     camerasTab.add(RobotContainer.limelight.frontCamera)
+     .withPosition(0, 0)
+     .withSize(4, 4);
+
+     camerasTab.add("LL", RobotContainer.limelight.limelightFeed)
+    .withPosition(4, 0)
+    .withSize(4, 4)
+    .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
   }
 }
