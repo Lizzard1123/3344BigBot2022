@@ -31,14 +31,12 @@ public class SpinTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.manualOverride){ // manual controlls
-      turret.spin(-RobotContainer.gunnerController.getRightTrigger() + RobotContainer.gunnerController.getLeftTrigger());
-    } else { //PIDS
-      turret.spin(pid.calculate(RobotContainer.limelight.getXOffset(), 0));
-      if(withinTolerance()){ //check if at target to reset Ki values
-        pid.reset();
-      }
+    double speed = (-RobotContainer.gunnerController.getRightTrigger() + RobotContainer.gunnerController.getLeftTrigger());
+    speed += pid.calculate(RobotContainer.limelight.getXOffset(), 0);
+    if(withinTolerance()){ //check if at target to reset Ki values
+      pid.reset();
     }
+    turret.spin(speed);
   }
 
   public void setTolerance(double tol){

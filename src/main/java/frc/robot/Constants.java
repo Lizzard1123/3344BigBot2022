@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.I2C;
  */
 public final class Constants {
     //important
-    public static boolean manualOverride = false;
+    public static boolean manualOverride = true;
 
     //Ports
     public static int FRPort = 1;
@@ -36,11 +36,11 @@ public final class Constants {
     public static int flightControllerPort = 0;
 
     //Drive speeds
-    public static double maxSpeed = 50;
+    public static double maxSpeed = 100;
     public static double turnSpeed = 100;
-    public static double turtle = 40;
+    public static double turtle = 100;
     public static double rabbit = 100;
-    public static double normal = 70;
+    public static double normal = 100;
     public static double driveSet = normal;
     public static double k_deadband = .1; //deadzone for controller inputs
     public static double scanWidth = 15;
@@ -48,15 +48,15 @@ public final class Constants {
 
     //max speeds
     public static double flywheelMaxSpeed = 100;
-    public static double turretMaxSpeed = 20;
+    public static double turretMaxSpeed = 35;
     public static double uptakeMaxSpeed = 60;
-    public static double intakeMaxSpeed = 25;
+    public static double intakeMaxSpeed = 40;
     public static double climberMaxSpeed = 50;
 
     //auton
     public static boolean goForAuton = false; 
-    public static double autonForwardSpeed = 30;
-    public static double autonForwardTime = 3;
+    public static double autonForwardSpeed = 50;
+    public static double autonForwardTime = .5;
     public static double autonTurnSpeed = 25;
     public static double autonTurnTime = 5;
     //misc
@@ -66,7 +66,7 @@ public final class Constants {
     public static boolean holdingBlueBall = false;
     public static boolean readyToShoot = false;
     public static double minDist = 130;
-    public static double shootTime = .75;
-    public static double getEjectSetGoal = 500;
+    public static double shootTime = 1;
+    public static double getEjectSetGoal = 2500;
     public static double defaultGimbal = 10;
 }

@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MoveTimed extends CommandBase {
   private Drivetrain drive;
   private double startTime;
+  private boolean reverse;
 
-  public MoveTimed(Drivetrain drive) {
+  public MoveTimed(Drivetrain drive, boolean rev) {
     super();
     this.drive = drive;
+    this.reverse = rev;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive);
   }
@@ -30,8 +32,8 @@ public class MoveTimed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.spinLeft(Constants.autonForwardSpeed / 100);
-    drive.spinRight(Constants.autonForwardSpeed / 100);
+    drive.spinLeft(-.5);
+    drive.spinRight(-.5);
   }
 
   // Called once the command ends or is interrupted.
@@ -43,8 +45,10 @@ public class MoveTimed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if((Timer.getFPGATimestamp() - startTime) >= Constants.autonForwardTime)
+    if((Timer.getFPGATimestamp() - startTime) >= 2){
+      System.out.println("auton end\n");
       return true;
+    }
     return false;
   }
 }

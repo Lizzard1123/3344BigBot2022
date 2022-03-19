@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -18,8 +19,8 @@ public class Autonomous extends SequentialCommandGroup {
    * @param subsystem The subsystem used by this command.
    */
   public Autonomous() {
-   if(Constants.goForAuton){
     addCommands(
+      /*
       //turret to the right
       new SpinTurretSpeed(RobotContainer.turret, .4),
       new WaitCommand(.2),
@@ -29,8 +30,9 @@ public class Autonomous extends SequentialCommandGroup {
       new MoveTimed(RobotContainer.drivetrain),
       new TurnTimed(RobotContainer.drivetrain),
       new ScanTurret(RobotContainer.turret)
+      */
+      new MoveTimed(RobotContainer.drivetrain, false)
     );
-   }
   }
 
   // Called when the command is initially scheduled.
