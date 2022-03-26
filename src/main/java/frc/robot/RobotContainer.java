@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Index;
+import frc.robot.commands.MoveAndShoot;
 import frc.robot.commands.MoveClimber;
 import frc.robot.commands.ScanTurret;
 import frc.robot.commands.SpinFlywheel;
@@ -30,6 +33,7 @@ import frc.robot.subsystems.Uptake;
 import frc.robot.subsystems.XBox;
 import frc.robot.subsystems.MyShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -59,6 +63,8 @@ public class RobotContainer {
   public static final Autonomous m_autoCommand = new Autonomous();
   public static final MyShuffleBoard shuffleBoardInterface = new MyShuffleBoard();
 
+  public static final SendableChooser<SequentialCommandGroup> autoChooser = new SendableChooser<SequentialCommandGroup>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //runs execute of driveCommand function indefinately
@@ -75,6 +81,7 @@ public class RobotContainer {
     gyro.calibrate();
     // Configure the button bindings
     configureButtonBindings();
+    putChooser();
   }
 
   /**
@@ -127,6 +134,12 @@ public class RobotContainer {
     
   }
 
+  public void putChooser() {
+    autoChooser.setDefaultOption("Nothing", new SequentialCommandGroup());
+    autoChooser.addOption("Shoot and Move", new MoveAndShoot());
+
+    SmartDashboard.putData(autoChooser);
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -134,6 +147,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return autoChooser.getSelected();
   }
 }

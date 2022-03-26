@@ -47,7 +47,7 @@ public final class Constants {
     public static double shootWidth = 20;
 
     //max speeds
-    public static double flywheelMaxSpeed = 100;
+    public static double flywheelMaxSpeed = 85;
     public static double turretMaxSpeed = 35;
     public static double uptakeMaxSpeed = 60;
     public static double intakeMaxSpeed = 40;
