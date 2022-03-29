@@ -15,7 +15,7 @@ import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
   VictorSPX climber = new VictorSPX(Constants.climberPort);
-  CANSparkMax climberGimbal = new CANSparkMax(11, MotorType.kBrushless);
+  //CANSparkMax climberGimbal = new CANSparkMax(11, MotorType.kBrushless);
 
   public Climber() {
     super();
@@ -31,11 +31,13 @@ public class Climber extends SubsystemBase {
   }
 
   public double getCurrent(){
-    return climberGimbal.getOutputCurrent();
+    //return climberGimbal.getOutputCurrent();
+    return 0;
   }
   
   public double getTemp(){
-    return climberGimbal.getMotorTemperature();
+    //return climberGimbal.getMotorTemperature();
+    return 0;
   }
 
   public void spin(double speed){
@@ -45,7 +47,7 @@ public class Climber extends SubsystemBase {
 
   public void spinGimbal(double speed){
     speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
-    climberGimbal.set(speed); 
+    //climberGimbal.set(speed); 
   }
 
   public void stop(){
