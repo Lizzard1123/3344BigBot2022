@@ -36,13 +36,7 @@ public class SpinFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(update){
-      pid.setSetpoint(interpolateVelocity(RobotContainer.limelight.getWidth()));
-    }
-    flywheel.spin(pid.calculate(flywheel.getVelocity()));
-    if(withinTolerance()){
-      //pid.reset();
-    }
+    flywheel.spin(flywheel.getVelocity());
   }
 
   // Called once the command ends or is interrupted.
@@ -58,12 +52,8 @@ public class SpinFlywheel extends CommandBase {
     return isDone;
   }
 
-  private double interpolateVelocity(double width){
-    return Math.pow(320/width, 2) * setInterpolatorPVal;
-  }
-
-  public double getInterpolatedVelocity(){
-    return interpolateVelocity(RobotContainer.limelight.getWidth());
+  private double interpolateVelocity(){
+    return RobotContainer.shuffleBoardInterface.getVelocity();
   }
 
   public double getError(){

@@ -75,7 +75,7 @@ public class RobotContainer {
     turret.setDefaultCommand(turretHandler);
     //flyhweel
     //flywheel.setDefaultCommand(flywheelHandler, false); if working with manual control
-    climber.setDefaultCommand(new moveClimberGimbal(climber, true, false, 0));
+    //climber.setDefaultCommand(new moveClimberGimbal(climber, true, false, 0));
     //uptake indexer
     uptake.setDefaultCommand(new Index(uptake));
     //calibrate gyro

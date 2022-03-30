@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Shoot extends CommandBase {
@@ -70,7 +71,7 @@ public class Shoot extends CommandBase {
 
   private void tryToShoot(){
     if(RobotContainer.limelight.hasSight() &&
-      RobotContainer.limelight.getWidth() >= Constants.shootWidth &&
+      (RobotContainer.gunnerController.getButtonB() || DriverStation.isAutonomous()) &&
       RobotContainer.flywheelHandler.withinTolerance() && 
       RobotContainer.turretHandler.withinTolerance())
       new spinUptakeTimed(uptake).schedule();

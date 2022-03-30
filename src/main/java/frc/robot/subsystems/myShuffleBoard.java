@@ -298,8 +298,12 @@ public class MyShuffleBoard extends SubsystemBase {
   public void updateFlywheelCommands(){
     RobotContainer.flywheelHandler.setTolerance(flywheelTolerance.getDouble(0.0));
     RobotContainer.flywheelHandler.setInterpolatorVal(flywheelTargetPVal.getDouble(0.0));
-    flywheelTargetVelocity.setDouble(RobotContainer.flywheelHandler.getInterpolatedVelocity());
+    Constants.shootSpeed = flywheelTargetVelocity.getDouble(Constants.shootSpeed);
     flywheelError.setDouble(RobotContainer.flywheelHandler.getError());
+  }
+
+  public double getVelocity(){
+    return flywheelTargetVelocity.getDouble(Constants.shootSpeed);
   }
 
   public boolean updateColorDist(double num){
@@ -586,7 +590,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(1, 1)
     .getEntry();
     
-    flywheelTargetVelocity = limelightTab.add("flywheelTargetVelocity", 0)
+    flywheelTargetVelocity = limelightTab.add("flywheelTargetVelocity", Constants.shootSpeed)
     .withPosition(4, 2)
     .withSize(1, 1)
     .getEntry();

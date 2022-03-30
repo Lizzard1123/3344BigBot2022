@@ -26,7 +26,7 @@ public class MoveClimber extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.spin(Constants.climberMaxSpeed * (reverse?-1:1));
+    climber.spin(Constants.climberMaxSpeed/100 * (reverse?-1:1));
   }
 
   // Called once the command ends or is interrupted.
