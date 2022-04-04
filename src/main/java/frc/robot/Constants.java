@@ -24,11 +24,11 @@ public final class Constants {
     public static int BRPort = 3;
     public static int BLPort = 2;
     public static int flywheelPort = 4;
+    public static int backFlywheelPort = 13;
     public static int turretPort = 5;
     public static int uptakePort = 6;
     public static int intakePort = 7;
-    public static int climberPort = 8;
-    public static int armPort = 12;
+    public static int climberPort = 12;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
     public static int leftLimitPort = 0;
     public static int rightLimitPort = 1;
@@ -67,7 +67,6 @@ public final class Constants {
     public static boolean readyToShoot = false;
     public static double minDist = 130;
     public static double shootTime = 1;
-    public static double getEjectSetGoal = 2500;
-    public static double shootSpeed = 5000;
     public static double defaultGimbal = 10;
+    public static double wheelMultipler = 1.52;
 }

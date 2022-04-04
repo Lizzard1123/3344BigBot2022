@@ -45,7 +45,8 @@
       "/Shuffleboard/powerTab/Intake": "Subsystem",
       "/Shuffleboard/powerTab/LimelightClass": "Subsystem",
       "/Shuffleboard/powerTab/Turret": "Subsystem",
-      "/Shuffleboard/powerTab/Uptake": "Subsystem"
+      "/Shuffleboard/powerTab/Uptake": "Subsystem",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
     }
   },
   "NetworkTables": {

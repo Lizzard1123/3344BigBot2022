@@ -15,7 +15,6 @@ import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
   public final CANSparkMax intake = new CANSparkMax(Constants.intakePort, MotorType.kBrushless);
-  //public final VictorSPX arm = new VictorSPX(Constants.armPort);
 
   public Intake() {
     super();
@@ -26,7 +25,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    RobotContainer.shuffleBoardInterface.updateIntakeVoltages(getIntakeVoltage(), getArmVoltage());
+    RobotContainer.shuffleBoardInterface.updateIntakeVoltages(getIntakeVoltage());
   }
 
   @Override
@@ -40,30 +39,11 @@ public class Intake extends SubsystemBase {
     intake.set(speed * (Constants.intakeMaxSpeed / 100)); 
   }
 
-  public void armSpin(double speed){
-    speed = MathUtil.clamp(speed, -1, 1); // check just in case, max and mins input
-    //arm.set(ControlMode.PercentOutput, speed * (Constants.armMaxSpeed / 100)); 
-  }
-
-  public void armVoltage(double volt){
-    volt = MathUtil.clamp(volt, -12, 12); // check just in case, max and mins input
-    //arm.set(ControlMode.PercentOutput, volt / 12); 
-  }
-
   public double getIntakeVoltage(){
     return intake.get() * 12;
   }
 
-  public double getArmVoltage(){
-    //return arm.getMotorOutputVoltage();
-    return 0.0;
-  }
-
   public void intakeStop(){
     intakeSpin(0);
-  }
-
-  public void armStop(){
-    armSpin(0);
   }
 }

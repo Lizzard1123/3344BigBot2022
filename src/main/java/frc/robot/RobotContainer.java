@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -17,12 +15,10 @@ import frc.robot.commands.Index;
 import frc.robot.commands.MoveAndShoot;
 import frc.robot.commands.MoveClimber;
 import frc.robot.commands.ScanTurret;
-import frc.robot.commands.SpinFlywheel;
 import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
 import frc.robot.commands.controllFlywheel;
-import frc.robot.commands.moveClimberGimbal;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
@@ -53,8 +49,6 @@ public class RobotContainer {
   public static final Intake intake = new Intake();
   public static final Climber climber = new Climber();
   public static final Flywheel flywheel = new Flywheel();
-  public static final PIDController flywheelPID = new PIDController(0, 0, 0);
-  public static SpinFlywheel flywheelHandler = new SpinFlywheel(flywheel, false, flywheelPID);
   public static final Turret turret = new Turret();
   public static final SpinTurret turretHandler = new SpinTurret(turret);
   public static final Uptake uptake = new Uptake();
@@ -108,10 +102,10 @@ public class RobotContainer {
     JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON);
     moveClimberDown.whileHeld(new MoveClimber(climber, false));
 
-    JoystickButton moveClimberGimbalUp = new JoystickButton(driverController, XBox.X_BUTTON);
-    moveClimberGimbalUp.whileHeld(new moveClimberGimbal(climber, false, true, Constants.defaultGimbal));
-    JoystickButton moveClimberGimbalDown = new JoystickButton(driverController, XBox.B_BUTTON);
-    moveClimberGimbalDown.whileHeld(new moveClimberGimbal(climber, true, true, 0));
+    //JoystickButton moveClimberGimbalUp = new JoystickButton(driverController, XBox.X_BUTTON);
+    //moveClimberGimbalUp.whileHeld(new moveClimberGimbal(climber, false, true, Constants.defaultGimbal));
+    //JoystickButton moveClimberGimbalDown = new JoystickButton(driverController, XBox.B_BUTTON);
+    //moveClimberGimbalDown.whileHeld(new moveClimberGimbal(climber, true, true, 0));
 
     //JoystickButton scan = new JoystickButton(driverController, XBox.B_BUTTON);
     //scan.whileHeld(new ScanTurret(turret));

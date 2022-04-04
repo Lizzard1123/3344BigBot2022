@@ -6,13 +6,6 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ExampleSubsystem;
-
-import java.io.Console;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */

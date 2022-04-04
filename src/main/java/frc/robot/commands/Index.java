@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Uptake;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -34,15 +36,34 @@ public class Index extends CommandBase {
         uptake.stop();
       Constants.holdingBlueBall = (uptake.getBlue() >= uptake.getRed());
      //check color of ball to determine its fate
-      if(Constants.holdingBall)
+      if(Constants.holdingBall){
         //sort color
         if((Constants.isBlue && Constants.holdingBlueBall )|| //is blue ball on blue team
           (!Constants.isBlue && !Constants.holdingBlueBall)){ //is red ball on red team
-          new Shoot(uptake, true).schedule();;
+          tryToShoot();
         } else { //wrong color
-          new Shoot(uptake, false).schedule();;
+          eject();
         }
+      } else {
+        RobotContainer.flywheel.spin(0);
+      }
     }
+  }
+  private void tryToShoot(){
+    RobotContainer.flywheel.spin(getFlywheelSpeed());
+    if(RobotContainer.limelight.hasSight() &&
+      (RobotContainer.gunnerController.getButtonB() || DriverStation.isAutonomous()) &&
+      RobotContainer.turretHandler.withinTolerance())
+      new spinUptakeTimed(uptake).schedule();
+  }
+
+  private void eject(){
+    RobotContainer.flywheel.spin(getFlywheelSpeed()/3);
+    new spinUptakeTimed(uptake).schedule();
+  }
+
+  private double getFlywheelSpeed(){
+    return RobotContainer.shuffleBoardInterface.getFlyhweelSpeed() / 100;
   }
 
   // Called once the command ends or is interrupted.

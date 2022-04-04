@@ -43,6 +43,9 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry flywheelTemp;
   private NetworkTableEntry flywheelVelocity;
   private NetworkTableEntry flywheelCurrent;
+  private NetworkTableEntry backFlywheelTemp;
+  private NetworkTableEntry backFlywheelVelocity;
+  private NetworkTableEntry backFlywheelCurrent;
   //other neo
   private NetworkTableEntry gimbalCurrent;
   private NetworkTableEntry gimbalTemp;
@@ -58,7 +61,6 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry holdingBall;
   private NetworkTableEntry shootTime;
   private NetworkTableEntry shootWidth;
-  private NetworkTableEntry getEjectSetGoal;
 
 
   //IO
@@ -76,11 +78,9 @@ public class MyShuffleBoard extends SubsystemBase {
   //limelight pid
   private NetworkTableEntry turretTolerance;
   private NetworkTableEntry turretError;
-  private NetworkTableEntry flywheelTolerance;
-  private NetworkTableEntry flywheelError;
-  private NetworkTableEntry flywheelTargetVelocity;
-  private NetworkTableEntry flywheelTargetPVal;
   private NetworkTableEntry readyToShoot;
+  private NetworkTableEntry backWheelMultipler;
+  private NetworkTableEntry flyhweelSpeed;
 
   //auton vars
   private NetworkTableEntry goForAuton;
@@ -92,7 +92,7 @@ public class MyShuffleBoard extends SubsystemBase {
 
   //intake ones
   private NetworkTableEntry intakeVoltage;
-  private NetworkTableEntry armVoltage;
+  private NetworkTableEntry climberVoltage;
   
 
   //struct (ish) for overrides 
@@ -152,14 +152,12 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.shootWidth = shootWidth.getDouble(Constants.shootWidth);
     Constants.manualOverride = manualOverride.getBoolean(Constants.manualOverride);
     Constants.goForAuton = goForAuton.getBoolean(Constants.goForAuton);
-    //updating spinflywheel command
-    updateFlywheelCommands();
+    Constants.wheelMultipler = backWheelMultipler.getDouble(Constants.wheelMultipler);
     //updating turret command
     updateTurretCommand();
     //ready to shoot
-    Constants.readyToShoot = RobotContainer.turretHandler.withinTolerance() && RobotContainer.flywheelHandler.withinTolerance() && RobotContainer.limelight.hasSight();
+    Constants.readyToShoot = RobotContainer.turretHandler.withinTolerance() && RobotContainer.limelight.hasSight();
     readyToShoot.setBoolean(Constants.readyToShoot);
-    Constants.getEjectSetGoal = getEjectSetGoal.getDouble(Constants.getEjectSetGoal);
     //auton updates
     Constants.autonForwardSpeed = MathUtil.clamp(autonForwardSpeed.getDouble(Constants.autonForwardSpeed), -Constants.maxSpeed, Constants.maxSpeed);
     Constants.autonForwardTime = MathUtil.clamp(autonForwardTime.getDouble(Constants.autonForwardTime), 0, 15);
@@ -249,6 +247,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(4, 0);
     Flywheel fly = RobotContainer.flywheel;
     NetworkTableEntry FV = flyTurContainer.add("FlywheelVoltage", fly.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
+    NetworkTableEntry BFV = flyTurContainer.add("BackFlywheelVoltage", fly.getBackVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     Turret turret = RobotContainer.turret;
     NetworkTableEntry TV = flyTurContainer.add("TurretVoltage", turret.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     Uptake uptake = RobotContainer.uptake;
@@ -259,6 +258,7 @@ public class MyShuffleBoard extends SubsystemBase {
     debugVoltages.put("BLVoltage", BLV);
     debugVoltages.put("BRVoltage", BRV);
     debugVoltages.put("FlywheelVoltage", FV);
+    debugVoltages.put("BackFlywheelVoltage", BFV);
     debugVoltages.put("TurretVoltage", TV);
     debugVoltages.put("UptakeVoltage", UV);
     //misc
@@ -294,16 +294,15 @@ public class MyShuffleBoard extends SubsystemBase {
   public boolean updateFlyWheelVelocity(double num){
     return flywheelVelocity.setDouble(num);
   }
-
-  public void updateFlywheelCommands(){
-    RobotContainer.flywheelHandler.setTolerance(flywheelTolerance.getDouble(0.0));
-    RobotContainer.flywheelHandler.setInterpolatorVal(flywheelTargetPVal.getDouble(0.0));
-    Constants.shootSpeed = flywheelTargetVelocity.getDouble(Constants.shootSpeed);
-    flywheelError.setDouble(RobotContainer.flywheelHandler.getError());
+  //back flywheel
+  public boolean updateBackFlyWheelCurrent(double num){
+    return backFlywheelCurrent.setDouble(num);
   }
-
-  public double getVelocity(){
-    return flywheelTargetVelocity.getDouble(Constants.shootSpeed);
+  public boolean updateBackFlyWheelTemp(double num){
+    return backFlywheelTemp.setDouble(num);
+  }
+  public boolean updateBackFlyWheelVelocity(double num){
+    return backFlywheelVelocity.setDouble(num);
   }
 
   public boolean updateColorDist(double num){
@@ -323,15 +322,26 @@ public class MyShuffleBoard extends SubsystemBase {
     return totalSpeedDisplay.setDouble(num);
   }
 
+  public double getMultipler(){
+    return backWheelMultipler.getDouble(Constants.wheelMultipler);
+  }
+
+  public double getFlyhweelSpeed(){
+    return flyhweelSpeed.getDouble(0);
+  }
+
   public void updateTurretCommand(){
     RobotContainer.turretHandler.setTolerance(turretTolerance.getDouble(4.0));
     turretError.setDouble(RobotContainer.turretHandler.getError());
   }
 
   //intake voltages
-  public void updateIntakeVoltages(double intake, double arm){
+  public void updateIntakeVoltages(double intake){
     intakeVoltage.setDouble(intake);
-    armVoltage.setDouble(arm);
+  }
+
+  public void updateClimberVoltage(double voltage){
+    climberVoltage.setDouble(voltage);
   }
 
   //return the shuffleboard value of constants
@@ -450,11 +460,6 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(3, 3)
     .withSize(1, 1)
     .getEntry(); //getEjectSetGoal
-
-    getEjectSetGoal = constTab.add("getEjectSetGoal", Constants.getEjectSetGoal)
-    .withPosition(3, 3)
-    .withSize(1, 1)
-    .getEntry();
   }
 
   private void initDebugTab(){
@@ -470,6 +475,12 @@ public class MyShuffleBoard extends SubsystemBase {
     flywheelVelocity = flyWheelContainer.add("flywheelVelocity", 0)
     .getEntry();
     flywheelCurrent = flyWheelContainer.add ("flywheelCurrent", 0)
+    .getEntry();
+    backFlywheelTemp = flyWheelContainer.add("backFlywheelTemp", 0)
+    .getEntry();
+    backFlywheelVelocity = flyWheelContainer.add("backFlywheelVelocity", 0)
+    .getEntry();
+    backFlywheelCurrent = flyWheelContainer.add ("backFlywheelCurrent", 0)
     .getEntry();
     //Color Sensor
     ShuffleboardContainer colorContainer = debugTab.getLayout("Color Sensor", BuiltInLayouts.kList)
@@ -505,7 +516,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(2, 1)
     .getEntry();
 
-    armVoltage = debugTab.add("armVoltage", 0)
+    climberVoltage = debugTab.add("climberVoltage", 0)
     .withWidget(BuiltInWidgets.kVoltageView)
     .withProperties(Map.of("min", -12, "max", 12))
     .withPosition(2, 3)
@@ -513,10 +524,10 @@ public class MyShuffleBoard extends SubsystemBase {
     .getEntry();
 
     //misc
-    debugTab
-    .add("GyroDisplay", RobotContainer.gyro)
-    .withPosition(4, 2)
-    .withWidget(BuiltInWidgets.kGyro);
+    //debugTab
+    //.add("GyroDisplay", RobotContainer.gyro)
+    //.withPosition(4, 2)
+    //.withWidget(BuiltInWidgets.kGyro);
 
     //Debug tab presets
     initAllVoltages();
@@ -575,28 +586,13 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(1, 1)
     .getEntry();
     
-    limelightTab.add("flywheelVisionPID", RobotContainer.flywheelPID)
-    .withPosition(6, 2)
-    .withSize(1, 2)
-    .withWidget(BuiltInWidgets.kPIDController);
-
-    flywheelTolerance = limelightTab.add("flywheelTolerance", 0)
-    .withPosition(5, 2)
-    .withSize(1, 1)
-    .getEntry();
-
-    flywheelError = limelightTab.add("flywheelError", 0)
-    .withPosition(5, 3)
-    .withSize(1, 1)
-    .getEntry();
-    
-    flywheelTargetVelocity = limelightTab.add("flywheelTargetVelocity", Constants.shootSpeed)
-    .withPosition(4, 2)
-    .withSize(1, 1)
-    .getEntry();
-    
-    flywheelTargetPVal = limelightTab.add("flywheelTargetPVal", 0)
+    backWheelMultipler = limelightTab.add("backWheelMultipler", Constants.wheelMultipler)
     .withPosition(4, 3)
+    .withSize(1, 1)
+    .getEntry();
+
+    flyhweelSpeed = limelightTab.add("flyhweelSpeed", 100)
+    .withPosition(5, 3)
     .withSize(1, 1)
     .getEntry();
 
