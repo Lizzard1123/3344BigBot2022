@@ -130,9 +130,9 @@ public class RobotContainer {
   }
 
   public void putChooser() {
-    autoChooser.setDefaultOption("Nothing", new SequentialCommandGroup());
+    autoChooser.addOption("Nothing", new SequentialCommandGroup());
     autoChooser.addOption("Shoot and Move", new MoveAndShoot());
-    autoChooser.addOption("Shoot 2 and move", new MoveAndShootTwo());
+    autoChooser.setDefaultOption("Shoot 2 and move", new MoveAndShootTwo());
 
     SmartDashboard.putData(autoChooser);
   }
