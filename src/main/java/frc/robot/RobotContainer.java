@@ -13,8 +13,8 @@ import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Index;
 import frc.robot.commands.MoveAndShoot;
+import frc.robot.commands.MoveAndShootTwo;
 import frc.robot.commands.MoveClimber;
-import frc.robot.commands.ScanTurret;
 import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
@@ -132,6 +132,7 @@ public class RobotContainer {
   public void putChooser() {
     autoChooser.setDefaultOption("Nothing", new SequentialCommandGroup());
     autoChooser.addOption("Shoot and Move", new MoveAndShoot());
+    autoChooser.addOption("Shoot 2 and move", new MoveAndShootTwo());
 
     SmartDashboard.putData(autoChooser);
   }

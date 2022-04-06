@@ -5,46 +5,41 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.Timer;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class TurnTimed extends CommandBase {
-  private Drivetrain drive;
-  private double startTime;
+public class SpinIntakeAuton extends CommandBase {
+  private Intake intake;
+  private boolean reverse = false;
+  private double speed;
 
-  public TurnTimed(Drivetrain drive) {
+  public SpinIntakeAuton(Intake intake, boolean reverse, double speed) {
     super();
-    this.drive = drive;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drive);
+    this.intake = intake;
+    this.reverse = reverse;
+    this.speed = speed;
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    startTime = Timer.getFPGATimestamp();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() { 
-    drive.spinLeft(Constants.autonForwardSpeed / 100);
-    drive.spinRight(-Constants.autonForwardSpeed / 100);
+  public void execute() {
+    intake.intakeSpin(speed * (reverse?-1:1));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.stopAll();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if((Timer.getFPGATimestamp() - startTime) >= Constants.autonTurnTime)
-      return true;
-    return false;
+    return true;
   }
 }

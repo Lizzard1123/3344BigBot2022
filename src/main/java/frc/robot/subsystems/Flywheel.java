@@ -19,7 +19,7 @@ public class Flywheel extends SubsystemBase {
   public final RelativeEncoder encoder = flywheel.getEncoder();
   
   public final CANSparkMax backFlywheel = new CANSparkMax(Constants.backFlywheelPort, MotorType.kBrushless);
-  public final RelativeEncoder backEncoder = flywheel.getEncoder();
+  public final RelativeEncoder backEncoder = backFlywheel.getEncoder();
 
 
   public Flywheel() {

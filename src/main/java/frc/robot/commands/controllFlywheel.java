@@ -28,7 +28,17 @@ public class controllFlywheel extends CommandBase {
   @Override
   public void execute() {
     if(Constants.manualOverride){
-      flywheel.spin(-RobotContainer.gunnerController.getLeftJoyY());
+      if(RobotContainer.gunnerController.getPOV() == -1){
+        flywheel.spin(-RobotContainer.gunnerController.getLeftJoyY());
+      } else if(RobotContainer.gunnerController.getPOV() == 0){
+        flywheel.spin(Constants.fullCourtSpeed/100);
+      } else if(RobotContainer.gunnerController.getPOV() == 90){
+        flywheel.spin(Constants.dumpBallSpeed/100);
+      } else if(RobotContainer.gunnerController.getPOV() == 180){
+        flywheel.spin(Constants.insideCircleSpeed/100);
+      } else if(RobotContainer.gunnerController.getPOV() == 270){
+        flywheel.spin(Constants.onCircleSpeed/100);
+      }
     }
   }
 

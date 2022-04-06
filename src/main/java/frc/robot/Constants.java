@@ -47,11 +47,17 @@ public final class Constants {
     public static double shootWidth = 20;
 
     //max speeds
-    public static double flywheelMaxSpeed = 85;
+    public static double flywheelMaxSpeed = 100;
+    //flywheel setpoints
+    public static double insideCircleSpeed = 20;
+    public static double onCircleSpeed = 37.5;
+    public static double fullCourtSpeed = 100;
+    public static double dumpBallSpeed = 30;
+
     public static double turretMaxSpeed = 35;
     public static double uptakeMaxSpeed = 60;
     public static double intakeMaxSpeed = 40;
-    public static double climberMaxSpeed = 50;
+    public static double climberMaxSpeed = 100;
 
     //auton
     public static boolean goForAuton = false; 
@@ -68,5 +74,5 @@ public final class Constants {
     public static double minDist = 130;
     public static double shootTime = 1;
     public static double defaultGimbal = 10;
-    public static double wheelMultipler = 1.52;
+    public static double wheelMultipler = -2;//1.52;
 }

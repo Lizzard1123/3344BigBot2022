@@ -32,7 +32,7 @@ public class spinUptakeTimed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    uptake.uptake.set(ControlMode.PercentOutput, -.6);
+    uptake.uptake.set(ControlMode.PercentOutput, -(Constants.uptakeMaxSpeed/100));
   }
 
   // Called once the command ends or is interrupted.

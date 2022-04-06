@@ -46,9 +46,6 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry backFlywheelTemp;
   private NetworkTableEntry backFlywheelVelocity;
   private NetworkTableEntry backFlywheelCurrent;
-  //other neo
-  private NetworkTableEntry gimbalCurrent;
-  private NetworkTableEntry gimbalTemp;
 
 
   //color sensor
@@ -80,7 +77,11 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry turretError;
   private NetworkTableEntry readyToShoot;
   private NetworkTableEntry backWheelMultipler;
-  private NetworkTableEntry flyhweelSpeed;
+  //setpoints
+  private NetworkTableEntry insideCircleSpeed;
+  private NetworkTableEntry onCircleSpeed;
+  private NetworkTableEntry fullCourtSpeed;
+  private NetworkTableEntry dumpBallSpeed;
 
   //auton vars
   private NetworkTableEntry goForAuton;
@@ -153,6 +154,10 @@ public class MyShuffleBoard extends SubsystemBase {
     Constants.manualOverride = manualOverride.getBoolean(Constants.manualOverride);
     Constants.goForAuton = goForAuton.getBoolean(Constants.goForAuton);
     Constants.wheelMultipler = backWheelMultipler.getDouble(Constants.wheelMultipler);
+    Constants.insideCircleSpeed = insideCircleSpeed.getDouble(Constants.insideCircleSpeed);
+    Constants.onCircleSpeed = onCircleSpeed.getDouble(Constants.onCircleSpeed);
+    Constants.fullCourtSpeed = fullCourtSpeed.getDouble(Constants.fullCourtSpeed);
+    Constants.dumpBallSpeed = dumpBallSpeed.getDouble(Constants.dumpBallSpeed);
     //updating turret command
     updateTurretCommand();
     //ready to shoot
@@ -168,9 +173,6 @@ public class MyShuffleBoard extends SubsystemBase {
     //indexer
     holdingBall.setBoolean(Constants.holdingBall);
     holdingBlueBall.setBoolean(Constants.holdingBlueBall);
-    //power tab misc
-    gimbalTemp.setDouble(RobotContainer.climber.getTemp());
-    gimbalCurrent.setDouble(RobotContainer.climber.getCurrent());
   }
 
   @Override
@@ -235,7 +237,7 @@ public class MyShuffleBoard extends SubsystemBase {
   //adds all voltage graphs into debug tab
   public void initAllVoltages(){
     Drivetrain drive = RobotContainer.drivetrain;
-    ShuffleboardContainer driveContainer = debugTab.getLayout("DriveTrain", BuiltInLayouts.kList)
+  ShuffleboardContainer driveContainer = debugTab.getLayout("DriveTrain", BuiltInLayouts.kList)
     .withSize(4, 3)
     .withPosition(0, 0);
     NetworkTableEntry FLV = driveContainer.add("FLVoltage", drive.getFLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
@@ -243,7 +245,7 @@ public class MyShuffleBoard extends SubsystemBase {
     NetworkTableEntry BLV = driveContainer.add("BLVoltage", drive.getBLVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     NetworkTableEntry BRV = driveContainer.add("BRVoltage", drive.getBRVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
     ShuffleboardContainer flyTurContainer = debugTab.getLayout("Flywheel&Turret", BuiltInLayouts.kList)
-    .withSize(2, 2)
+    .withSize(2, 3)
     .withPosition(4, 0);
     Flywheel fly = RobotContainer.flywheel;
     NetworkTableEntry FV = flyTurContainer.add("FlywheelVoltage", fly.getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("min", -12, "max", 12)).getEntry();
@@ -326,10 +328,6 @@ public class MyShuffleBoard extends SubsystemBase {
     return backWheelMultipler.getDouble(Constants.wheelMultipler);
   }
 
-  public double getFlyhweelSpeed(){
-    return flyhweelSpeed.getDouble(0);
-  }
-
   public void updateTurretCommand(){
     RobotContainer.turretHandler.setTolerance(turretTolerance.getDouble(4.0));
     turretError.setDouble(RobotContainer.turretHandler.getError());
@@ -392,19 +390,11 @@ public class MyShuffleBoard extends SubsystemBase {
     //Driver tab set notes
     setNotes();
 
-    //color picker
-    colorPicker = driveTab.add("Color", Constants.isBlue)
-    .withPosition(0, 3)
-    .withSize(1, 1)
-    .withWidget(BuiltInWidgets.kToggleButton)
-    .getEntry();
-
-    colorDisplay = driveTab.add("CurrentColor", Constants.isBlue)
-    .withPosition(1, 3)
-    .withSize(1, 1)
-    .withWidget(BuiltInWidgets.kBooleanBox)
-    .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
-    .getEntry();
+    //auton chooser
+    //driveTab.add(RobotContainer.autoChooser)
+    //.withWidget(BuiltInWidgets.kComboBoxChooser)
+    //.withPosition(0, 3)
+    //.withSize(2, 1);
 
     manualOverride = driveTab.add("manualOverride", Constants.manualOverride)
     .withPosition(1, 2)
@@ -460,6 +450,21 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(3, 3)
     .withSize(1, 1)
     .getEntry(); //getEjectSetGoal
+
+    
+    //color picker
+    colorPicker = constTab.add("Color", Constants.isBlue)
+    .withPosition(1, 3)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kToggleButton)
+    .getEntry();
+
+    colorDisplay = constTab.add("CurrentColor", Constants.isBlue)
+    .withPosition(2, 3)
+    .withSize(1, 1)
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .withProperties(Map.of("Color when false", "red", "Color when true", "blue"))
+    .getEntry();
   }
 
   private void initDebugTab(){
@@ -564,7 +569,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(7, 1)
     .withSize(1, 1)
     .getEntry();
-    limelightCamController = limelightTab.add("ll_CamController", false)
+    limelightCamController = limelightTab.add("ll_CamController", true)
     .withPosition(7, 2)
     .withSize(1, 1)
     .withWidget(BuiltInWidgets.kToggleButton)
@@ -591,8 +596,20 @@ public class MyShuffleBoard extends SubsystemBase {
     .withSize(1, 1)
     .getEntry();
 
-    flyhweelSpeed = limelightTab.add("flyhweelSpeed", 100)
+    insideCircleSpeed = limelightTab.add("insideCircleSpeed", Constants.insideCircleSpeed)
     .withPosition(5, 3)
+    .withSize(1, 1)
+    .getEntry();
+    onCircleSpeed = limelightTab.add("onCircleSpeed", Constants.onCircleSpeed)
+    .withPosition(6, 3)
+    .withSize(1, 1)
+    .getEntry();
+    fullCourtSpeed = limelightTab.add("fullCourtSpeed", Constants.fullCourtSpeed)
+    .withPosition(5, 2)
+    .withSize(1, 1)
+    .getEntry();
+    dumpBallSpeed = limelightTab.add("dumpBallSpeed", Constants.dumpBallSpeed)
+    .withPosition(6, 2)
     .withSize(1, 1)
     .getEntry();
 
@@ -630,16 +647,6 @@ public class MyShuffleBoard extends SubsystemBase {
     powerTab.add("Uptake", RobotContainer.uptake)
     .withPosition(6, 2)
     .withSize(2, 1);
-
-    gimbalCurrent = powerTab.add("gimbalCurrent", 0)
-    .withPosition(8, 0)
-    .withSize(1, 1)
-    .getEntry();
-
-    gimbalTemp = powerTab.add("gimbalTemp", 0)
-    .withPosition(8, 1)
-    .withSize(1, 1)
-    .getEntry();
   }
 
   private void initAuton(){

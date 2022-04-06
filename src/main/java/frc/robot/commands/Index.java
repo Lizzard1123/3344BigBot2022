@@ -29,14 +29,12 @@ public class Index extends CommandBase {
   @Override
   public void execute() { //this is kinda a mess
     //manual override doesnt need indexer 
+    //check if ball is in front of color sensor
+   Constants.holdingBall = (uptake.getDist() >= Constants.minDist);
+   Constants.holdingBlueBall = (uptake.getBlue() >= uptake.getRed());
     if(!Constants.manualOverride){
-      //check if ball is in front of color sensor
-      Constants.holdingBall = (uptake.getDist() >= Constants.minDist);
-      if(Constants.holdingBall)
-        uptake.stop();
-      Constants.holdingBlueBall = (uptake.getBlue() >= uptake.getRed());
-     //check color of ball to determine its fate
       if(Constants.holdingBall){
+        uptake.stop();
         //sort color
         if((Constants.isBlue && Constants.holdingBlueBall )|| //is blue ball on blue team
           (!Constants.isBlue && !Constants.holdingBlueBall)){ //is red ball on red team
@@ -58,12 +56,12 @@ public class Index extends CommandBase {
   }
 
   private void eject(){
-    RobotContainer.flywheel.spin(getFlywheelSpeed()/3);
+    RobotContainer.flywheel.spin(getFlywheelSpeed()/1.5);
     new spinUptakeTimed(uptake).schedule();
   }
 
   private double getFlywheelSpeed(){
-    return RobotContainer.shuffleBoardInterface.getFlyhweelSpeed() / 100;
+    return 0;
   }
 
   // Called once the command ends or is interrupted.
