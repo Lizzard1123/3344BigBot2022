@@ -49,9 +49,9 @@ public final class Constants {
     //max speeds
     public static double flywheelMaxSpeed = 100;
     //flywheel setpoints
-    public static double insideCircleSpeed = 20;
-    public static double onCircleSpeed = 37.5;
-    public static double fullCourtSpeed = 100;
+    public static double insideCircleSpeed = 45;
+    public static double onCircleSpeed = 39;
+    public static double fullCourtSpeed = 80;
     public static double dumpBallSpeed = 30;
 
     public static double turretMaxSpeed = 35;
@@ -61,10 +61,10 @@ public final class Constants {
 
     //auton
     public static boolean goForAuton = false; 
-    public static double autonForwardSpeed = 50;
-    public static double autonForwardTime = .5;
-    public static double autonTurnSpeed = 25;
-    public static double autonTurnTime = 5;
+    public static double autonForwardSpeed = 40;
+    public static double autonForwardTime = 1.9;
+    public static double autonTurnSpeed = 40;
+    public static double autonTurnTime = 2;
     //misc
     public static boolean flywheelAnalog = false; // speed of flywheel manual controller
     public static boolean isBlue = true; //holds team color false means red

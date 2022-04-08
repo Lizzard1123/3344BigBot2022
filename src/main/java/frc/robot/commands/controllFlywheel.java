@@ -32,14 +32,19 @@ public class controllFlywheel extends CommandBase {
         flywheel.spin(-RobotContainer.gunnerController.getLeftJoyY());
       } else if(RobotContainer.gunnerController.getPOV() == 0){
         flywheel.spin(Constants.fullCourtSpeed/100);
+        Constants.wheelMultipler = -2;
       } else if(RobotContainer.gunnerController.getPOV() == 90){
         flywheel.spin(Constants.dumpBallSpeed/100);
+        Constants.wheelMultipler = 2;
       } else if(RobotContainer.gunnerController.getPOV() == 180){
         flywheel.spin(Constants.insideCircleSpeed/100);
+        Constants.wheelMultipler = -.5;
       } else if(RobotContainer.gunnerController.getPOV() == 270){
         flywheel.spin(Constants.onCircleSpeed/100);
+        Constants.wheelMultipler = -2;
       }
     }
+    RobotContainer.shuffleBoardInterface.backWheelMultipler.setDouble(Constants.wheelMultipler);
   }
 
   // Called once the command ends or is interrupted.

@@ -76,7 +76,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry turretTolerance;
   private NetworkTableEntry turretError;
   private NetworkTableEntry readyToShoot;
-  private NetworkTableEntry backWheelMultipler;
+  public NetworkTableEntry backWheelMultipler;
   //setpoints
   private NetworkTableEntry insideCircleSpeed;
   private NetworkTableEntry onCircleSpeed;
