@@ -50,7 +50,7 @@ public final class Constants {
     public static double flywheelMaxSpeed = 100;
     //flywheel setpoints
     public static double insideCircleSpeed = 45;
-    public static double onCircleSpeed = 39;
+    public static double onCircleSpeed = 40.5;
     public static double fullCourtSpeed = 80;
     public static double dumpBallSpeed = 30;
 
