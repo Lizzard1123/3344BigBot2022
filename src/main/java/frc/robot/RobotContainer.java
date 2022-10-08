@@ -97,6 +97,10 @@ public class RobotContainer {
     JoystickButton spinIntakeDown = new JoystickButton(driverController, XBox.RB_BUTTON);
     spinIntakeDown.whileHeld(new SpinIntake(intake, true));
     
+
+    JoystickButton movePiston = new JoystickButton(driverController, Xbox.Y_BUTTON);
+    movePiston.whenPressed(command, interruptible)
+
     JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     moveClimberUp.whileHeld(new MoveClimber(climber, true));
     JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON);
