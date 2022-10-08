@@ -28,7 +28,7 @@ public class Pistons extends SubsystemBase {
         rightPiston.set(kReverse);
     }
 
-    public void extend(){
+    public void togglePiston(){
         leftPiston.toggle();
         rightPiston.toggle();
     }
