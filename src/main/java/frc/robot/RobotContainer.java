@@ -18,6 +18,7 @@ import frc.robot.commands.MoveClimber;
 import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
+import frc.robot.commands.TogglePistons;
 import frc.robot.commands.controllFlywheel;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -28,6 +29,7 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Uptake;
 import frc.robot.subsystems.XBox;
 import frc.robot.subsystems.MyShuffleBoard;
+import frc.robot.subsystems.Pistons;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -48,6 +50,7 @@ public class RobotContainer {
   public static final Drivetrain drivetrain = new Drivetrain();
   public static final Intake intake = new Intake();
   public static final Climber climber = new Climber();
+  public static final Pistons piston = new Pistons();
   public static final Flywheel flywheel = new Flywheel();
   public static final Turret turret = new Turret();
   public static final SpinTurret turretHandler = new SpinTurret(turret);
@@ -98,12 +101,12 @@ public class RobotContainer {
     spinIntakeDown.whileHeld(new SpinIntake(intake, true));
     
 
-    JoystickButton movePiston = new JoystickButton(driverController, Xbox.Y_BUTTON);
-    movePiston.whenPressed(command, interruptible)
+    JoystickButton movePiston = new JoystickButton(driverController, XBox.Y_BUTTON);
+    movePiston.whenPressed(new TogglePistons(piston));
 
-    JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
-    moveClimberUp.whileHeld(new MoveClimber(climber, true));
-    JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON);
+    //JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
+    //moveClimberUp.whileHeld(new MoveClimber(climber, true));
+    JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON); // I have no idea if this will work
     moveClimberDown.whileHeld(new MoveClimber(climber, false));
 
     //JoystickButton moveClimberGimbalUp = new JoystickButton(driverController, XBox.X_BUTTON);

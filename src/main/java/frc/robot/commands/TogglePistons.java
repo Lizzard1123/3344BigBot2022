@@ -5,21 +5,18 @@
 package frc.robot.commands;
 
 //import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
+//import frc.robot.RobotContainer;
+import frc.robot.subsystems.Pistons;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class SpinIntakeAuton extends CommandBase {
-  private Intake intake;
-  private boolean reverse = false;
-  private double speed;
+public class TogglePistons extends CommandBase {
+  private Pistons piston;
 
-  public SpinIntakeAuton(Intake intake, boolean reverse, double speed) {
-    super();
-    this.intake = intake;
-    this.reverse = reverse;
-    this.speed = speed;
-    addRequirements(intake);
+  public TogglePistons(Pistons piston) {
+    this.piston = piston;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(piston);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +26,7 @@ public class SpinIntakeAuton extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.intakeSpin(speed * (reverse?-1:1));
+    piston.extend();
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +37,6 @@ public class SpinIntakeAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
