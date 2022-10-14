@@ -26,7 +26,7 @@ public final class Constants {
     public static int flywheelPort = 4;
     public static int backFlywheelPort = 13;
     public static int turretPort = 5;
-    public static int uptakePort = 6;
+    public static int uptakePort = 12;
     public static int intakePort = 7;
     public static int climberPort = 12;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
