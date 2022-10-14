@@ -24,7 +24,7 @@ public class XBox extends Joystick{
             START_BUTTON = 8,
             LS_BUTTON = 9,
             RS_BUTTON = 10,
-            upButton = 11, //TODO FIND THESE
+            upButton = 11, 
             rightButton = 12,
             downButton = 13,
             

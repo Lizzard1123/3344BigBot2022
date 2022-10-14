@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+
 public class MyShuffleBoard extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   private static ShuffleboardTab driveTab  = Shuffleboard.getTab("Drive");
@@ -386,6 +387,12 @@ public class MyShuffleBoard extends SubsystemBase {
     driveTab.add(RobotContainer.limelight.frontCamera)
     .withPosition(2, 0)
     .withSize(5, 4);
+
+    //driveTab.add("Piston Status", piston.checkStatus()).withPosition(3,0).withSize(5,4);
+    driveTab.add("Piston Status", RobotContainer.piston.checkStatus())
+    .withPosition(3, 0)
+    .withSize(2, 2);
+
 
     //Driver tab set notes
     setNotes();

@@ -50,11 +50,11 @@ public class RobotContainer {
   public static final Drivetrain drivetrain = new Drivetrain();
   public static final Intake intake = new Intake();
   public static final Climber climber = new Climber();
-  public static final Pistons piston = new Pistons();
+  public static final Pistons piston = new Pistons(); // check port numbers
   public static final Flywheel flywheel = new Flywheel();
   public static final Turret turret = new Turret();
   public static final SpinTurret turretHandler = new SpinTurret(turret);
-  public static final Uptake uptake = new Uptake();
+  public static final Uptake uptake = new Uptake(); // check neo
   public static final AnalogGyro gyro = new AnalogGyro(0); // double check port #
   public static final LimelightClass limelight = new LimelightClass();
   //public static Limelight lime = new Limelight();

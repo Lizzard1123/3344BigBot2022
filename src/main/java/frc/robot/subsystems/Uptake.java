@@ -4,9 +4,14 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.util.Color;
@@ -15,24 +20,31 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Uptake extends SubsystemBase {
-  public final VictorSPX uptake = new VictorSPX(Constants.uptakePort); 
+  //public final VictorSPX uptake = new VictorSPX(Constants.uptakePort); 
   public final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorPort);
+
+  public final CANSparkMax uptake = new CANSparkMax(Constants.uptakePort, MotorType.kBrushless);
+  public final RelativeEncoder encoder = uptake.getEncoder();
 
   public Uptake() {
     super();
+    uptake.setIdleMode(IdleMode.kBrake);
   }
 
   public void spin(double speed){
     speed = MathUtil.clamp(speed, -1,  1); // check just in case, max and mins input
-    uptake.set(ControlMode.PercentOutput, speed * (Constants.uptakeMaxSpeed / 100)); 
+    uptake.set( speed * (Constants.uptakeMaxSpeed / 100));
+    //uptake.set(ControlMode.PercentOutput, speed * (Constants.uptakeMaxSpeed / 100)); 
   }
 
   public double getVoltage(){
-    return uptake.getMotorOutputVoltage();
+    return uptake.getAppliedOutput();
+    //return uptake.getMotorOutputVoltage();
   }
 
   public void stop(){
-    uptake.set(ControlMode.PercentOutput, 0);
+    //uptake.set(ControlMode.PercentOutput, 0);
+    uptake.stopMotor();
   }
 
   public Color getColor(){

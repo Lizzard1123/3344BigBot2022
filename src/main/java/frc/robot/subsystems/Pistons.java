@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
+
 //import java.util.HashMap;
 //import java.util.Map;
 
@@ -19,8 +20,8 @@ import frc.robot.Constants;
 //import frc.robot.RobotContainer;
 
 public class Pistons extends SubsystemBase {
-    public final static DoubleSolenoid leftPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.leftPistonPort1, Constants.leftPistonPort2);
-    public final static DoubleSolenoid rightPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.rightPistonPort1, Constants.rightPistonPort2);
+    public final static DoubleSolenoid leftPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.leftPistonPort1, Constants.leftPistonPort2);
+    public final static DoubleSolenoid rightPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.rightPistonPort1, Constants.rightPistonPort2);
 
     public Pistons(){
         super();
@@ -31,6 +32,17 @@ public class Pistons extends SubsystemBase {
     public void togglePiston(){
         leftPiston.toggle();
         rightPiston.toggle();
+    }
+
+    public boolean checkStatus(){
+
+        if(leftPiston.isFwdSolenoidDisabled() && rightPiston.isFwdSolenoidDisabled()){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 }
