@@ -83,7 +83,7 @@ public class Drivetrain extends SubsystemBase {
 
   //displays motor voltages in the debug tab in shuffleboard
   public void displayVoltages(){
-    MyShuffleBoard sb = RobotContainer.shuffleBoardInterface;
+    HarrisonShuffleBoard sb = RobotContainer.shuffleBoardInterface;
     boolean sucess =  
       sb.updateVoltage("FLVoltage", getFLVoltage()) &&
       sb.updateVoltage("FRVoltage", getFRVoltage()) &&

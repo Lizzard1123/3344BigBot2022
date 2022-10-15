@@ -27,7 +27,7 @@ import frc.robot.subsystems.LimelightClass;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Uptake;
 import frc.robot.subsystems.XBox;
-import frc.robot.subsystems.MyShuffleBoard;
+import frc.robot.subsystems.HarrisonShuffleBoard;
 import frc.robot.subsystems.Pistons;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -58,7 +58,7 @@ public class RobotContainer {
   public static final LimelightClass limelight = new LimelightClass();
   //public static Limelight lime = new Limelight();
   public static final Autonomous m_autoCommand = new Autonomous();
-  public static final MyShuffleBoard shuffleBoardInterface = new MyShuffleBoard();
+  public static final HarrisonShuffleBoard shuffleBoardInterface = new HarrisonShuffleBoard();
 
   public static final SendableChooser<SequentialCommandGroup> autoChooser = new SendableChooser<SequentialCommandGroup>();
 
