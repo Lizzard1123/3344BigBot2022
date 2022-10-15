@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+
 public class MyShuffleBoard extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   private static ShuffleboardTab driveTab  = Shuffleboard.getTab("Drive");
@@ -76,7 +77,7 @@ public class MyShuffleBoard extends SubsystemBase {
   private NetworkTableEntry turretTolerance;
   private NetworkTableEntry turretError;
   private NetworkTableEntry readyToShoot;
-  public NetworkTableEntry backWheelMultipler;
+  private NetworkTableEntry backWheelMultipler;
   //setpoints
   private NetworkTableEntry insideCircleSpeed;
   private NetworkTableEntry onCircleSpeed;
@@ -387,6 +388,12 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(2, 0)
     .withSize(5, 4);
 
+    //driveTab.add("Piston Status", piston.checkStatus()).withPosition(3,0).withSize(5,4);
+    driveTab.add("Piston Status", RobotContainer.piston.checkStatus())
+    .withPosition(3, 0)
+    .withSize(2, 2);
+
+
     //Driver tab set notes
     setNotes();
 
@@ -626,7 +633,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(0, 0)
     .withSize(3, 4);
     */
- 
+
     powerTab.add("Drivetrain", RobotContainer.drivetrain)
     .withPosition(4, 1)
     .withSize(2, 1);
