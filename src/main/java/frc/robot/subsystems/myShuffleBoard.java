@@ -626,9 +626,7 @@ public class MyShuffleBoard extends SubsystemBase {
     .withPosition(0, 0)
     .withSize(3, 4);
     */
-    powerTab.add("Climber", RobotContainer.climber)
-    .withPosition(4, 0)
-    .withSize(2, 1);
+ 
     powerTab.add("Drivetrain", RobotContainer.drivetrain)
     .withPosition(4, 1)
     .withSize(2, 1);

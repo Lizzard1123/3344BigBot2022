@@ -26,16 +26,15 @@ public final class Constants {
     public static int flywheelPort = 4;
     public static int backFlywheelPort = 13;
     public static int turretPort = 5;
-    public static int uptakePort = 6;
+    public static int uptakePort = 12;
     public static int intakePort = 7;
-    public static int climberPort = 12;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
     public static int leftLimitPort = 0;
     public static int rightLimitPort = 1;
-    public static int leftPistonPort1 = 8;
-    public static int leftPistonPort2 = 9;
-    public static int rightPistonPort1 = 10;
-    public static int rightPistonPort2 = 11;
+    public static int leftPistonPort1 = 12;
+    public static int leftPistonPort2 = 13;
+    public static int rightPistonPort1 = 14;
+    public static int rightPistonPort2 = 15;
     //others
     public static int flightControllerPort = 0;
 
