@@ -4,6 +4,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -81,9 +82,9 @@ public class RobotContainer {
     configureButtonBindings();
     putChooser();
     //enable hub
-    pne.enableCompressorDigital();
     pne.makeCompressor();
-    
+    pne.enableCompressorDigital();
+
 
     
   }
