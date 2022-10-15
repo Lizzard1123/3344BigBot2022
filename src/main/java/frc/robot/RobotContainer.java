@@ -14,7 +14,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Index;
 import frc.robot.commands.MoveAndShoot;
 import frc.robot.commands.MoveAndShootTwo;
-import frc.robot.commands.MoveClimber;
+//import frc.robot.commands.MoveClimber;
 import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
@@ -106,8 +106,8 @@ public class RobotContainer {
 
     //JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     //moveClimberUp.whileHeld(new MoveClimber(climber, true));
-    JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON); // I have no idea if this will work
-    moveClimberDown.whileHeld(new MoveClimber(climber, false));
+    //JoystickButton moveClimberDown = new JoystickButton(driverController, XBox.A_BUTTON); // I have no idea if this will work
+    //moveClimberDown.whileHeld(new MoveClimber(climber, false));
 
     //JoystickButton moveClimberGimbalUp = new JoystickButton(driverController, XBox.X_BUTTON);
     //moveClimberGimbalUp.whileHeld(new moveClimberGimbal(climber, false, true, Constants.defaultGimbal));
