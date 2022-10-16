@@ -29,6 +29,7 @@ public final class Constants {
     public static int uptakePort = 12;
     public static int intakePort = 7;
     public static I2C.Port colorPort = I2C.Port.kOnboard;
+    public static int winchPort;
     public static int leftLimitPort = 0;
     public static int rightLimitPort = 1;
     public static int leftPistonPort1 = 12;
@@ -61,6 +62,7 @@ public final class Constants {
     public static double uptakeMaxSpeed = 60;
     public static double intakeMaxSpeed = 40;
     public static double climberMaxSpeed = 100;
+    public static double winchMaxSpeed = 50;
 
     //auton
     public static boolean goForAuton = false; 

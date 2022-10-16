@@ -4,7 +4,6 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -17,11 +16,13 @@ import frc.robot.commands.Index;
 import frc.robot.commands.MoveAndShoot;
 import frc.robot.commands.MoveAndShootTwo;
 //import frc.robot.commands.MoveClimber;
+import frc.robot.commands.SpinWinch;
 import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
 import frc.robot.commands.TogglePistons;
 import frc.robot.commands.controllFlywheel;
+import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
@@ -51,6 +52,7 @@ public class RobotContainer {
   public static final XBox gunnerController = new XBox(1);
   public static final Drivetrain drivetrain = new Drivetrain();
   public static final Intake intake = new Intake();
+  public static final Winch winch = new Winch();
   public static final Pistons piston = new Pistons(); // check port numbers
   public static final Flywheel flywheel = new Flywheel();
   public static final Turret turret = new Turret();
@@ -110,6 +112,11 @@ public class RobotContainer {
 
     JoystickButton movePiston = new JoystickButton(driverController, XBox.Y_BUTTON);
     movePiston.whenPressed(new TogglePistons(piston));
+
+    JoystickButton windWinch = new JoystickButton(driverController, XBox.Y_BUTTON);
+    windWinch.whenHeld(new SpinWinch(winch, true));
+    JoystickButton unwindWinch = new JoystickButton(driverController, XBox.A_BUTTON);
+    unwindWinch.whenHeld(new SpinWinch(winch, false));
 
     //JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     //moveClimberUp.whileHeld(new MoveClimber(climber, true));
