@@ -145,7 +145,7 @@ public class HarrisonShuffleBoard extends SubsystemBase {
     Constants.turretMaxSpeed = updateConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
     Constants.uptakeMaxSpeed = updateConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     Constants.intakeMaxSpeed = updateConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
-    Constants.climberMaxSpeed = updateConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed);
+    Constants.winchMaxSpeed = updateConstantOverrides("winchMaxSpeed", Constants.winchMaxSpeed);
     Constants.defaultGimbal = updateConstantOverrides("defaultGimbal", Constants.defaultGimbal);
     Constants.flywheelAnalog = flywheelAnalog.getBoolean(Constants.flywheelAnalog);
     Constants.scanWidth = scanWidth.getDouble(Constants.scanWidth);
@@ -420,7 +420,7 @@ public class HarrisonShuffleBoard extends SubsystemBase {
     setUpConstantOverrides("turretMaxSpeed", Constants.turretMaxSpeed);
     setUpConstantOverrides("uptakeMaxSpeed", Constants.uptakeMaxSpeed);
     setUpConstantOverrides("intakeMaxSpeed", Constants.intakeMaxSpeed);
-    setUpConstantOverrides("climberMaxSpeed", Constants.climberMaxSpeed); //defaultGimbal
+    setUpConstantOverrides("winchMaxSpeed", Constants.winchMaxSpeed); //defaultGimbal
     setUpConstantOverrides("defaultGimbal", Constants.defaultGimbal);
     //misc
     scanWidth = constTab.add("scanWidth", Constants.scanWidth)

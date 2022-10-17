@@ -61,7 +61,7 @@ public final class Constants {
     public static double turretMaxSpeed = 35;
     public static double uptakeMaxSpeed = 60;
     public static double intakeMaxSpeed = 40;
-    public static double climberMaxSpeed = 100;
+    //public static double climberMaxSpeed = 100;
     public static double winchMaxSpeed = 50;
 
     //auton
