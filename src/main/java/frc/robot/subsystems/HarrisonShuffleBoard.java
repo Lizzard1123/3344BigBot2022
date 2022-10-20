@@ -359,8 +359,8 @@ public class HarrisonShuffleBoard extends SubsystemBase {
     ShuffleboardContainer noteContainer = driveTab.getLayout("Notes", BuiltInLayouts.kList)
     .withSize(2, 4)
     .withPosition(7, 0);
-    noteContainer.add("0", "Y climber up");
-    noteContainer.add("1", "A climber down");
+    noteContainer.add("0", "Y climber toggle");
+    noteContainer.add("1", "Drive it like you stole it");
     noteContainer.add("2", "X gimbal close");
     noteContainer.add("3", "B gimbal open");
     noteContainer.add("4", "good luck");
@@ -391,7 +391,8 @@ public class HarrisonShuffleBoard extends SubsystemBase {
     //driveTab.add("Piston Status", piston.checkStatus()).withPosition(3,0).withSize(5,4);
     driveTab.add("Piston Status", RobotContainer.piston.checkStatus())
     .withPosition(3, 0)
-    .withSize(2, 2);
+    .withSize(2, 2)
+    .withWidget(BuiltInWidgets.kBooleanBox);
 
 
     //Driver tab set notes
