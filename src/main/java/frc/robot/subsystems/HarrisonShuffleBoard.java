@@ -360,10 +360,10 @@ public class HarrisonShuffleBoard extends SubsystemBase {
     .withSize(2, 4)
     .withPosition(7, 0);
     noteContainer.add("0", "Y climber toggle");
-    noteContainer.add("1", "Drive it like you stole it");
-    noteContainer.add("2", "X gimbal close");
-    noteContainer.add("3", "B gimbal open");
-    noteContainer.add("4", "good luck");
+    noteContainer.add("1", "Up D-Pad Full power");
+    noteContainer.add("2", "Right D-Pad Dump Ball Power");
+    noteContainer.add("3", "Down D-Pad Inside Circle Speed");
+    noteContainer.add("4", "Left D-Pad On Circle Speed");
     noteContainer.add("5", "youve got this");
 
   }
