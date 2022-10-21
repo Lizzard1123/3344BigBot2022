@@ -16,7 +16,7 @@ import frc.robot.commands.Index;
 import frc.robot.commands.MoveAndShoot;
 import frc.robot.commands.MoveAndShootTwo;
 //import frc.robot.commands.MoveClimber;
-import frc.robot.commands.SpinWinch;
+//import frc.robot.commands.SpinWinch;
 import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTurret;
 import frc.robot.commands.SpinUptake;
@@ -113,10 +113,10 @@ public class RobotContainer {
     JoystickButton movePiston = new JoystickButton(driverController, XBox.Y_BUTTON);
     movePiston.whenPressed(new TogglePistons(piston));
 
-    JoystickButton windWinch = new JoystickButton(driverController, XBox.Y_BUTTON);
-    windWinch.whenHeld(new SpinWinch(winch, true));
-    JoystickButton unwindWinch = new JoystickButton(driverController, XBox.A_BUTTON);
-    unwindWinch.whenHeld(new SpinWinch(winch, false));
+    //JoystickButton windWinch = new JoystickButton(driverController, XBox.Y_BUTTON);
+    //windWinch.whenHeld(new SpinWinch(winch, true));
+    //JoystickButton unwindWinch = new JoystickButton(driverController, XBox.A_BUTTON);
+    //unwindWinch.whenHeld(new SpinWinch(winch, false));
 
     //JoystickButton moveClimberUp = new JoystickButton(driverController, XBox.Y_BUTTON);
     //moveClimberUp.whileHeld(new MoveClimber(climber, true));
