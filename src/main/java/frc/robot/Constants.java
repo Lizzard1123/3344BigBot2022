@@ -19,10 +19,10 @@ public final class Constants {
     public static boolean manualOverride = true;
 
     //Ports
-    public static int FRPort = 1;
-    public static int FLPort = 0;
-    public static int BRPort = 3;
-    public static int BLPort = 2;
+    public static final int FRPort = 8;   
+    public static final int FLPort = 9;    
+    public static final int BRPort = 5;    
+    public static final int BLPort = 6;    
     public static int flywheelPort = 4;
     public static int backFlywheelPort = 13;
     public static int turretPort = 5;
